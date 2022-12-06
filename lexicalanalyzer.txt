@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 
-// global variables
+// global variable
 char program[200];
 char inputIndex = 0;
 char mainStr[100]; // consider string literal
@@ -83,7 +83,7 @@ bool isDelimiter(char currentChar){
 void evalChar(char x){    // gets character class
     char currentChar[1];
     currentChar[0] = x;
-    char str_c[2];
+    char str_c[2] = "";
     char str_literal[100] = "";
     
     if(isAlphabet(currentChar[0])){
@@ -140,25 +140,40 @@ void evalChar(char x){    // gets character class
     }
     
     else if(currentChar[0] == '\"'){
-        inputIndex++;
-        
-        while(program[inputIndex] != '\"'){
-            str_c[0]=program[inputIndex];
-            strcat(str_literal,str_c); 
-            inputIndex++;
-        }
-        // printf("string literal %s\n", str_literal);
-        
-        lexeme[lexIndex] = str_literal; 
+        lexeme[lexIndex] = mainStr; 
         printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
         lexIndex++;
-        strcpy(charClass,"STR_LITERAL");
+        
+        inputIndex++;
+        
+        if(program[inputIndex] == '\"'){
+            // str ="":
+            // remove if necessary
+        }
+        else{
+            while(program[inputIndex] != '\"'){
+                str_c[0]=program[inputIndex];
+                strcat(str_literal,str_c); 
+                inputIndex++;
+            }     
+            strcpy(mainStr,str_literal);
+            strcpy(charClass,"STR_LITERAL");
+        }
+        // printf("string literal %s\n", str_literal);
     }
     
     else if(currentChar[0] == '\''){
+        lexeme[lexIndex] = mainStr; 
+        printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+        lexIndex++;
+        
         inputIndex++;
         
-        printf("character literal %c\n", program[inputIndex]);
+        char c_literal[2] = "";
+        c_literal[0] = program[inputIndex];
+        
+        strcpy(mainStr, c_literal);
+        strcpy(charClass,"CHAR_LITERAL");
         
         inputIndex++;
     }  
@@ -178,7 +193,6 @@ void myFunction(){   // gets input character
     }
     
     if(inputIndex == strlen(program)){
-        // printf("last %c\n", program[strlen(program)-1]);
         lexeme[lexIndex] = mainStr; 
         printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
     }
@@ -202,3 +216,6 @@ int main()
 
     return 0;
 }
+
+
+
