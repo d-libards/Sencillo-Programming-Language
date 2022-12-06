@@ -1,0 +1,208 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
+// global variables
+char program[200];
+char inputIndex = 0;
+char mainStr[100]; // consider string literal
+char charClass[15] = "ALPHABET";
+
+char *lexeme[100];
+int lexIndex = 0;
+
+
+bool isAlphabet(char currentChar){
+    int i=0;
+    bool result = false;
+
+    char letterList[]={'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                        'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                        'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                        'N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_','\0'};
+    while(i < strlen(letterList)){   //53
+        if(currentChar == letterList[i]){
+            result = true;
+            break;
+        }
+        i++;
+    }
+    
+    return result;    
+}
+
+bool isIntLiteral(char currentChar){
+    int i=0;
+    bool result = false;
+
+    char digitList[]={'0','1','2','3','4','5','6','7','8','9','\0'};
+    
+    while(i < strlen(digitList)){   
+        if(currentChar == digitList[i]){
+            result = true;
+            break;
+        }
+        i++;
+    }
+    return result; 
+}
+
+bool isOperator(char currentChar){
+    int i=0;
+    bool result = false;
+
+    char operatorList[]={'=','+','-','*','/','%','!','>','<','\0'};
+    
+    while(i < strlen(operatorList)){   
+        if(currentChar == operatorList[i]){
+            result = true;
+            break;
+        }
+        i++;
+    }
+    return result;     
+}
+
+bool isDelimiter(char currentChar){
+    int i=0;
+    bool result = false;
+
+    char delimiterList[]={'(',')','{','}','[',']',':','\0'};
+    
+    while(i < strlen(delimiterList)){   
+        if(currentChar == delimiterList[i]){
+            result = true;
+            break;
+        }
+        i++;
+    }
+    return result;     
+}
+
+void evalChar(char x){    // gets character class
+    char currentChar[1];
+    currentChar[0] = x;
+    char str_c[2];
+    char str_literal[100] = "";
+    
+    if(isAlphabet(currentChar[0])){
+        //printf("alphabet %c\n", currentChar[0]);
+        if(strcmp(charClass,"ALPHABET") == 0){
+            strcat(mainStr, currentChar);
+        }
+        else{
+            lexeme[lexIndex] = mainStr; // string to string array
+            printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"ALPHABET");
+        }
+        
+    }
+    
+    else if(isIntLiteral(currentChar[0])){
+        // printf("int literal %c\n", currentChar[0]);
+        
+        if(strcmp(charClass,"INT_LITERAL") == 0){
+            strcat(mainStr, currentChar);
+        }
+        else{
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"INT_LITERAL");
+        }
+    }
+    
+    else if(isOperator(currentChar[0])){
+        // printf("operator %c\n", currentChar[0]);
+        if(strcmp(charClass,"OPERATOR") == 0){
+            strcat(mainStr, currentChar);
+        }
+        else{
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"OPERATOR");
+        }        
+    }
+    
+    else if(isDelimiter(currentChar[0])){
+        // printf("delimiter %c\n", currentChar[0]);
+        if(strcmp(charClass,"DELIMITER") == 0){
+            strcat(mainStr, currentChar);
+        }
+        else{
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"DELIMITER");
+        }       
+    }
+    
+    else if(currentChar[0] == '\"'){
+        inputIndex++;
+        
+        while(program[inputIndex] != '\"'){
+            str_c[0]=program[inputIndex];
+            strcat(str_literal,str_c); 
+            inputIndex++;
+        }
+        // printf("string literal %s\n", str_literal);
+        
+        lexeme[lexIndex] = str_literal; 
+        printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+        lexIndex++;
+        strcpy(charClass,"STR_LITERAL");
+    }
+    
+    else if(currentChar[0] == '\''){
+        inputIndex++;
+        
+        printf("character literal %c\n", program[inputIndex]);
+        
+        inputIndex++;
+    }  
+    
+    else if(currentChar[0] == ' '){
+        //printf("space \n");
+        strcpy(charClass,"BLANK_SPACE");
+    }
+
+}
+
+void myFunction(){   // gets input character
+    while(inputIndex < strlen(program)){
+        evalChar(program[inputIndex]);
+        inputIndex++;
+    }
+    
+    if(inputIndex == strlen(program)){
+        // printf("last %c\n", program[strlen(program)-1]);
+        lexeme[lexIndex] = mainStr; 
+        printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+    }
+    
+    // printf("mainStr: %s\n", mainStr);
+    
+    // int x = 0;
+    // while(x < lexIndex){  // lexIndex gets incremented
+    //     printf("lexeme %d: %s\n", x,lexeme[x]);
+    //     x++;
+    // }
+    
+}
+
+int main()
+{
+    printf("Program: ");
+    gets(program);
+    printf("%s\n", program);
+    myFunction();
+
+    return 0;
+}
