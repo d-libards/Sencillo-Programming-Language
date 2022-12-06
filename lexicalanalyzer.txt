@@ -68,7 +68,7 @@ bool isDelimiter(char currentChar){
     int i=0;
     bool result = false;
 
-    char delimiterList[]={'(',')','{','}','[',']',':','\0'};
+    char delimiterList[]={'(',')','{','}','[',']',':',';','\0'};
     
     while(i < strlen(delimiterList)){   
         if(currentChar == delimiterList[i]){
@@ -132,16 +132,11 @@ void evalChar(char x){    // gets character class
     
     else if(isDelimiter(currentChar[0])){
         // printf("delimiter %c\n", currentChar[0]);
-        if(strcmp(charClass,"DELIMITER") == 0){
-            strcat(mainStr, currentChar);
-        }
-        else{
-            lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
-            lexIndex++;
-            strcpy(mainStr,currentChar);
-            strcpy(charClass,"DELIMITER");
-        }       
+        lexeme[lexIndex] = mainStr; 
+        printf("lexeme %d: %s\n",lexIndex, lexeme[lexIndex]);
+        lexIndex++;
+        strcpy(mainStr,currentChar);
+        strcpy(charClass,"DELIMITER");
     }
     
     else if(currentChar[0] == '\"'){
@@ -172,6 +167,7 @@ void evalChar(char x){    // gets character class
         //printf("space \n");
         strcpy(charClass,"BLANK_SPACE");
     }
+    
 
 }
 
