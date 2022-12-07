@@ -1,6 +1,10 @@
 #include<stdio.h>
 
 int main(){
-    printf("Hello World");
-    printf("DOminique Libardo")
+
+    printf("Hello World\n");
+    printf("\t\'DOminique Libardo\'");
+
+    printf("\ntoradora");
+    printf("\n\nworkier");
 }
