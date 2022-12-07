@@ -98,11 +98,81 @@ void getClass(){
     else if(mainStr[0] == 'd' && mainStr[1] == 'o' && mainStr[2] == 'b' && mainStr[3] == 'l' &&
             mainStr[4] == 'e' && mainStr[5] == NULL){
         strcpy(token,"double_keyword");
+    } 
+    else if(mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == NULL){
+        strcpy(token,"integer_keyword");
+    }
+    else if(mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' && 
+            mainStr[4] == 'n' && mainStr[5] == NULL){
+        strcpy(token,"scanf_keyword");
     }    
+    else if(mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == NULL){
+        strcpy(token,"float_keyword");
+    }   
+    else if(mainStr[0] == 'h' && mainStr[1] == 'a' && mainStr[2] == 'c' && mainStr[3] == 'e' &&
+            mainStr[4] == 'r' && mainStr == NULL){
+        strcpy(token,"do_keyword");
+    } 
+    else if(mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' &&
+            mainStr[4] == 'i' && mainStr[5] == NULL){
+        strcpy(token,"printf_keyword");
+    }    
+    else if(mainStr[0] == 'm' && mainStr[1] == 'a' && mainStr[2] == 's' && mainStr[3] == NULL){
+        strcpy(token,"else_keyword");
+    }    
+    else if(mainStr[0] == 'm' && mainStr[1] == 'i' && mainStr[2] == 'e' && mainStr[3] == 'n' && 
+            mainStr[4] == 't' && mainStr[5] == 'r' && mainStr[6] == 'a' && mainStr[7] == 's' && mainStr[8] == NULL){
+        strcpy(token,"while_keyword");
+    }    
+    else if(mainStr[0] == 'n' && mainStr[1] == 'i' && mainStr[2] == NULL){
+        strcpy(token,"or_keyword");
+    } 
+    else if(mainStr[0] == 'n' && mainStr[1] == 'o' && mainStr[2] == NULL){
+        strcpy(token,"not_keyword");
+    }    
+    else if(mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 's' &&
+            mainStr[4] == 'o' && mainStr[5] == NULL){
+        strcpy(token,"char_keyword");
+    }    
+    else if(mainStr[0] == 'p' && mainStr[1] == 'o' && mainStr[2] == 'r' && mainStr[3] == NULL){
+        strcpy(token,"for_keyword");
+    }    
+    else if(mainStr[0] == 'r' && mainStr[1] == 'e' && mainStr[2] == 't' && mainStr[3] == 'o' &&
+            mainStr[4] == 'r' && mainStr[5] == 'n' && mainStr[6] == 'o' && mainStr[7] == NULL){
+        strcpy(token,"return_keyword");
+    }
+    else if(mainStr[0] == 's' && mainStr[1] == 'e' && mainStr[2] == 'q' && mainStr[3] == 'u' && mainStr[4] == 'i' &&
+            mainStr[5] == 'r' && mainStr[6] == NULL){
+        strcpy(token,"continue_keyword");
+    }   
+    else if(mainStr[0] == 's' && mainStr[1] == 'i' && mainStr[2] == NULL){
+        strcpy(token,"if_keyword");
+    }  
+    else if(mainStr[0] == 'v' && mainStr[1] == 'a' && mainStr[2] == 'c' && mainStr[3] == 'i' && mainStr[4] == 'o' &&
+            mainStr[5] == NULL){
+        strcpy(token,"void_keyword");
+    }    
+    else if(mainStr[0] == 'v' && mainStr[1] == 'a' && mainStr[2] == 'm' && mainStr[3] == 'o' && mainStr[4] == 's' &&
+            mainStr[5] == NULL){
+        strcpy(token,"goto_keyword");
+    }  
+    else if(mainStr[0] == 'y' && mainStr[1] ==  NULL){
+        strcpy(token,"and_keyword");
+    }    
+    else if(mainStr[0] == 'f' && mainStr[1] == 'a' && mainStr[2] == 'l' && mainStr[3] == 's' && mainStr[4] == 'o' &&
+            mainStr[5] == NULL){
+        strcpy(token,"false_reservedword");
+    }
+    else if(mainStr[0] == 'v' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 'd' && mainStr[4] == 'a' &&
+            mainStr[5] == 'd' && mainStr[6] == NULL){
+        strcpy(token,"true_reservedword");
+    }    
+    else if(mainStr[0] == '#' && mainStr[1] == '#' && mainStr[2] == '#'){
+        strcpy(token,"comment");
+    }
     else{
         strcpy(token,"identifier");
     }
-    
 }
 
 void evalChar(char x){    // gets character class
@@ -119,10 +189,14 @@ void evalChar(char x){    // gets character class
         if(strcmp(charClass,"ALPHABET") == 0){
             strcat(mainStr, currentChar);
         }
+        else if(strcmp(charClass,"BLANK_SPACE") == 0){
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"ALPHABET");            
+        }
         else{
             getClass();
             lexeme[lexIndex] = mainStr; // string to string array
-            printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
             lexIndex++;
             strcpy(mainStr,currentChar);
             strcpy(charClass,"ALPHABET");
@@ -136,10 +210,14 @@ void evalChar(char x){    // gets character class
         if(strcmp(charClass,"INT_LITERAL") == 0){
             strcat(mainStr, currentChar);
         }
+        else if(strcmp(charClass,"BLANK_SPACE") == 0){
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"INT_LITERAL");            
+        }        
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
             lexIndex++;
             strcpy(mainStr,currentChar);
             strcpy(charClass,"INT_LITERAL");
@@ -151,10 +229,14 @@ void evalChar(char x){    // gets character class
         if(strcmp(charClass,"OPERATOR") == 0){
             strcat(mainStr, currentChar);
         }
+        else if(strcmp(charClass,"BLANK_SPACE") == 0){
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"OPERATOR");            
+        }          
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
             lexIndex++;
             strcpy(mainStr,currentChar);
             strcpy(charClass,"OPERATOR");
@@ -163,64 +245,113 @@ void evalChar(char x){    // gets character class
     
     else if(isDelimiter(currentChar[0])){
         // printf("delimiter %c\n", currentChar[0]);
-        getClass();
-        lexeme[lexIndex] = mainStr; 
-        printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
-        lexIndex++;
-        strcpy(mainStr,currentChar);
-        strcpy(charClass,"DELIMITER");
+        if(strcmp(charClass,"BLANK_SPACE") == 0){
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"DELIMITER");            
+        } 
+        else{
+            getClass();
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"DELIMITER");
+        }
     }
     
     else if(currentChar[0] == '\"'){
-        getClass();
-        lexeme[lexIndex] = mainStr; 
-        printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
-        lexIndex++;
-        
-        inputIndex++;
-        
-        if(program[inputIndex] == '\"'){
-            // str ="":
-            // remove if necessary
-        }
+        if(strcmp(charClass,"BLANK_SPACE") == 0){
+            inputIndex++;
+            if(program[inputIndex] == '\"'){
+                // str ="":
+                // remove if necessary
+            }
+            else{
+                while(program[inputIndex] != '\"'){
+                    str_c[0] = program[inputIndex];
+                    strcat(str_literal,str_c); 
+                    inputIndex++;
+                }     
+                strcpy(mainStr,str_literal);
+                strcpy(charClass,"STR_LITERAL");
+            }
+        }  
         else{
-            while(program[inputIndex] != '\"'){
-                str_c[0] = program[inputIndex];
-                strcat(str_literal,str_c); 
-                inputIndex++;
-            }     
-            strcpy(mainStr,str_literal);
-            strcpy(charClass,"STR_LITERAL");
+            getClass();
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
+            lexIndex++;
+            
+            inputIndex++;
+            
+            if(program[inputIndex] == '\"'){
+                // str ="":
+                // remove if necessary
+            }
+            else{
+                
+                while(program[inputIndex] != '\"'){
+                    str_c[0] = program[inputIndex];
+                    strcat(str_literal,str_c); 
+                    inputIndex++;
+                }     
+                strcpy(mainStr,str_literal);
+                strcpy(charClass,"STR_LITERAL");
+            }
         }
         // printf("string literal %s\n", str_literal);
     }
     
     else if(currentChar[0] == '\''){
-        getClass();
-        lexeme[lexIndex] = mainStr; 
-        printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
-        lexIndex++;
+        if(strcmp(charClass,"BLANK_SPACE") == 0){
+            inputIndex++;
+            
+            char c_literal[2] = "";
+            c_literal[0] = program[inputIndex];
+            
+            strcpy(mainStr, c_literal);
+            strcpy(charClass,"CHAR_LITERAL");
+            
+            inputIndex++;          
+        } 
+        else{
+            getClass();
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
+            lexIndex++;
+            
+            inputIndex++;
+            
+            char c_literal[2] = "";
+            c_literal[0] = program[inputIndex];
+            
+            strcpy(mainStr, c_literal);
+            strcpy(charClass,"CHAR_LITERAL");
+            
+            inputIndex++;
+            
+        }
         
-        inputIndex++;
-        
-        char c_literal[2] = "";
-        c_literal[0] = program[inputIndex];
-        
-        strcpy(mainStr, c_literal);
-        strcpy(charClass,"CHAR_LITERAL");
-        
-        inputIndex++;
     }  
     
     else if(currentChar[0] == ' '){
         //printf("space \n");
-        strcpy(charClass,"BLANK_SPACE");
+        if(strcmp(charClass,"BLANK_SPACE") == 0){}
+        else{
+            getClass();
+            lexeme[lexIndex] = mainStr; 
+            printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
+            lexIndex++;
+            strcpy(mainStr,currentChar);
+            strcpy(charClass,"BLANK_SPACE");
+        }
+        
     }
     
     else if(currentChar[0] == '#'){
         getClass();
         lexeme[lexIndex] = mainStr; 
-        printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
+        printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
         lexIndex++;
         
         // inputIndex+=2;   - Alternative
@@ -262,7 +393,7 @@ void myFunction(){   // gets input character
     if(inputIndex == strlen(program)){
         getClass();
         lexeme[lexIndex] = mainStr; 
-        printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
+        printf("lexeme %d: %s %s %s\n",lexIndex, lexeme[lexIndex], token,charClass);
     }
     
 }
@@ -277,6 +408,3 @@ int main()
 
     return 0;
 }
-
-
-
