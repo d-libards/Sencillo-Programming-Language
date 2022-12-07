@@ -217,7 +217,7 @@ void evalChar(char x){    // gets character class
         strcpy(charClass,"BLANK_SPACE");
     }
     
-    else if(currentChar[0] == '#' && program[inputIndex+1] && program[inputIndex+2]){
+    else if(currentChar[0] == '#'){
         getClass();
         lexeme[lexIndex] = mainStr; 
         printf("lexeme %d: %s %s\n",lexIndex, lexeme[lexIndex], token);
