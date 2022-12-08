@@ -187,7 +187,12 @@ void getClass(){
             strcpy(token,"not_op");
         }  
         else{
-            strcpy(token,"identifier");
+            if(mainStr[0] == '_'){
+                strcpy(token,"invalid identifier");
+            }
+            else{
+                strcpy(token,"identifier");                
+            }
         }
             
     }
@@ -270,7 +275,11 @@ void getClass(){
         } 
         else if(mainStr[0] == '<' && mainStr[1]  == '\0'){
             strcpy(token,"less_op");
-        }     
+        }    
+        
+        else{
+            strcpy(token,"invalid operator");
+        }
             
     }
     
@@ -279,7 +288,18 @@ void getClass(){
     }
     
     else if(strcmp(charClass,"INT_LITERAL") == 0){
-        strcpy(token,"int_literal");
+        int found=0;
+        for(int i = 0; i < strlen(mainStr); i++){
+            if(mainStr[i] == '.'){
+                found=1;
+            }
+        }
+        if(found==1){
+            strcpy(token,"float_literal");
+        }
+        else{
+             strcpy(token,"int_literal");
+        }
     }
     
     else if(strcmp(charClass,"STR_LITERAL") == 0){
@@ -431,13 +451,25 @@ void evalChar(char x){    // gets character class
         if(strcmp(charClass,"BLANK_SPACE") == 0){
             inputIndex++;
             
-            char c_literal[2] = "";
+            char c_literal[30] = "";
+            char ch[2];
             c_literal[0] = program[inputIndex];
             
-            strcpy(mainStr, c_literal);
-            strcpy(charClass,"CHAR_LITERAL");
+            inputIndex++;           
             
-            inputIndex++;          
+            if(program[inputIndex] != '\''){
+                while(program[inputIndex] != '\''){
+                    ch[0] = program[inputIndex];
+                    strcat(c_literal,ch); 
+                    inputIndex++;
+                }
+                printf(" ! invalid character: %s\n",c_literal);
+                strcpy(charClass,"BLANK_SPACE");
+            }
+            else{
+                strcpy(mainStr, c_literal);
+                strcpy(charClass,"CHAR_LITERAL");
+            }         
         } 
         else{
             getClass();
@@ -448,16 +480,26 @@ void evalChar(char x){    // gets character class
             
             inputIndex++;
             
-            char c_literal[2] = "";
+            char c_literal[30] = "";
+            char ch[2];
             c_literal[0] = program[inputIndex];
             
-            strcpy(mainStr, c_literal);
-            strcpy(charClass,"CHAR_LITERAL");
+            inputIndex++;           
             
-            inputIndex++;
-            
+            if(program[inputIndex] != '\''){
+                while(program[inputIndex] != '\''){
+                    ch[0] = program[inputIndex];
+                    strcat(c_literal,ch); 
+                    inputIndex++;
+                }
+                printf("! invalid character: %s\n",c_literal);
+                strcpy(charClass,"BLANK_SPACE");
+            }
+            else{
+                strcpy(mainStr, c_literal);
+                strcpy(charClass,"CHAR_LITERAL");
+            }
         }
-        
     }  
     
     else if(currentChar[0] == ' '){
@@ -538,6 +580,10 @@ void evalChar(char x){    // gets character class
             strcpy(charClass,"COMMENT");
         }
     }
+    
+    else{
+        printf("unknown character: %c\n", currentChar[0]);
+    }
 
 }
 
@@ -570,6 +616,8 @@ int main()
 
     return 0;
 }
+
+
 
 
 
