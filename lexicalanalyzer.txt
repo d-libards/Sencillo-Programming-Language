@@ -333,7 +333,7 @@ void getClass(){
 }
 
 void evalChar(char x){    // gets character class
-    char currentChar[1];
+    char currentChar[2];
     currentChar[0] = x;
     char str_c[2] = "";  
     char str_literal[100] = "";   
@@ -619,6 +619,11 @@ int main()
 
     return 0;
 }
+
+
+
+
+
 
 
 
