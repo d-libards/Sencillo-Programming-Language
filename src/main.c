@@ -1,10 +1,9 @@
 #include<stdio.h>
 
-int main(){
+int main(int argc, char **argv){
 
     printf("Hello World\n");
     printf("\t\'DOminique Libardo\'");
 
-    printf("\ntoradora");
-    printf("\n\nworkier");
+    return 0;
 }
