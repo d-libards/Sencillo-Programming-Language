@@ -2,6 +2,5 @@
 #define MAIN_H
 #include "lexer.h"  
 
-extern char program;
 
 #endif

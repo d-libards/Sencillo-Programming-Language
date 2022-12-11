@@ -15,6 +15,19 @@ int lexIndex = 0;
 
 char token[20];
 
+int number = 0;
+
+void add_one(){
+    number++;
+}
+
+void print(){
+    printf("number: %d\n", number);
+}
+
+
+
+
 bool isAlphabet(char currentChar){
     int i=0;
     bool result = false;
@@ -592,7 +605,7 @@ void evalChar(char x){    // gets character class
 }
 
 void myFunction(){   // gets input character
-     while(inputIndex < strlen(program)-1){
+   while(inputIndex < strlen(program)-1){
         evalChar(program[inputIndex]); // if(x==c)
         inputIndex++;
     }
@@ -607,3 +620,7 @@ void myFunction(){   // gets input character
         }
     }
 }
+
+/*
+
+*/

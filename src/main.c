@@ -8,7 +8,6 @@
 
 int main()
 {
-    char program[300];
     printf("Program: ");
     fgets(program,300,stdin);
     printf("%s\n", program);
