@@ -1,17 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <stdbool.h>
+//#include <string.h>
+//#include "include/lexer.h"
+//#include "include/main.h"
 
 // global variables
-char program[300];
 int inputIndex = 0;
 char mainStr[100]; // consider string literal
 char charClass[15] = "ALPHABET";
 
 char *lexeme[100];
 int lexIndex = 0;
-
 char token[20];
 
 bool isAlphabet(char currentChar){
@@ -610,15 +610,6 @@ void myFunction(){   // gets input character
 }
 
 
-int main()
-{
-    printf("Program: ");
-    fgets(program,300,stdin);
-    printf("%s\n", program);
-    myFunction();
-
-    return 0;
-}
 
 
 

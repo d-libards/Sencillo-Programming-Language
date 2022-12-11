@@ -1,7 +1,7 @@
 #executable
 exec = sencillo.exe
 #connecting the makefile to the src folder with extence .c
-sources = $(wildcard src/*.c)
+sources = $(wildcard *.c)
 #change the file extension
 objects = $(sources:.c=.sn)
 #debugging
