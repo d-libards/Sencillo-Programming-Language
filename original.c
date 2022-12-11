@@ -2,14 +2,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "include/lexer.h"
-
 
 // global variables
+char program[300];
 int inputIndex = 0;
 char mainStr[100]; // consider string literal
 char charClass[15] = "ALPHABET";
-char program[300];
+
 char *lexeme[100];
 int lexIndex = 0;
 
@@ -592,7 +591,7 @@ void evalChar(char x){    // gets character class
 }
 
 void myFunction(){   // gets input character
-     while(inputIndex < strlen(program)-1){
+    while(inputIndex < strlen(program)-1){
         evalChar(program[inputIndex]); // if(x==c)
         inputIndex++;
     }
@@ -606,4 +605,24 @@ void myFunction(){   // gets input character
             strcpy(token,"");
         }
     }
+    
+
 }
+
+
+int main()
+{
+    printf("Program: ");
+    fgets(program,300,stdin);
+    printf("%s\n", program);
+    myFunction();
+
+    return 0;
+}
+
+
+
+
+
+
+

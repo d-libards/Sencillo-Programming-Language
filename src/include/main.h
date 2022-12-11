@@ -1,7 +1,7 @@
 #ifndef MAIN_H
 #define MAIN_H
-#include 
+#include "lexer.h"  
 
-char program[300];
+extern char program;
 
 #endif
