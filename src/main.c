@@ -4,13 +4,18 @@
 #include <string.h>
 #include "include/lexer.h"
 #include "include/main.h"
-//#include "lexer.c"
 
 int main()
 {
-    printf("Program: ");
-    fgets(program,300,stdin);
-    printf("%s\n", program);
-    myFunction();
+    inputptr = fopen("examples/example.sen", "rt");
+    outputptr = fopen("examples/LexicalAnalyzerTable.txt","w");
+    if (inputptr == NULL){
+        perror("Unable to open the file");
+    }
+    while(fgets(program,sizeof(program), inputptr) != NULL){
+        myFunction(program);
+    }
+    fclose(inputptr);
+    fclose(outputptr);
     return 0;
 }
