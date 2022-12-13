@@ -335,9 +335,9 @@ void getClass(){
 }
 
 void evalChar(char x){    // gets character class
-    char currentChar[2];
+    char currentChar[2] = "";
     currentChar[0] = x;
-    char str_c[2] = "";
+    char str_c[2] ="";
     char str_literal[100] = "";
 
     char comment_c[2] = "";
@@ -604,12 +604,12 @@ void evalChar(char x){    // gets character class
 }
 
 void myFunction(){   // gets input character
-    while(inputIndex < strlen(program)){
+    while(inputIndex < strlen(program)-1){
         evalChar(program[inputIndex]); // if(x==c)
         inputIndex++;
     }
 
-    if(inputIndex == strlen(program)){
+    if(inputIndex == strlen(program)-1){
         if(isBlankSpace()){}
         else{
             getClass();
@@ -629,7 +629,7 @@ int main()
     file = fopen("Lexical Analyzer Table.txt","w");
 
     printf("Program: ");
-    gets(program);
+    fgets(program,300,stdin);
     printf("%s\n", program);
     myFunction();
 
