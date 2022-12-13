@@ -8,7 +8,7 @@
 int inputIndex = 0;
 char mainStr[100]; // consider string literal
 char charClass[15] = "ALPHABET";
-char program[2000];
+char program[1000];
 char *lexeme[100];
 int lexIndex = 0;
 char token[20];
@@ -603,7 +603,7 @@ void evalChar(char x){    // gets character class
 
 }
 
-void myFunction(){   // gets input character
+void myFunction(char* program){   // gets input character
    while(inputIndex < strlen(program)-1){
         evalChar(program[inputIndex]); // if(x==c)
         inputIndex++;

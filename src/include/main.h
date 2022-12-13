@@ -3,6 +3,6 @@
 #include "lexer.h"  
 
 FILE *inputptr, *outputptr;
-extern char program[2000];
+extern char program[1000];
 
 #endif
