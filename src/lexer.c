@@ -179,11 +179,11 @@ void getClass(){
         }  
         else if(mainStr[0] == 'f' && mainStr[1] == 'a' && mainStr[2] == 'l' && mainStr[3] == 's' && mainStr[4] == 'o' &&
                 mainStr[5] == '\0'){
-            strcpy(token,"boolean_literal");
+            strcpy(token,"false_reserved");
         }
         else if(mainStr[0] == 'v' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 'd' && mainStr[4] == 'a' &&
                 mainStr[5] == 'd' && mainStr[6] == '\0'){
-            strcpy(token,"boolean_literal");
+            strcpy(token,"true_reserved");
         }  
         
         // boolean
@@ -199,10 +199,10 @@ void getClass(){
         }  
         else{
             if(mainStr[0] == '_'){
-                strcpy(token,"invalid identifier");
+                strcpy(token,"invalid id");
             }
             else{
-                strcpy(token,"identifier");                
+                strcpy(token,"id");                
             }
         }
             
@@ -214,79 +214,79 @@ void getClass(){
         // arithmetic operator
     
         if(mainStr[0] == '+' && mainStr[1] == '\0'){
-            strcpy(token,"add_op");
+            strcpy(token,"+");
         }
         else if(mainStr[0] == '-' && mainStr[1] == '\0'){
-            strcpy(token,"sub_op");
+            strcpy(token,"-");
         }    
         else if(mainStr[0] == '/' && mainStr[1] == '\0'){
-            strcpy(token,"div_op");
+            strcpy(token,"/");
         }   
         else if(mainStr[0] == '*' && mainStr[1] == '\0'){
-            strcpy(token,"mult_op");
+            strcpy(token,"*");
         }  
         else if(mainStr[0] == '%' && mainStr[1] == '\0'){
-            strcpy(token,"mod_op");
+            strcpy(token,"%");
         }    
         else if(mainStr[0] == '*' && mainStr[1] == '*' && mainStr[2] == '\0'){
-            strcpy(token,"expo_op");
+            strcpy(token,"**");
         }
         else if(mainStr[0] == '/' && mainStr[1] == '/' && mainStr[2] == '\0'){
-            strcpy(token,"intDiv_op");
+            strcpy(token,"//");
         }  
        
         // assignment operator
         
         else if(mainStr[0] == '=' && mainStr[1] == '\0'){
-            strcpy(token,"assign_op");
+            strcpy(token,"=");
         }    
         else if(mainStr[0] == '+' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"addAssign_op");
+            strcpy(token,"+=");
         }  
         else if(mainStr[0] == '-' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"subAssign_op");
+            strcpy(token,"-=");
         }  
         else if(mainStr[0] == '*' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"multAssign_op");
+            strcpy(token,"*=");
         } 
         else if(mainStr[0] == '%' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"modAssign_op");
+            strcpy(token,"%=");
         }  
         else if(mainStr[0] == '/' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"divAssign_op");
+            strcpy(token,"/=");
         }  
         else if(mainStr[0] == '/' && mainStr[1] == '/' && mainStr[2] == '=' && mainStr[3] == '\0'){
-            strcpy(token,"intDivAssign_op");
+            strcpy(token,"//=");
         }     
         
         // increment & decrement
         
         else if(mainStr[0] == '+' && mainStr[1] == '+' && mainStr[2] == '\0'){
-            strcpy(token,"increment_op");
+            strcpy(token,"++");
         }  
         else if(mainStr[0] == '-' && mainStr[1] == '-' && mainStr[2] == '\0'){
-            strcpy(token,"decrement_op");
+            strcpy(token,"--");
         }  
     
         // boolean relational       
         
         else if(mainStr[0] == '=' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"equal_op");
+            strcpy(token,"==");
         } 
         else if(mainStr[0] == '!' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"notEqual_op");
+            strcpy(token,"!=");
         }   
         else if(mainStr[0] == '>' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"goe_op");
+            strcpy(token,">=");
         } 
         else if(mainStr[0] == '<' && mainStr[1] == '=' && mainStr[2] == '\0'){
-            strcpy(token,"loe_op");
+            strcpy(token,"<=");
         }       
         else if(mainStr[0] == '>' && mainStr[1] == '\0'){
-            strcpy(token,"greater_op");
+            strcpy(token,">");
         } 
         else if(mainStr[0] == '<' && mainStr[1]  == '\0'){
-            strcpy(token,"less_op");
+            strcpy(token,"<");
         }    
         
         else{
@@ -297,7 +297,33 @@ void getClass(){
     
     else if(charClass[0]=='D' && charClass[1]=='E' && charClass[2]=='L' && charClass[3]=='I' && charClass[4]=='M' && 
             charClass[5]=='I' && charClass[6]=='T' && charClass[7] =='E' && charClass[8] =='R' && charClass[9] =='\0'){
-        strcpy(token,"delimiter");
+         if(mainStr[0] == '(' && mainStr[1] == '\0'){
+            strcpy(token,"(");
+           }
+        else if(mainStr[0] == ')' && mainStr[1] == '\0'){
+            strcpy(token,")");
+           }
+        else if(mainStr[0] == '[' && mainStr[1] == '\0'){
+            strcpy(token,"[");
+           }
+        else if(mainStr[0] == ']' && mainStr[1] == '\0'){
+            strcpy(token,"]");
+           }
+        else if(mainStr[0] == '{' && mainStr[1] == '\0'){
+            strcpy(token,"{");
+           }
+        else if(mainStr[0] == '}' && mainStr[1] == '\0'){
+            strcpy(token,"}");
+           }
+        else if(mainStr[0] == ';' && mainStr[1] == '\0'){
+            strcpy(token,";");
+           }
+        else if(mainStr[0] == ',' && mainStr[1] == '\0'){
+            strcpy(token,",");
+           }
+        else if(mainStr[0] == ':' && mainStr[1] == '\0'){
+            strcpy(token,":");
+           }
     }
     
     else if(charClass[0]=='N' && charClass[1]=='U' && charClass[2]=='M' && charClass[3]=='E' && charClass[4]=='R' && 
