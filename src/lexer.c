@@ -603,13 +603,13 @@ void evalChar(char x){    // gets character class
 
 }
 
-void myFunction(char* program){   // gets input character
-   while(inputIndex < strlen(program)-1){
+void myFunction(){   // gets input character
+   while(inputIndex < strlen(program)){
         evalChar(program[inputIndex]); // if(x==c)
         inputIndex++;
     }
     
-    if(inputIndex == strlen(program)-1){
+    if(inputIndex == strlen(program)){
         if(isBlankSpace()){}    
         else{
             getClass();

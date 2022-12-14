@@ -7,13 +7,13 @@
 
 int main()
 {
-    inputptr = fopen("examples/example.sen", "r");
-    outputptr = fopen("examples/LexicalAnalyzerTable.txt","w");
+    inputptr = fopen("examples/example.c", "r");
+    outputptr = fopen("examples/SymbolTable.txt","w");
     if (inputptr == NULL){
         perror("Unable to open the file");
     }
    while(fgets(program,sizeof(program), inputptr) != NULL){
-        myFunction(program);
+        myFunction();
    }
 
     fclose(inputptr);
