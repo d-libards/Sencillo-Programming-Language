@@ -576,50 +576,68 @@ void evalChar(char x){    // gets character class
     }
 
     else if(currentChar[0] == '#'){
-        if(isBlankSpace() || charClass[0] == '\0'){
-            inputIndex++;
-            inputIndex++;
-            inputIndex++;
-
+        inputIndex++;
+        if(program[inputIndex] != '#'){
             while(program[inputIndex] != '#'){
                 comment_c[0] = program[inputIndex];
                 strcat(comment_str,comment_c);
                 inputIndex++;
             }
-
-            inputIndex++;
-            inputIndex++;
-
-            // inputIndex+=2;       - Alternative
-
-            strcpy(mainStr,comment_str);
-            strcpy(charClass,"COMMENT");
+            printf("! invalid comment: %s\n",comment_str);
         }
-
-        else{
-            getClass();
-            lexeme[lexIndex] = mainStr;
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
-            fprintf(file,"lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
-            strcpy(token,"");
-            lexIndex++;
-
+        else if(program[inputIndex+1] != '#'){
             inputIndex++;
-            inputIndex++;
-
-            inputIndex++;
-
             while(program[inputIndex] != '#'){
                 comment_c[0] = program[inputIndex];
                 strcat(comment_str,comment_c);
                 inputIndex++;
             }
-
             inputIndex++;
-            inputIndex++;
+            printf("! invalid comment: %s\n",comment_str);
+        }
+        else{
+            if(isBlankSpace() || charClass[0] == '\0'){
+                inputIndex++;
+                inputIndex++;
 
-            strcpy(mainStr,comment_str);
-            strcpy(charClass,"COMMENT");
+                while(program[inputIndex] != '#'){
+                    comment_c[0] = program[inputIndex];
+                    strcat(comment_str,comment_c);
+                    inputIndex++;
+                }
+
+                inputIndex++;
+                inputIndex++;
+
+                strcpy(mainStr,comment_str);
+                strcpy(charClass,"COMMENT");
+            }
+
+            else{
+                getClass();
+                lexeme[lexIndex] = mainStr;
+                printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
+                fprintf(file,"lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
+                strcpy(token,"");
+                lexIndex++;
+
+                inputIndex++;
+                inputIndex++;
+
+                inputIndex++;
+
+                while(program[inputIndex] != '#'){
+                    comment_c[0] = program[inputIndex];
+                    strcat(comment_str,comment_c);
+                    inputIndex++;
+                }
+
+                inputIndex++;
+                inputIndex++;
+
+                strcpy(mainStr,comment_str);
+                strcpy(charClass,"COMMENT");
+            }
         }
     }
 
@@ -637,7 +655,7 @@ void myFunction(){   // gets input character
     }
 
     if(inputIndex == strlen(program)-1){
-        if(isBlankSpace()){}
+        if(isBlankSpace() || charClass[0] == '\0'){}
         else{
             getClass();
             lexeme[lexIndex] = mainStr;
