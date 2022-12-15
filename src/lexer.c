@@ -7,7 +7,7 @@
 // global variables
 int inputIndex = 0;
 char mainStr[100]; // consider string literal
-char charClass[15] = "ALPHABET";
+char charClass[15] = "";
 char program[1000];
 char *lexeme[100];
 int lexIndex = 0;
@@ -374,7 +374,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='B' && charClass[6]=='E' && charClass[7]=='T' && charClass[8]=='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"ALPHABET");          
         }
@@ -395,7 +395,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='I' && charClass[6]=='C' && charClass[7] =='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"NUMERIC");            
         }        
@@ -415,7 +415,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='T' && charClass[6]=='O' && charClass[7] =='R' && charClass[8] =='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"OPERATOR");            
         }          
@@ -430,7 +430,7 @@ void evalChar(char x){    // gets character class
         }        
     }
     
-    else if(isDelimiter(currentChar[0])){
+    else if(isDelimiter(currentChar[0]) || charClass[0] == '\0'){
         if(isBlankSpace()){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"DELIMITER");            
@@ -447,7 +447,7 @@ void evalChar(char x){    // gets character class
     }
     
     else if(currentChar[0] == '\"'){
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             inputIndex++;
             if(program[inputIndex] == '\"'){
                 // str ="":
@@ -490,7 +490,7 @@ void evalChar(char x){    // gets character class
     }
     
     else if(currentChar[0] == '\''){
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             inputIndex++;
             
             char c_literal[30] = "";
@@ -545,7 +545,7 @@ void evalChar(char x){    // gets character class
     }  
     
     else if(currentChar[0] == ' ' || currentChar[0] == '\n'){
-        if(isBlankSpace()){}
+        if(isBlankSpace() || charClass[0] == '\0'){}
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
@@ -559,7 +559,7 @@ void evalChar(char x){    // gets character class
     }
     
     else if(currentChar[0] == '#'){
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             inputIndex++;
             inputIndex++;
             inputIndex++;
@@ -582,7 +582,7 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            fprintf(outputptr,"lexeme %d: %s\t\t%s\n",lexIndex, lexeme[lexIndex], token);
+            fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
             
