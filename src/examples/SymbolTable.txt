@@ -1,1 +1,91 @@
-lexeme 0: Dominique Libardo			comment
+lexeme 1: integer			id
+lexeme 2: =			=
+lexeme 3: 1			int_literal
+lexeme 4: :			:
+lexeme 5: doubler			id
+lexeme 6: =			=
+lexeme 7: 3.6			float_literal
+lexeme 8: :			:
+lexeme 9: string			id
+lexeme 10: =			=
+lexeme 11: title			str_literal
+lexeme 12: :			:
+lexeme 13: character			id
+lexeme 14: =			=
+lexeme 15: a			char_literal
+lexeme 16: :			:
+lexeme 17: Assignment Operators			comment
+lexeme 18: =			=
+lexeme 19: +=			+=
+lexeme 20: -=			-=
+lexeme 21: *=			*=
+lexeme 22: /=			/=
+lexeme 23: %=			%=
+lexeme 24: //=			//=
+lexeme 25: Unary Operators			comment
+lexeme 26: ++			++
+lexeme 27: --			--
+lexeme 28: Arithmetic Operators			comment
+lexeme 29: +			+
+lexeme 30: -			-
+lexeme 31: *			*
+lexeme 32: /			/
+lexeme 33: %			%
+lexeme 34: **			**
+lexeme 35: //			//
+lexeme 36: Logical Operators			comment
+lexeme 37: y			and_op
+lexeme 38: ni			or_op
+lexeme 39: no			not_op
+lexeme 40: Boolean Relational Operators			comment
+lexeme 41: ==			==
+lexeme 42: !=			!=
+lexeme 43: >			>
+lexeme 44: <			<
+lexeme 45: >=			>=
+lexeme 46: <=			<=
+lexeme 47: Key Words and Reserved Words			comment
+lexeme 48: bool			boolean_keyword
+lexeme 49: cuer			string_keyword
+lexeme 50: dec			elif_keyword
+lexeme 51: descanso			break_keyword
+lexeme 52: doble			double_keyword
+lexeme 53: ent			integer_keyword
+lexeme 54: escan			scanf_keyword
+lexeme 55: flot			float_keyword
+lexeme 56: hacer			do_keyword
+lexeme 57: impri			printf_keyword
+lexeme 58: mas			else_keyword
+lexeme 59: mientras			while_keyword
+lexeme 60: ni			or_op
+lexeme 61: no			not_op
+lexeme 62: perso			char_keyword
+lexeme 63: por			for_keyword
+lexeme 64: retorno			return_keyword
+lexeme 65: sequir			continue_keyword
+lexeme 66: si			if_keyword
+lexeme 67: vacio			void_keyword
+lexeme 68: vamos			goto_keyword
+lexeme 69: y			and_op
+lexeme 70: falso			false_reserved
+lexeme 71: verdad			true_reserved
+lexeme 72: Noise Words			comment
+lexeme 73: booleano			boolean_keyword
+lexeme 74: decontra			elif_keyword
+lexeme 75: personaje			char_keyword
+lexeme 76: entero			integer_keyword
+lexeme 77: escanear			scanf_keyword
+lexeme 78: flotar			float_keyword
+lexeme 79: cuerda			string_keyword
+lexeme 80: imprimir			printf_keyword
+lexeme 81: sample comment			comment
+lexeme 82: Delimeters			comment
+lexeme 83: :			:
+lexeme 84: (			(
+lexeme 85: )			)
+lexeme 86: [			[
+lexeme 87: ]			]
+lexeme 88: {			{
+lexeme 89: }			}
+lexeme 90: ,			,
+lexeme 91: ;			;

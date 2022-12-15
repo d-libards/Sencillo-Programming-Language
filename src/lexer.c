@@ -10,7 +10,7 @@ char mainStr[100]; // consider string literal
 char charClass[15] = "";
 char program[1000];
 char *lexeme[100];
-int lexIndex = 0;
+int lexIndex = 1;
 char token[20];
 int number = 0;
 
@@ -494,7 +494,7 @@ void evalChar(char x){    // gets character class
             inputIndex++;
             
             char c_literal[30] = "";
-            char ch[2];
+            char ch[2] = "";
             c_literal[0] = program[inputIndex];
             
             inputIndex++;           
@@ -505,7 +505,7 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                fprintf(outputptr,"! invalid char literal: %s\n",c_literal);
+                fprintf(outputptr,"lexeme not recognize  \t\t\t%s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
             else{
@@ -523,7 +523,7 @@ void evalChar(char x){    // gets character class
             inputIndex++;
             
             char c_literal[30] = "";
-            char ch[2];
+            char ch[2] = "";
             c_literal[0] = program[inputIndex];
             
             inputIndex++;           
@@ -534,7 +534,7 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                fprintf(outputptr,"! invalid char literal: %s\n",c_literal);
+                fprintf(outputptr,"lexeme not recognize %s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
             else{
@@ -606,7 +606,7 @@ void evalChar(char x){    // gets character class
     }
     
     else{
-        fprintf(outputptr,"! unknown character: \t%c\n", currentChar[0]);
+        fprintf(outputptr,"lexeme not recognize \t\t\t%c\n", currentChar[0]);
     }
 
 }
@@ -618,7 +618,7 @@ void myFunction(){   // gets input character
     }
     
     if(inputIndex == strlen(program)){
-        if(isBlankSpace()){}    
+        if(isBlankSpace() || charClass[0] == '\0'){}    
         else{
             getClass();
             lexeme[lexIndex] = mainStr;
