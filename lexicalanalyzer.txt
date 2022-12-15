@@ -7,7 +7,7 @@
 char program[300];
 int inputIndex = 0;
 char mainStr[100]; // consider string literal
-char charClass[15] = "ALPHABET";
+char charClass[15] = "";
 
 char *lexeme[100];
 int lexIndex = 0;
@@ -90,7 +90,6 @@ bool isBlankSpace(){
     }
     return(false);
 }
-
 
 void getClass(){
 
@@ -377,7 +376,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='B' && charClass[6]=='E' && charClass[7]=='T' && charClass[8]=='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"ALPHABET");
         }
@@ -401,7 +400,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='I' && charClass[6]=='C' && charClass[7] =='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace()|| charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"NUMERIC");
         }
@@ -423,7 +422,7 @@ void evalChar(char x){    // gets character class
             charClass[5]=='T' && charClass[6]=='O' && charClass[7] =='R' && charClass[8] =='\0'){
             strcat(mainStr, currentChar);
         }
-        else if(isBlankSpace()){
+        else if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"OPERATOR");
         }
@@ -441,7 +440,7 @@ void evalChar(char x){    // gets character class
 
     else if(isDelimiter(currentChar[0])){
         // printf("delimiter %c\n", currentChar[0]);
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"DELIMITER");
         }
@@ -458,7 +457,7 @@ void evalChar(char x){    // gets character class
     }
 
     else if(currentChar[0] == '\"'){
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             inputIndex++;
             if(program[inputIndex] == '\"'){
                 // str ="":
@@ -503,7 +502,7 @@ void evalChar(char x){    // gets character class
     }
 
     else if(currentChar[0] == '\''){
-        if(isBlankSpace()){
+        if(isBlankSpace()|| charClass[0] == '\0'){
             inputIndex++;
 
             char c_literal[30] = "";
@@ -562,7 +561,7 @@ void evalChar(char x){    // gets character class
 
     else if(currentChar[0] == ' '){
         //printf("space \n");
-        if(isBlankSpace()){}
+        if(isBlankSpace()|| charClass[0] == '\0'){}
         else{
             getClass();
             lexeme[lexIndex] = mainStr;
@@ -577,7 +576,7 @@ void evalChar(char x){    // gets character class
     }
 
     else if(currentChar[0] == '#'){
-        if(isBlankSpace()){
+        if(isBlankSpace() || charClass[0] == '\0'){
             inputIndex++;
             inputIndex++;
             inputIndex++;
