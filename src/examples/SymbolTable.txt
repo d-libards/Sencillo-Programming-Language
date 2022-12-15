@@ -36,8 +36,8 @@ lexeme 34: 0			int_literal
 lexeme 35: ;			;
 lexeme 36: a			id
 lexeme 37: ++			++
-! unknown character: ?
-! unknown character: ^
+! unknown character: 	?
+! unknown character: 	^
 lexeme 38: )			)
 lexeme 39: {			{
 lexeme 40: cuer			string_keyword
@@ -67,7 +67,7 @@ lexeme 63: =			=
 lexeme 64: +=			+=
 lexeme 65: -=			-=
 lexeme 66: /=			/=
-lexeme 67: */			invalid operator
+lexeme 67: *=			*=
 lexeme 68: //=			//=
 lexeme 69: %=			%=
 lexeme 70: <			<

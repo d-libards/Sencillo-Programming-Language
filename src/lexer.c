@@ -370,7 +370,6 @@ void evalChar(char x){    // gets character class
     char comment_str[100] = "";  
     
     if(isAlphabet(currentChar[0])){
-        //printf("alphabet %c\n", currentChar[0]);
         if(charClass[0]=='A' && charClass[1]=='L' && charClass[2]=='P' && charClass[3]=='H' && charClass[4]=='A' && 
             charClass[5]=='B' && charClass[6]=='E' && charClass[7]=='T' && charClass[8]=='\0'){
             strcat(mainStr, currentChar);
@@ -382,7 +381,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; // string to string array
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);            
             strcpy(token,"");
             lexIndex++;
@@ -393,8 +391,6 @@ void evalChar(char x){    // gets character class
     }
     
     else if(isNumeric(currentChar[0])){
-        // printf("int literal %c\n", currentChar[0]);
-        
         if(charClass[0]=='N' && charClass[1]=='U' && charClass[2]=='M' && charClass[3]=='E' && charClass[4]=='R' && 
             charClass[5]=='I' && charClass[6]=='C' && charClass[7] =='\0'){
             strcat(mainStr, currentChar);
@@ -406,7 +402,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);            
             strcpy(token,"");
             lexIndex++;
@@ -416,7 +411,6 @@ void evalChar(char x){    // gets character class
     }
     
     else if(isOperator(currentChar[0])){
-        // printf("operator %c\n", currentChar[0]);
         if(charClass[0]=='O' && charClass[1]=='P' && charClass[2]=='E' && charClass[3]=='R' && charClass[4]=='A' && 
             charClass[5]=='T' && charClass[6]=='O' && charClass[7] =='R' && charClass[8] =='\0'){
             strcat(mainStr, currentChar);
@@ -428,7 +422,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
@@ -438,7 +431,6 @@ void evalChar(char x){    // gets character class
     }
     
     else if(isDelimiter(currentChar[0])){
-        // printf("delimiter %c\n", currentChar[0]);
         if(isBlankSpace()){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"DELIMITER");            
@@ -446,7 +438,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
@@ -475,7 +466,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
@@ -497,7 +487,6 @@ void evalChar(char x){    // gets character class
                 strcpy(charClass,"STR_LITERAL");
             }
         }
-        // printf("string literal %s\n", str_literal);
     }
     
     else if(currentChar[0] == '\''){
@@ -516,7 +505,6 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                printf("invalid character: %s\n",c_literal);
                 fprintf(outputptr,"! invalid char literal: %s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
@@ -528,7 +516,6 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
@@ -547,7 +534,6 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                printf("invalid character: %s\n",c_literal);
                 fprintf(outputptr,"! invalid char literal: %s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
@@ -558,13 +544,11 @@ void evalChar(char x){    // gets character class
         }
     }  
     
-    else if(currentChar[0] == ' '){
-        //printf("space \n");
+    else if(currentChar[0] == ' ' || currentChar[0] == '\n'){
         if(isBlankSpace()){}
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
@@ -598,8 +582,7 @@ void evalChar(char x){    // gets character class
         else{
             getClass();
             lexeme[lexIndex] = mainStr; 
-            printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
-            fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
+            fprintf(outputptr,"lexeme %d: %s\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
             lexIndex++;
             
@@ -623,8 +606,7 @@ void evalChar(char x){    // gets character class
     }
     
     else{
-        printf("unknown character: %c\n", currentChar[0]);
-        fprintf(outputptr,"! unknown character: %c\n", currentChar[0]);
+        fprintf(outputptr,"! unknown character: \t%c\n", currentChar[0]);
     }
 
 }
@@ -640,7 +622,6 @@ void myFunction(){   // gets input character
         else{
             getClass();
             lexeme[lexIndex] = mainStr;
-            printf("lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
             strcpy(token,"");
         }
