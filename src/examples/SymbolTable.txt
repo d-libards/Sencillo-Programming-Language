@@ -1,3 +1,1 @@
-lexeme 0: 			
-lexeme 1: #			
-lexeme 2: ominique Libardo			comment
+lexeme 0: Dominique Libardo			comment

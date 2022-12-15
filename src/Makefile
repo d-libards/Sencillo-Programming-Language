@@ -10,7 +10,7 @@ flags = -g
 $(exec): $(objects)
 	gcc $(objects) $(flags) -o $(exec)
 
-#creating the sn files - detect file in the src file
+#creating the o files - detect file in the src file
 %.o: %.c include/%.h
 	gcc -c $(flags) $< -o $@
 

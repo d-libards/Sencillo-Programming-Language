@@ -430,8 +430,8 @@ void evalChar(char x){    // gets character class
         }        
     }
     
-    else if(isDelimiter(currentChar[0]) || charClass[0] == '\0'){
-        if(isBlankSpace()){
+    else if(isDelimiter(currentChar[0])){
+        if(isBlankSpace() || charClass[0] == '\0'){
             strcpy(mainStr,currentChar);
             strcpy(charClass,"DELIMITER");            
         } 
