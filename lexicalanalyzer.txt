@@ -8,7 +8,6 @@ char program[300];
 char mainStr[100];
 char charClass[15] = "";
 
-
 int inputIndex = 0;
 char *lexeme[100];
 int lexIndex = 1;
@@ -121,7 +120,7 @@ void getClass(){
             strcpy(token,"break_keyword");
         }
         else if(mainStr[0] == 'd' && mainStr[1] == 'o' && mainStr[2] == 'b' && mainStr[3] == 'l' &&
-                mainStr[4] == 'e' && mainStr[5] == '\0'){ //doble
+                mainStr[4] == 'e' && mainStr[5] == '\0'){ // doble
             strcpy(token,"double_keyword");
         }
         else if(mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == '\0'){
@@ -381,6 +380,20 @@ void getClass(){
     }
 }
 
+bool closeComment(){
+    int len = inputIndex + 1;
+    bool found = false;
+    while(len <= strlen(program)){
+        if(program[len] == '#'){
+            found = true;
+            break;
+        }
+        len++;
+    }
+    return found;
+}
+
+
 void evalChar(char x){    // gets character class
     char currentChar[2] = "";
     currentChar[0] = x;
@@ -596,68 +609,82 @@ void evalChar(char x){    // gets character class
     }
 
     else if(currentChar[0] == '#'){
-        inputIndex++;
-        if(program[inputIndex] != '#'){
-            while(program[inputIndex] != '#'){
-                comment_c[0] = program[inputIndex];
-                strcat(comment_str,comment_c);
-                inputIndex++;
-            }
-            printf("! invalid comment: %s\n",comment_str);
-        }
-        else if(program[inputIndex+1] != '#'){
+        if(closeComment()){
             inputIndex++;
-            while(program[inputIndex] != '#'){
-                comment_c[0] = program[inputIndex];
-                strcat(comment_str,comment_c);
-                inputIndex++;
+            if(closeComment()){
+                if(program[inputIndex] != '#'){
+                    while(program[inputIndex] != '#'){
+                        comment_c[0] = program[inputIndex];
+                        strcat(comment_str,comment_c);
+                        inputIndex++;
+                    }
+                    printf("! invalid comment: %s\n",comment_str);
+                }
+                else if(program[inputIndex+1] != '#'){
+                    inputIndex++;
+                    while(program[inputIndex] != '#'){
+                        comment_c[0] = program[inputIndex];
+                        strcat(comment_str,comment_c);
+                        inputIndex++;
+                    }
+                    inputIndex++;
+                    printf("! invalid comment: %s\n",comment_str);
+                }
+                else{
+                    if(isBlankSpace() || charClass[0] == '\0'){
+                        inputIndex++;
+                        if(closeComment()){
+                            inputIndex++;
+
+                            while(program[inputIndex] != '#'){
+                                comment_c[0] = program[inputIndex];
+                                strcat(comment_str,comment_c);
+                                inputIndex++;
+                            }
+            
+                            inputIndex++;
+                            inputIndex++;
+            
+                            strcpy(mainStr,comment_str);
+                            strcpy(charClass,"COMMENT");
+                        }
+                        else{
+                            printf("! invalid characters ###\n");
+                        }
+                    }
+                    else{
+                        getClass();
+                        lexeme[lexIndex] = mainStr;
+                        printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
+                        fprintf(file,"lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
+                        strcpy(token,"");
+                        lexIndex++;
+        
+                        inputIndex++;
+                        inputIndex++;
+        
+                        inputIndex++;
+        
+                        while(program[inputIndex] != '#'){
+                            comment_c[0] = program[inputIndex];
+                            strcat(comment_str,comment_c);
+                            inputIndex++;
+                        }
+        
+                        inputIndex++;
+                        inputIndex++;
+        
+                        strcpy(mainStr,comment_str);
+                        strcpy(charClass,"COMMENT");
+                    }
+                }
             }
-            inputIndex++;
-            printf("! invalid comment: %s\n",comment_str);
+            else{
+                printf("! invalid characters ##\n");
+            }
         }
         else{
-            if(isBlankSpace() || charClass[0] == '\0'){
-                inputIndex++;
-                inputIndex++;
-
-                while(program[inputIndex] != '#'){
-                    comment_c[0] = program[inputIndex];
-                    strcat(comment_str,comment_c);
-                    inputIndex++;
-                }
-
-                inputIndex++;
-                inputIndex++;
-
-                strcpy(mainStr,comment_str);
-                strcpy(charClass,"COMMENT");
-            }
-
-            else{
-                getClass();
-                lexeme[lexIndex] = mainStr;
-                printf("lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
-                fprintf(file,"lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
-                strcpy(token,"");
-                lexIndex++;
-
-                inputIndex++;
-                inputIndex++;
-
-                inputIndex++;
-
-                while(program[inputIndex] != '#'){
-                    comment_c[0] = program[inputIndex];
-                    strcat(comment_str,comment_c);
-                    inputIndex++;
-                }
-
-                inputIndex++;
-                inputIndex++;
-
-                strcpy(mainStr,comment_str);
-                strcpy(charClass,"COMMENT");
-            }
+            printf("! invalid character %s\n", currentChar);
         }
     }
 
