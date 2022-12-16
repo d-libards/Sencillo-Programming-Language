@@ -16,13 +16,12 @@ int main()
         printf("Invalid file path");
         return 0;
     }
-    if(filepath[len-1] != 'c' && filepath[len-2] != '.'){
+    if(filepath[len-1] != 's' && filepath[len-2] != '.'){
         printf("Invalid file extension\n.\n.\nProgram will now close");
         return 0;
     }else{
         inputptr = fopen(filepath, "r");
     }
-
 
     char contents [1000];
 
