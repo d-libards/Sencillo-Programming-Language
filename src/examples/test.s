@@ -1,4 +1,5 @@
-verdad falso
+*/
+###sencillo###
 
 integer = 1:
 doubler = 3.6:
@@ -15,14 +16,10 @@ character = 'a':
 y ni no
 ###Boolean Relational Operators###
 == != > < >= <=
-###Key Words###
-bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y
+###Key Words and Reserved Words###
+bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad
 ###Noise Words###
 booleano decontra personaje entero escanear flotar cuerda imprimir
-
-####Reserved Word###
-falso verdad
-
 ###sample comment###
 ###Delimeters###
 : () [ ] { } , ;

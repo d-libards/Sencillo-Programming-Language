@@ -1,5 +1,5 @@
-lexeme 1: verdad			true_reserved
-lexeme 2: faLso			id
+lexeme 1: */			invalid operator
+lexeme 2: sencillo			comment
 lexeme 3: integer			id
 lexeme 4: =			=
 lexeme 5: 1			int_literal
@@ -51,8 +51,8 @@ lexeme 50: bool			boolean_keyword
 lexeme 51: cuer			string_keyword
 lexeme 52: dec			elif_keyword
 lexeme 53: descanso			break_keyword
-lexeme 54: doble			double_keyword
-lexeme 55: ent			integer_keyword
+lexeme 54: doble			id
+lexeme 55: ent			id
 lexeme 56: escan			scanf_keyword
 lexeme 57: flot			float_keyword
 lexeme 58: hacer			do_keyword
@@ -72,14 +72,14 @@ lexeme 71: y			and_op
 lexeme 72: falso			false_reserved
 lexeme 73: verdad			true_reserved
 lexeme 74: Noise Words			comment
-lexeme 75: booleano			boolean_keyword
-lexeme 76: decontra			elif_keyword
-lexeme 77: personaje			char_keyword
-lexeme 78: entero			integer_keyword
-lexeme 79: escanear			scanf_keyword
-lexeme 80: flotar			float_keyword
-lexeme 81: cuerda			string_keyword
-lexeme 82: imprimir			printf_keyword
+lexeme 75: booleano			boolean_noiseword
+lexeme 76: decontra			elif_noiseword
+lexeme 77: personaje			char_noiseword
+lexeme 78: entero			integer_noiseword
+lexeme 79: escanear			scanf_noiseword
+lexeme 80: flotar			float_noiseword
+lexeme 81: cuerda			string_noiseword
+lexeme 82: imprimir			printf_noiseword
 lexeme 83: sample comment			comment
 lexeme 84: Delimeters			comment
 lexeme 85: :			:

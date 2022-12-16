@@ -95,52 +95,61 @@ void getClass(){
     
     if(charClass[0]=='A' && charClass[1]=='L' && charClass[2]=='P' && charClass[3]=='H' && charClass[4]=='A' && 
             charClass[5]=='B' && charClass[6]=='E' && charClass[7]=='T' && charClass[8]=='\0'){
-        if((mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == '\0') ||
-            (mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == 'e' && 
-            mainStr[5] == 'a' && mainStr[6] == 'n' && mainStr[7] == 'o' && mainStr[8] == '\0')){
+        if(mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == '\0'){
             strcpy(token,"boolean_keyword");
+        }
+        else if(mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == 'e' &&
+            mainStr[5] == 'a' && mainStr[6] == 'n' && mainStr[7] == 'o' && mainStr[8] == '\0'){
+            strcpy(token,"boolean_noiseword");
         }  
-        else if((mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == '\0') ||
-                (mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == 'd' &&
-                mainStr[5] == 'a' && mainStr[6] == '\0')){
+        else if(mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == '\0'){
             strcpy(token,"string_keyword");
-        }  
-        else if((mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == '\0') ||
-            (mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == 'o' && mainStr[4] == 'n' &&
-            mainStr[5] == 't' && mainStr[6] == 'r' && mainStr[7] == 'a' && mainStr[8] == '\0')){
+        }
+        else if(mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == 'd' &&
+                mainStr[5] == 'a' && mainStr[6] == '\0'){
+            strcpy(token,"string_noiseword");
+        }
+        else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == '\0'){
             strcpy(token,"elif_keyword");
+        }
+        else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == 'o' && mainStr[4] == 'n' &&
+            mainStr[5] == 't' && mainStr[6] == 'r' && mainStr[7] == 'a' && mainStr[8] == '\0'){
+            strcpy(token,"elif_noiseword");
         }
         else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 's' && mainStr[3] == 'c' &&
                 mainStr[4] == 'a' && mainStr[5] == 'n' && mainStr[6] == 's' && mainStr[7] == 'o' && mainStr[8] == '\0'){
             strcpy(token,"break_keyword");
         }  
-        else if(mainStr[0] == 'd' && mainStr[1] == 'o' && mainStr[2] == 'b' && mainStr[3] == 'l' &&
-                mainStr[4] == 'e' && mainStr[5] == '\0'){
-            strcpy(token,"double_keyword");
-        } 
-        else if((mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == '\0') || 
-                (mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == 'e' && 
-                mainStr[4] == 'r' && mainStr[5] == 'o' && mainStr[6] == '\0')){
-            strcpy(token,"integer_keyword");
+         else if(mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == 'e' &&
+                mainStr[4] == 'r' && mainStr[5] == 'o' && mainStr[6] == '\0'){
+            strcpy(token,"integer_noiseword");
         }
-        else if((mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' && mainStr[4] == 'n' && 
-                mainStr[5] == '\0') || (mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' && 
-                mainStr[4] == 'n' && mainStr[5] == 'e' && mainStr[6] == 'a' && mainStr[7] == 'r' && mainStr[8] == '\0')){
+        else if(mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' && mainStr[4] == 'n' &&
+                mainStr[5] == '\0'){
             strcpy(token,"scanf_keyword");
-        }    
-        else if((mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == '\0') ||
-                (mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == 'a' &&
-                mainStr[5] == 'r' && mainStr[6] == '\0')){
+        }
+        else if(mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' &&
+                mainStr[4] == 'n' && mainStr[5] == 'e' && mainStr[6] == 'a' && mainStr[7] == 'r' && mainStr[8] == '\0'){
+            strcpy(token,"scanf_noiseword");
+        }
+        else if(mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == '\0'){
             strcpy(token,"float_keyword");
-        }   
+        }
+        else if(mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == 'a' &&
+                mainStr[5] == 'r' && mainStr[6] == '\0'){
+            strcpy(token,"float_noiseword");
+        }      
         else if(mainStr[0] == 'h' && mainStr[1] == 'a' && mainStr[2] == 'c' && mainStr[3] == 'e' &&
                 mainStr[4] == 'r' && mainStr[5] == '\0'){
             strcpy(token,"do_keyword");
         } 
-        else if((mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' && mainStr[4] == 'i' && 
-                mainStr[5] == '\0') || (mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' && 
-                mainStr[4] == 'i' && mainStr[5] == 'm' && mainStr[6] == 'i' && mainStr[7] == 'r' && mainStr[8] == '\0')){
+        else if(mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' && mainStr[4] == 'i' &&
+                mainStr[5] == '\0'){
             strcpy(token,"printf_keyword");
+        }
+        else if(mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' &&
+                mainStr[4] == 'i' && mainStr[5] == 'm' && mainStr[6] == 'i' && mainStr[7] == 'r' && mainStr[8] == '\0'){
+            strcpy(token,"printf_noiseword");
         }    
         else if(mainStr[0] == 'm' && mainStr[1] == 'a' && mainStr[2] == 's' && mainStr[3] == '\0'){
             strcpy(token,"else_keyword");
@@ -149,11 +158,14 @@ void getClass(){
                 mainStr[4] == 't' && mainStr[5] == 'r' && mainStr[6] == 'a' && mainStr[7] == 's' && mainStr[8] == '\0'){
             strcpy(token,"while_keyword");
         }    
-        else if((mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 's' && mainStr[4] == 'o' && 
-                mainStr[5] == '\0') || (mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' && 
-                mainStr[3] == 's' && mainStr[4] == 'o' && mainStr[5] == 'n' && mainStr[6] == 'a' && 
-                mainStr[7] == 'j' && mainStr[8] == 'e' && mainStr[9] == '\0')){
+        else if(mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 's' && mainStr[4] == 'o' &&
+                mainStr[5] == '\0'){
             strcpy(token,"char_keyword");
+        }
+        else if(mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' &&
+                mainStr[3] == 's' && mainStr[4] == 'o' && mainStr[5] == 'n' && mainStr[6] == 'a' &&
+                mainStr[7] == 'j' && mainStr[8] == 'e' && mainStr[9] == '\0'){
+            strcpy(token,"char_noiseword");
         }    
         else if(mainStr[0] == 'p' && mainStr[1] == 'o' && mainStr[2] == 'r' && mainStr[3] == '\0'){
             strcpy(token,"for_keyword");
