@@ -12,23 +12,25 @@ int main()
     printf("Input file path: ");
     scanf("%s",filepath);
     len = strlen(filepath);
-    if (len < 1) {
-        printf("Invalid file path");
-        return 0;
+    int checker = 0;
+
+    if (len <= 1) {
+        printf("Invalid file path\n");
     }
-    if(filepath[len-1] != 's' && filepath[len-2] != '.'){
-        printf("Invalid file extension\n.\n.\nProgram will now close");
-        return 0;
-    }else{
+    if(filepath[len-1] == 's' && filepath[len-2] == '.'){
         inputptr = fopen(filepath, "r");
+        checker = 1;
+    }
+    else if (len > 1 && checker != 1){
+        printf("Invalid file extension\n.\n.\nProgram will now close");
+    }
+
+    if(inputptr == NULL){
+        printf("\nThe file is empty");
     }
 
     char contents [1000];
-
     outputptr = fopen("examples/SymbolTable.txt","w");
-    if (inputptr == NULL){
-        perror("Unable to open the file");
-    }
     while(fgets(contents,sizeof(contents), inputptr) != NULL){
         strcat(program,contents);
     }
