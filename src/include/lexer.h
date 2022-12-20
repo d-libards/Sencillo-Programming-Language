@@ -7,6 +7,7 @@ bool isOperator(char currentChar);
 bool isDelimiter(char currentChar);
 bool isBlankSpace();
 void getClass();
+bool closeComment();
 void evalChar(char x);
 void myFunction();
 

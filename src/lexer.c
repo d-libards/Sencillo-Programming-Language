@@ -372,6 +372,19 @@ void getClass(){
     }
 }
 
+bool closeComment(){
+    int len = inputIndex + 1;
+    bool found = false;
+    while(len <= strlen(program)){
+        if(program[len] == '#'){
+            found = true;
+            break;
+        }
+        len++;
+    }
+    return found;
+}
+
 void evalChar(char x){    // gets character class
     char currentChar[2] = "";
     currentChar[0] = x;
@@ -571,55 +584,84 @@ void evalChar(char x){    // gets character class
     }
     
     else if(currentChar[0] == '#'){
-        if(isBlankSpace() || charClass[0] == '\0'){
+        if(closeComment()){
             inputIndex++;
-            inputIndex++;
-            inputIndex++;
-            
-            while(program[inputIndex] != '#'){
-                comment_c[0] = program[inputIndex];
-                strcat(comment_str,comment_c); 
-                inputIndex++;
-            }     
-            
-            inputIndex++;
-            inputIndex++;
+            if(closeComment()){
+                if(program[inputIndex] != '#'){
+                    while(program[inputIndex] != '#'){
+                        comment_c[0] = program[inputIndex];
+                        strcat(comment_str,comment_c);
+                        inputIndex++;
+                    }
+                    fprintf(outputptr,"! invalid comment: %s\n",comment_str);
+                }
+                else if(program[inputIndex+1] != '#'){
+                    inputIndex++;
+                    while(program[inputIndex] != '#'){
+                        comment_c[0] = program[inputIndex];
+                        strcat(comment_str,comment_c);
+                        inputIndex++;
+                    }
+                    inputIndex++;
+                    fprintf(outputptr,"! invalid comment: %s\n",comment_str);
+                }
+                else{
+                    if(isBlankSpace() || charClass[0] == '\0'){
+                        inputIndex++;
+                        if(closeComment()){
+                            inputIndex++;
 
-            // inputIndex+=2;       - Alternative
+                            while(program[inputIndex] != '#'){
+                                comment_c[0] = program[inputIndex];
+                                strcat(comment_str,comment_c);
+                                inputIndex++;
+                            }
             
-            strcpy(mainStr,comment_str);
-            strcpy(charClass,"COMMENT");            
-        }
+                            inputIndex++;
+                            inputIndex++;
+            
+                            strcpy(mainStr,comment_str);
+                            strcpy(charClass,"COMMENT");
+                        }
+                        else{
+                            fprintf(outputptr,"! invalid characters ###\n");
+                        }
+                    }
+                    else{
+                        getClass();
+                        lexeme[lexIndex] = mainStr;
+                        fprintf(outputptr,"lexeme %d: %s\t%s\n",lexIndex, lexeme[lexIndex], token);
+                        strcpy(token,"");
+                        lexIndex++;
         
+                        inputIndex++;
+                        inputIndex++;
+        
+                        inputIndex++;
+        
+                        while(program[inputIndex] != '#'){
+                            comment_c[0] = program[inputIndex];
+                            strcat(comment_str,comment_c);
+                            inputIndex++;
+                        }
+        
+                        inputIndex++;
+                        inputIndex++;
+        
+                        strcpy(mainStr,comment_str);
+                        strcpy(charClass,"COMMENT");
+                    }
+                }
+            }
+            else{
+                fprintf(outputptr,"! invalid characters ##\n");
+            }
+        }
         else{
-            getClass();
-            lexeme[lexIndex] = mainStr; 
-            fprintf(outputptr,"lexeme %d: %s\t\t\t%s\n",lexIndex, lexeme[lexIndex], token);
-            strcpy(token,"");
-            lexIndex++;
-            
-            inputIndex++;
-            inputIndex++;
-
-            inputIndex++;
-            
-            while(program[inputIndex] != '#'){
-                comment_c[0] = program[inputIndex];
-                strcat(comment_str,comment_c); 
-                inputIndex++;
-            }     
-            
-            inputIndex++;
-            inputIndex++;
-
-            strcpy(mainStr,comment_str);
-            strcpy(charClass,"COMMENT");
+            fprintf(outputptr,"lexeme not recognize \t\t\t%c\n", currentChar[0]);
         }
     }
     
-    else{
-        fprintf(outputptr,"lexeme not recognize \t\t\t%c\n", currentChar[0]);
-    }
 
 }
 
