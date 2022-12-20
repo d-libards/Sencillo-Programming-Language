@@ -1,3 +1,1 @@
-lexeme 1: tite			comment
-lexeme 2: ent			id
-lexeme 3: r			id
+lexeme 1: !			invalid operator

@@ -391,7 +391,7 @@ void evalChar(char x){    // gets character class
     char str_c[2] = "";  
     char str_literal[100] = "";   
     
-    char comment_c[2] = ""; 
+    char comment_c[100] = ""; 
     char comment_str[100] = "";  
     
     if(isAlphabet(currentChar[0])){
@@ -658,12 +658,19 @@ void evalChar(char x){    // gets character class
             }
         }
         else{
-            fprintf(outputptr,"lexeme not recognize \t\t\t%c\n", currentChar[0]);
+            fprintf(outputptr,"! invalid character %s\n", currentChar);
         }
+    }
+
+    else{
+        fprintf(outputptr,"! unknown character: %c\n", currentChar[0]);
     }
     
 
 }
+
+    
+
 
 void myFunction(){   // gets input character
    while(inputIndex < strlen(program)){
