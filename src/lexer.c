@@ -530,7 +530,7 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                fprintf(outputptr,"lexeme not recognize  \t\t\t%s\n",c_literal);
+                fprintf(outputptr,"invalid char_literal: \t\t\t%s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
             else{
@@ -559,7 +559,7 @@ void evalChar(char x){    // gets character class
                     strcat(c_literal,ch); 
                     inputIndex++;
                 }
-                fprintf(outputptr,"lexeme not recognize %s\n",c_literal);
+                fprintf(outputptr,"invalid char_literal: %s\n",c_literal);
                 strcpy(charClass,"BLANK_SPACE");
             }
             else{
@@ -663,7 +663,7 @@ void evalChar(char x){    // gets character class
     }
 
     else{
-        fprintf(outputptr,"! unknown character: %c\n", currentChar[0]);
+        fprintf(outputptr,"invalid character: \t\t\t%c\n", currentChar[0]);
     }
     
 

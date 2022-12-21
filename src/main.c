@@ -17,7 +17,7 @@ int main()
     if (len <= 1) {
         printf("Invalid file path\n");
     }
-    if(filepath[len-1] == 's' && filepath[len-2] == '.'){
+    if(filepath[len-1] == 's' && filepath[len-2] == '.'){//check file extension
         inputptr = fopen(filepath, "r");
         checker = 1;
     }

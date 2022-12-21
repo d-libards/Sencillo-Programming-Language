@@ -1,0 +1,2 @@
+lexeme 1: test			id
+lexeme 2: 123			int_literal
