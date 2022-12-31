@@ -1,3 +1,5 @@
+y
+
 ###Assignment Operators###
 = += -=  *=  /=  %=  //= 
 ###Unary Operators###
@@ -28,3 +30,10 @@ _num
 4.5
 "string"
 'c'
+
+myname
+14name
+my_name
+
+3.14.14
+'cat'

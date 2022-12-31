@@ -1,2 +1,92 @@
-lexeme 1: test			id
-lexeme 2: 123			int_literal
+lexeme 1: y			and_op
+lexeme 2: Assignment Operators			comment
+lexeme 3: =			=
+lexeme 4: +=			+=
+lexeme 5: -=			-=
+lexeme 6: *=			*=
+lexeme 7: /=			/=
+lexeme 8: %=			%=
+lexeme 9: //=			//=
+lexeme 10: Unary Operators			comment
+lexeme 11: ++			++
+lexeme 12: --			--
+lexeme 13: Arithmetic Operators			comment
+lexeme 14: +			+
+lexeme 15: -			-
+lexeme 16: *			*
+lexeme 17: /			/
+lexeme 18: %			%
+lexeme 19: **			**
+lexeme 20: //			//
+lexeme 21: Logical Operators			comment
+lexeme 22: y			and_op
+lexeme 23: ni			or_op
+lexeme 24: no			not_op
+lexeme 25: Boolean Relational Operators			comment
+lexeme 26: ==			==
+lexeme 27: !=			!=
+lexeme 28: >			>
+lexeme 29: <			<
+lexeme 30: >=			>=
+lexeme 31: <=			<=
+lexeme 32: Keywords			comment
+lexeme 33: bool			boolean_keyword
+lexeme 34: cuer			string_keyword
+lexeme 35: dec			elif_keyword
+lexeme 36: descanso			break_keyword
+lexeme 37: doble			id
+lexeme 38: ent			id
+lexeme 39: escan			scanf_keyword
+lexeme 40: flot			float_keyword
+lexeme 41: hacer			do_keyword
+lexeme 42: impri			printf_keyword
+lexeme 43: mas			else_keyword
+lexeme 44: mientras			while_keyword
+lexeme 45: ni			or_op
+lexeme 46: no			not_op
+lexeme 47: perso			char_keyword
+lexeme 48: por			for_keyword
+lexeme 49: retorno			return_keyword
+lexeme 50: sequir			continue_keyword
+lexeme 51: si			if_keyword
+lexeme 52: vacio			void_keyword
+lexeme 53: vamos			goto_keyword
+lexeme 54: y			and_op
+lexeme 55: Reserved Word			comment
+lexeme 56: falso			false_reserved
+lexeme 57: verdad			true_reserved
+lexeme 58: Noise Words			comment
+lexeme 59: booleano			boolean_noiseword
+lexeme 60: decontra			elif_noiseword
+lexeme 61: personaje			char_noiseword
+lexeme 62: entero			integer_noiseword
+lexeme 63: escanear			scanf_noiseword
+lexeme 64: flotar			float_noiseword
+lexeme 65: cuerda			string_noiseword
+lexeme 66: imprimir			printf_noiseword
+lexeme 67: Delimeters			comment
+lexeme 68: :			:
+lexeme 69: (			(
+lexeme 70: )			)
+lexeme 71: [			[
+lexeme 72: ]			]
+lexeme 73: {			{
+lexeme 74: }			}
+lexeme 75: ,			,
+lexeme 76: ;			;
+lexeme 77: invalid			comment
+invalid character: 			@
+lexeme 78: _num			invalid id
+lexeme 79: */			invalid operator
+invalid char_literal: 			invalid
+lexeme 80: constant value			comment
+lexeme 81: 9			int_literal
+lexeme 82: 4.5			float_literal
+lexeme 83: string			str_literal
+lexeme 84: c			char_literal
+lexeme 85: myname			id
+lexeme 86: 14			int_literal
+lexeme 87: name			id
+lexeme 88: my_name			id
+lexeme 89: 3.14.14			float_literal
+invalid char_literal: 			cat

@@ -670,8 +670,6 @@ void evalChar(char x){    // gets character class
 }
 
     
-
-
 void myFunction(){   // gets input character
    while(inputIndex < strlen(program)){
         evalChar(program[inputIndex]); // if(x==c)
