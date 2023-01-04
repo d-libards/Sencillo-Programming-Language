@@ -279,9 +279,7 @@ void getClass()
     else if (charClass[0] == 'O' && charClass[1] == 'P' && charClass[2] == 'E' && charClass[3] == 'R' && charClass[4] == 'A' &&
              charClass[5] == 'T' && charClass[6] == 'O' && charClass[7] == 'R' && charClass[8] == '\0')
     {
-
         // arithmetic operator
-
         if (mainStr[0] == '+' && mainStr[1] == '\0')
         {
             strcpy(token, "+");
