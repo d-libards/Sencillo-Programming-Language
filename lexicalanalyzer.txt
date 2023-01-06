@@ -25,7 +25,7 @@ void identifyCharacterLit(char* subStr, int right); // to delete
 char *token;
 
 int main(){
-    char str[500] ="930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
+    char str[500] ="930232 34.34 0.3.0 2.2323.232/*haha*/ ()[]{};:; 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("The Program is : '%s' \n", str);
     printf("All Tokens are : \n");
     detectTokens(str);
@@ -357,171 +357,144 @@ bool isValidKeyword(char* mainStr) {
 
     if(mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == '\0'){
         token = "boolean_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == '\0'){
         token = "string_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == '\0'){
         token = "elif_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 's' && mainStr[3] == 'c' &&
             mainStr[4] == 'a' && mainStr[5] == 'n' && mainStr[6] == 's' && mainStr[7] == 'o' && mainStr[8] == '\0'){
         token = "break_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'd' && mainStr[1] == 'o' && mainStr[2] == 'b' && mainStr[3] == 'l' &&
             mainStr[4] == 'e' && mainStr[5] == '\0'){ // doble
         token = "double_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == '\0'){
         token = "integer_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' && mainStr[4] == 'n' &&
             mainStr[5] == '\0'){
         token = "scanf_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == '\0'){
         token = "float_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'h' && mainStr[1] == 'a' && mainStr[2] == 'c' && mainStr[3] == 'e' &&
             mainStr[4] == 'r' && mainStr[5] == '\0'){
         token = "do_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' && mainStr[4] == 'i' &&
             mainStr[5] == '\0'){
         token = "printf_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'm' && mainStr[1] == 'a' && mainStr[2] == 's' && mainStr[3] == '\0'){
         token = "else_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'm' && mainStr[1] == 'i' && mainStr[2] == 'e' && mainStr[3] == 'n' &&
             mainStr[4] == 't' && mainStr[5] == 'r' && mainStr[6] == 'a' && mainStr[7] == 's' && mainStr[8] == '\0'){
         token = "while_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 's' && mainStr[4] == 'o' &&
             mainStr[5] == '\0'){
         token = "char_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'p' && mainStr[1] == 'o' && mainStr[2] == 'r' && mainStr[3] == '\0'){
         token = "for_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'r' && mainStr[1] == 'e' && mainStr[2] == 't' && mainStr[3] == 'o' &&
             mainStr[4] == 'r' && mainStr[5] == 'n' && mainStr[6] == 'o' && mainStr[7] == '\0'){
         token = "return_keyword";
-        return (true);
     }
     else if(mainStr[0] == 's' && mainStr[1] == 'e' && mainStr[2] == 'q' && mainStr[3] == 'u' && mainStr[4] == 'i' &&
             mainStr[5] == 'r' && mainStr[6] == '\0'){
         token = "continue_keyword";
-        return (true);
     }
     else if(mainStr[0] == 's' && mainStr[1] == 'i' && mainStr[2] == '\0'){
         token = "if_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'v' && mainStr[1] == 'a' && mainStr[2] == 'c' && mainStr[3] == 'i' && mainStr[4] == 'o' &&
             mainStr[5] == '\0'){
         token = "void_keyword";
-        return (true);
     }
     else if(mainStr[0] == 'v' && mainStr[1] == 'a' && mainStr[2] == 'm' && mainStr[3] == 'o' && mainStr[4] == 's' &&
             mainStr[5] == '\0'){
         token = "goto_keyword";
-        return (true);
     }
 
     // boolean
 
     else if(mainStr[0] == 'y' && mainStr[1] ==  '\0' ){
         token = "and_op";
-        return (true);
     }
     else if(mainStr[0] == 'n' && mainStr[1] == 'i' && mainStr[2] == '\0'){
         token = "or_op";
-        return (true);
     }
     else if(mainStr[0] == 'n' && mainStr[1] == 'o' && mainStr[2] == '\0'){
         token = "not_op";
-        return (true);
     }
-
     else
         return (false);
+
+    return (true);
 }
 
 bool isValidReservedword(char* mainStr){
     if(mainStr[0] == 'f' && mainStr[1] == 'a' && mainStr[2] == 'l' && mainStr[3] == 's' && mainStr[4] == 'o' &&
             mainStr[5] == '\0'){
         token = "false_reserved";
-        return (true);
     }
     else if(mainStr[0] == 'v' && mainStr[1] == 'e' && mainStr[2] == 'r' && mainStr[3] == 'd' && mainStr[4] == 'a' &&
             mainStr[5] == 'd' && mainStr[6] == '\0'){
         token = "true_reserved";
-        return (true);
     }
     else
         return (false);
+
+    return (true);
 }
 
 bool isValidNoiseword(char* mainStr){
     if(mainStr[0] == 'b' && mainStr[1] == 'o' && mainStr[2] == 'o' && mainStr[3] == 'l' && mainStr[4] == 'e' &&
         mainStr[5] == 'a' && mainStr[6] == 'n' && mainStr[7] == 'o' && mainStr[8] == '\0'){
         token = "boolean_noiseword";
-        return (true);
     }
 
     else if(mainStr[0] == 'c' && mainStr[1] == 'u' && mainStr[2] == 'e' && mainStr[3] == 'r' && mainStr[4] == 'd' &&
             mainStr[5] == 'a' && mainStr[6] == '\0'){
         token = "string_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'd' && mainStr[1] == 'e' && mainStr[2] == 'c' && mainStr[3] == 'o' && mainStr[4] == 'n' &&
         mainStr[5] == 't' && mainStr[6] == 'r' && mainStr[7] == 'a' && mainStr[8] == '\0'){
         token = "elif_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'e' && mainStr[1] == 'n' && mainStr[2] == 't' && mainStr[3] == 'e' &&
             mainStr[4] == 'r' && mainStr[5] == 'o' && mainStr[6] == '\0'){
         token = "integer_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'e' && mainStr[1] == 's' && mainStr[2] == 'c' && mainStr[3] == 'a' &&
             mainStr[4] == 'n' && mainStr[5] == 'e' && mainStr[6] == 'a' && mainStr[7] == 'r' && mainStr[8] == '\0'){
         token = "scanf_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'f' && mainStr[1] == 'l' && mainStr[2] == 'o' && mainStr[3] == 't' && mainStr[4] == 'a' &&
             mainStr[5] == 'r' && mainStr[6] == '\0'){
         token = "float_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'i' && mainStr[1] == 'm' && mainStr[2] == 'p' && mainStr[3] == 'r' &&
             mainStr[4] == 'i' && mainStr[5] == 'm' && mainStr[6] == 'i' && mainStr[7] == 'r' && mainStr[8] == '\0'){
         token = "printf_noiseword";
-        return (true);
     }
     else if(mainStr[0] == 'p' && mainStr[1] == 'e' && mainStr[2] == 'r' &&
             mainStr[3] == 's' && mainStr[4] == 'o' && mainStr[5] == 'n' && mainStr[6] == 'a' &&
             mainStr[7] == 'j' && mainStr[8] == 'e' && mainStr[9] == '\0'){
         token = "char_noiseword";
-        return (true);
     }
     else
         return (false);
+
+    return (true);
 }
 
 bool isValidInteger(char* str) {
