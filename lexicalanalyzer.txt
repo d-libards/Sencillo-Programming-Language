@@ -27,7 +27,7 @@ void identifyCharacterLit(char* subStr, int right); // to delete
 char *token;
 
 int main(){
-    char str[500] ="5$ @ dreams come true 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
+    char str[500] ="5$ @ name 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("The Program is : '%s' \n", str);
     printf("All Tokens are : \n");
     detectTokens(str);
