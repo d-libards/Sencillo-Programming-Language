@@ -10,7 +10,7 @@ bool isvalidIdentifier(char* str);
 bool isValidKeyword(char* mainStr);
 bool isValidInteger(char* str);
 bool isRealNumber(char* str);
-char* subString(char* str, int left, int right);
+char* getSubString(char* str, int left, int right);
 
 bool isValidReservedword(char* mainStr);
 bool isValidNoiseword(char* mainStr);
@@ -25,7 +25,7 @@ void identifyCharacterLit(char* subStr, int right); // to delete
 char *token;
 
 int main(){
-    char str[500] ="930232 34.34 0.3.0 2.2323.232/*haha*/ ()[]{};:; 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
+    char str[500] ="/**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("The Program is : '%s' \n", str);
     printf("All Tokens are : \n");
     detectTokens(str);
@@ -42,19 +42,23 @@ void detectTokens(char* str) {
         if(str[right] == '/' && str[right+1] == '*'){
             right+=2;
 
-            char c[2] = "";
-            char subs[100] = "";
+            char subs[500];
+            int i = 0;
 
-            // string inside the /* */ will be stored in subs variable one by one using strcat
+            // string inside the /* */ will be stored in subs variable one by one
             while(str[right] != '*' && str[right+1] != '/'){
-                c[0] = str[right];
-                strcat(subs,c);
+                subs[i] = str[right];
                 right++;
+                i++;
             }
-            printf("Comment : %s\n", subs);
+            subs[i] = '\0';
+            token = "comment";
+
+            printf("Comment : %s\t%s\n", subs, token);
+
             right+=2;
             left = right;
-            // when we already extracted a lexeme, we want the left value to keep
+            // extracted a lexeme, then update the left value
         }
 
         // CHARACTER LITERAL
@@ -65,7 +69,7 @@ void detectTokens(char* str) {
             // if ch='' or empty character literal
             if(str[right+1] == '\''){
                 right++;
-                printf("! invalid empty character literal: %s\n", subs);
+                token = "invalid char_literal";
             }
             // if the third character is not '
             else if(str[right+2] != '\'') {
@@ -77,17 +81,18 @@ void detectTokens(char* str) {
                     strcat(subs,c);
                     right++;
                 }
-                printf("! invalid character literal: %s\n", subs);
+                token="invalid char_literal";
             }
             // normal character
             else{
                 right++;
                 c[0] = str[right];
                 strcat(subs,c);
-                printf("Character Literal : %s\n", subs);
+                token = "char_literal";
                 right++;
             }
 
+            printf("Character literal: %s\t%s\n", subs,token);
             right++;
             left = right;
         }
@@ -104,7 +109,8 @@ void detectTokens(char* str) {
                 strcat(subs,c);
                 right++;
             }
-            printf("String literal: %s\n", subs);
+            token = "str_literal";
+            printf("String literal: %s\t%s\n", subs,token);
 
             right++;
             left = right;
@@ -140,7 +146,7 @@ void detectTokens(char* str) {
         // if char is delimiter AND left != right
         // or if right == length AND left != right
         else if ((isValidDelimiter(str[right]) == true && left != right) || (right == length && left != right)) {
-            char* subStr = subString(str, left, right - 1);
+            char* subStr = getSubString(str, left, right - 1);
 
             if (isValidKeyword(subStr) == true)
                 printf("Valid Keyword : %s\t%s\n", subStr,token);
@@ -546,16 +552,25 @@ bool isRealNumber(char* str) {
     return (true);
     /*
         if a character in the substring is neither a digit nor a '.', then return false
+        if the first loop ends w/o returning, then the str contains only numeric values and decimal
     */
 }
 
-char* subString(char* str, int left, int right) {
-   int i;
-   char* subStr = (char*)malloc( sizeof(char) * (right - left + 2));
-   for (i = left; i <= right; i++)
-   subStr[i - left] = str[i];
-   subStr[right - left + 1] = '\0';
-   return (subStr);
+char* getSubString(char* str, int left, int right) {
+    char subs[300];
+    int i = 0;
+
+    while(left <= right){
+        subs[i] = str[left];
+        left++;
+        i++;
+    }
+    subs[i]='\0';
+    char *subStr = subs;
+
+    return (subStr);
 }
 
+// left - lowerbound
+// right- upperbound
 
