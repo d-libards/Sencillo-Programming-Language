@@ -18,6 +18,8 @@ int identifyOperator(char* str, int right);
 void identifyDelimiter(char ch);
 void identifyKeyword(char* mainStr);
 bool isaDigit(char ch);
+bool hasAlphabet(char* str);
+bool isIdentifierElement(char ch);
 
 void identifyCharacterLit(char* subStr, int right); // to delete
 
@@ -25,7 +27,7 @@ void identifyCharacterLit(char* subStr, int right); // to delete
 char *token;
 
 int main(){
-    char str[500] ="/**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
+    char str[500] ="5$ @ dreams come true 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("The Program is : '%s' \n", str);
     printf("All Tokens are : \n");
     detectTokens(str);
@@ -158,13 +160,15 @@ void detectTokens(char* str) {
                 printf("Valid Integer : %s\t%s\n", subStr, token);
             else if (isRealNumber(subStr) == true)
                 printf("Real Number : %s\t%s\n", subStr,token);
-            else if (isvalidIdentifier(subStr) == true && isValidDelimiter(str[right - 1]) == false)
-                printf("Valid Identifier : %s\n", subStr);
-            else if (isvalidIdentifier(subStr) == false && isValidDelimiter(str[right - 1]) == false)
-                printf("Invalid Identifier : %s\n", subStr);
+            else if (isvalidIdentifier(subStr) == true)
+                printf("Valid Identifier : %s\t%s\n", subStr, token);
+            else if (isvalidIdentifier(subStr) == false)
+                printf("Unknown input : %s\n", subStr);
+            /*
             else{
                 printf("! unknown : %s\n", subStr);
             }
+            */
 
 
                 left = right;
@@ -351,12 +355,76 @@ void identifyCharacterLit(char* str, int right){
 
 // Returns 'true' if the string is a VALID IDENTIFIER.
 bool isvalidIdentifier(char* str){
-   if (str[0] == '0' || str[0] == '1' || str[0] == '2' ||
-   str[0] == '3' || str[0] == '4' || str[0] == '5' ||
-   str[0] == '6' || str[0] == '7' || str[0] == '8' ||
-   str[0] == '9' || isValidDelimiter(str[0]) == true)
-   return (false);
-   return (true);
+
+    // first checkpoint
+    // no alphabet = not qualified to be an identifier
+    if(hasAlphabet(str) == false)
+        return (false);
+
+    // second checkpoint
+    // checks if each character in the str is an identifier element (a-zA-z,0-9,_)
+    // if even 1 element is not an identifier element, then return true and tag it as an invalid id
+    for(int i = 0; i<strlen(str); i++){
+        if(isIdentifierElement(str[i]) == false){
+            token = "invalid identifier";
+            return (true);
+        }
+    }
+
+    // third checkpoint
+    // checks if the first character is an alphabet
+    // if not, then tag the str as an invalid identifier
+    char alphabet[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+    for(int i = 0; i<strlen(alphabet); i++){
+        if(alphabet[i] == str[0]){
+            token = "identifier";
+            return (true);
+        }
+    }
+
+    token = "invalid identifier";
+    return (true);
+}
+
+bool hasAlphabet(char* str){
+    char alphabet[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                    'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                    'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                    'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+
+    for(int i = 0; i < strlen(str); i++){
+        for(int j = 0; j < strlen(alphabet); j++){
+            if(str[i] == alphabet[j]){
+                return (true);
+            }
+        }
+    }
+    return (false);
+    /*
+        if the string has as an alphabet, return true
+        if the loop ends, then str has no alphabet, return false
+    */
+}
+
+bool isIdentifierElement(char ch){
+
+    char identifierElements[] = {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                    'n','o','p','q','r','s','t','u','v','w','x','y','z',
+                    'A','B','C','D','E','F','G','H','I','J','K','L','M',
+                    'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+                    '0','1','2','3','4','5','6','7','8','9','_'};
+
+    for(int i=0; i < strlen(identifierElements); i++){
+        if(identifierElements[i] == ch){
+            return (true);
+        }
+    }
+
+    return (false);
 }
 
 bool isValidKeyword(char* mainStr) {
