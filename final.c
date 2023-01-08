@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+void fileChecker(char str[]);
 void getLexemes(char *str);
 bool isSeparator(char ch);
 bool isOperator(char ch);
@@ -26,13 +27,24 @@ FILE *inputptr;
 
 int main()
 {
+    char filepath[100];
     outputptr = fopen("SymbolTable.txt", "w");
+    printf("Input filepath: ");
+    scanf("%s", filepath);
+    fileChecker(filepath);
+
     char str[500] = "(){}[];:,5$ @ name _name 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("Program: \n\n'%s' \n\n", str);
+    fprintf(outputptr, "Program: \n\n'%s' \n\n", str);
     getLexemes(str);
     fclose(outputptr);
 
     return (0);
+}
+
+void fileChecker(char str[])
+{
+    printf("%s\n", str);
 }
 
 void getLexemes(char *str)
@@ -62,6 +74,7 @@ void getLexemes(char *str)
             token = "comment";
 
             printf("Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
 
             upperbound += 2;
             lowerbound = upperbound;
@@ -105,6 +118,7 @@ void getLexemes(char *str)
             }
 
             printf("Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -126,6 +140,7 @@ void getLexemes(char *str)
             }
             token = "str_literal";
             printf("Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -169,20 +184,40 @@ void getLexemes(char *str)
             char *subStr = getSubString(str, lowerbound, upperbound - 1);
 
             if (isKeyword(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else if (isReservedword(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else if (isNoiseword(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else if (isIntegerLiteral(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else if (isFloatLiteral(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else if (isIdentifier(subStr) == true)
+            {
                 printf("Lexeme : %s\t%s\n", subStr, token);
+                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+            }
             else
+            {
                 printf("Unknown input : %s\n", subStr);
-
+                fprintf(outputptr, "Unknown input : %s\n", subStr);
+            }
             lowerbound = upperbound;
         }
     }
@@ -243,6 +278,7 @@ void identifyDelimiter(char ch)
     }
 
     printf("Lexeme : %c\t%s\n", ch, token);
+    fprintf(outputptr, "Lexeme : %c\t%s\n", ch, token);
 }
 
 bool isOperator(char ch)
@@ -379,6 +415,7 @@ int identifyOperator(char *str, int upperbound)
         token = "invalid operator";
     }
     printf("Lexeme : %s\t%s\n", subStr, token);
+    fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
 
     return upperbound;
 }
