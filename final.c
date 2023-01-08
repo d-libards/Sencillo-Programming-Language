@@ -28,23 +28,43 @@ FILE *inputptr;
 int main()
 {
     char filepath[100];
-    outputptr = fopen("SymbolTable.txt", "w");
+    // char string[1000] = " ";
+    char content[1000];
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
 
-    char str[500] = "(){}[];:,5$ @ name _name 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
-    printf("Program: \n\n'%s' \n\n", str);
-    fprintf(outputptr, "Program: \n\n'%s' \n\n", str);
-    getLexemes(str);
+    while (fgets(content, sizeof(content), inputptr))
+    {
+        getLexemes(content);
+    }
+    // printf("Program: \n\n'%s' \n\n", contents);
+    // fprintf(outputptr, "Program: \n\n'%s' \n\n", contents);
     fclose(outputptr);
+    fclose(inputptr);
 
     return (0);
 }
 
 void fileChecker(char str[])
 {
-    printf("%s\n", str);
+    int len = strlen(str);
+    int checker = 0;
+
+    // check if the file path have proper length
+    if (len <= 1)
+        printf("Invalid file path\n");
+    // check file extension
+    else if (str[len - 1] == 's' && str[len - 2] == '.')
+    {
+        inputptr = fopen(str, "r");
+        outputptr = fopen("SymbolTable.txt", "w");
+        checker = 1;
+        if (inputptr == NULL)
+            printf("\nFile doesn't exist\n");
+    }
+    else if (len > 1 && checker != 1)
+        printf("Invalid file extension\n.\n.\nProgram will now close");
 }
 
 void getLexemes(char *str)
@@ -227,7 +247,7 @@ void getLexemes(char *str)
 bool isSeparator(char ch)
 {
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
-                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n'};
+                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0'};
 
     for (int i = 0; i < strlen(separatorList); i++)
     {
