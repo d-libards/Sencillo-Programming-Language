@@ -23,7 +23,7 @@ int main()
     }
     else if (len > 1 && checker != 1)
         printf("Invalid file extension\n.\n.\nProgram will now close");
-    else (inputptr == NULL)
+    if (inputptr == NULL)
         printf("\nThe file is empty");
 
     char contents[1000];
@@ -32,6 +32,7 @@ int main()
     {
         strcat(program, contents);
     }
+    printf("%s", program);
 
     myFunction();
     fclose(inputptr);

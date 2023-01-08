@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
+char *removeNewline(char *string);
 void fileChecker(char str[]);
 void getLexemes(char *str);
 bool isSeparator(char ch);
@@ -28,7 +30,7 @@ FILE *inputptr;
 int main()
 {
     char filepath[100];
-    // char string[1000] = " ";
+    char string[1000];
     char content[1000];
     printf("Input filepath: ");
     scanf("%s", filepath);
@@ -36,14 +38,34 @@ int main()
 
     while (fgets(content, sizeof(content), inputptr))
     {
-        getLexemes(content);
+        strcat(string, content);
+        removeNewline(string);
     }
-    // printf("Program: \n\n'%s' \n\n", contents);
-    // fprintf(outputptr, "Program: \n\n'%s' \n\n", contents);
+    getLexemes(string);
     fclose(outputptr);
     fclose(inputptr);
 
     return (0);
+}
+
+char *removeNewline(char *string)
+{
+    // non_newline to keep the frequency of non newline characters
+    int non_newline = 0;
+
+    // Traverse a string and if it is non space character then, place it at index non_newline
+    for (int i = 0; string[i] != '\n'; i++)
+    {
+        if (string[i] != '\n')
+        {
+            string[non_newline] = string[i];
+            non_newline++; // non_newline incremented
+        }
+    }
+
+    // Finally placing final character at the string end
+    string[non_newline] = ' ';
+    return string;
 }
 
 void fileChecker(char str[])
@@ -93,8 +115,7 @@ void getLexemes(char *str)
             subs[i] = '\0';
             token = "comment";
 
-            printf("Lexeme : %s\t%s\n", subs, token);
-            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
 
             upperbound += 2;
             lowerbound = upperbound;
@@ -137,8 +158,7 @@ void getLexemes(char *str)
                 upperbound++;
             }
 
-            printf("Lexeme : %s\t%s\n", subs, token);
-            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -159,8 +179,7 @@ void getLexemes(char *str)
                 upperbound++;
             }
             token = "str_literal";
-            printf("Lexeme : %s\t%s\n", subs, token);
-            fprintf(outputptr, "Lexeme : %s\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -204,40 +223,19 @@ void getLexemes(char *str)
             char *subStr = getSubString(str, lowerbound, upperbound - 1);
 
             if (isKeyword(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else if (isReservedword(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else if (isNoiseword(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else if (isIntegerLiteral(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else if (isFloatLiteral(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else if (isIdentifier(subStr) == true)
-            {
-                printf("Lexeme : %s\t%s\n", subStr, token);
-                fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
-            }
+                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
             else
-            {
-                printf("Unknown input : %s\n", subStr);
-                fprintf(outputptr, "Unknown input : %s\n", subStr);
-            }
+                fprintf(outputptr, "Unknown input : \t\t\t\t\t\t\t%s\n", subStr);
             lowerbound = upperbound;
         }
     }
@@ -246,8 +244,18 @@ void getLexemes(char *str)
 
 bool isSeparator(char ch)
 {
+    /*
+    if (ch == '\n' || ch == ' ' || ch == '+' || ch == '-' || ch == '*' ||
+        ch == '/' || ch == '%' || ch == '>' || ch == '<' ||
+        ch == '!' || ch == '=' || ch == '[' || ch == ']' ||
+        ch == '{' || ch == '}' || ch == '(' || ch == ')' || ch == ':' ||
+        ch == ';' || ch == ',')
+        return (true);
+    return (false);
+    */
+
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
-                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0'};
+                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n'};
 
     for (int i = 0; i < strlen(separatorList); i++)
     {
@@ -297,8 +305,7 @@ void identifyDelimiter(char ch)
         token = ":";
     }
 
-    printf("Lexeme : %c\t%s\n", ch, token);
-    fprintf(outputptr, "Lexeme : %c\t%s\n", ch, token);
+    fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\t%s\n", ch, token);
 }
 
 bool isOperator(char ch)
@@ -434,8 +441,7 @@ int identifyOperator(char *str, int upperbound)
     {
         token = "invalid operator";
     }
-    printf("Lexeme : %s\t%s\n", subStr, token);
-    fprintf(outputptr, "Lexeme : %s\t%s\n", subStr, token);
+    fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", subStr, token);
 
     return upperbound;
 }
