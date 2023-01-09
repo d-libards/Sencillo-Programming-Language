@@ -1,3 +1,9 @@
+Unknown input : 							###
+Lexeme : na$me							invalid identifier
+Lexeme : namee$							invalid identifier
+Lexeme : na14me							identifier
+Lexeme : na_me							identifier
+Lexeme : name_							identifier
 Lexeme : (								(
 Lexeme : )								)
 Lexeme : {								{
