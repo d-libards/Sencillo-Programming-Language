@@ -3,8 +3,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-char *removeNewline(char *string);
-void fileChecker(char str[]);
 void getLexemes(char *str);
 bool isSeparator(char ch);
 bool isOperator(char ch);
@@ -23,73 +21,20 @@ bool hasAlphabet(char *str);
 bool isIdentifierElement(char ch);
 
 char *token;
-FILE *outputptr;
-FILE *inputptr;
 
 int main()
 {
-    char filepath[100];
-    char string[1000];
-    char content[1000];
-    printf("Input filepath: ");
-    scanf("%s", filepath);
-    fileChecker(filepath);
 
-    while (fgets(content, sizeof(content), inputptr))
-    {
-        strcat(string, content);
-        removeNewline(string);
-    }
-    getLexemes(string);
-    fclose(outputptr);
-    fclose(inputptr);
+    char str[500] = "9 34.34 0.3.0 2.2323.232 87634 345.4";
+    printf("Program: \n\n'%s' \n\n", str);
+    getLexemes(str);
 
     return (0);
 }
 
-char *removeNewline(char *string)
-{
-    // non_newline to keep the frequency of non newline characters
-    int non_newline = 0;
-
-    // Traverse a string and if it is non space character then, place it at index non_newline
-    for (int i = 0; string[i] != '\n'; i++)
-    {
-        if (string[i] != '\n')
-        {
-            string[non_newline] = string[i];
-            non_newline++; // non_newline incremented
-        }
-    }
-
-    // Finally placing final character at the string end
-    string[non_newline] = ' ';
-    return string;
-}
-
-void fileChecker(char str[])
-{
-    int len = strlen(str);
-    int checker = 0;
-
-    // check if the file path have proper length
-    if (len <= 1)
-        printf("Invalid file path\n");
-    // check file extension
-    else if (str[len - 1] == 's' && str[len - 2] == '.')
-    {
-        inputptr = fopen(str, "r");
-        outputptr = fopen("SymbolTable.txt", "w");
-        checker = 1;
-        if (inputptr == NULL)
-            printf("\nFile doesn't exist\n");
-    }
-    else if (len > 1 && checker != 1)
-        printf("Invalid file extension\n.\n.\nProgram will now close");
-}
-
 void getLexemes(char *str)
 {
+
     int lowerbound = 0, upperbound = 0;
     int length = strlen(str);
 
@@ -114,7 +59,7 @@ void getLexemes(char *str)
             subs[i] = '\0';
             token = "comment";
 
-            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
+            printf("Lexeme : %s\t%s\n", subs, token);
 
             upperbound += 2;
             lowerbound = upperbound;
@@ -157,7 +102,7 @@ void getLexemes(char *str)
                 upperbound++;
             }
 
-            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
+            printf("Lexeme : %s\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -178,7 +123,7 @@ void getLexemes(char *str)
                 upperbound++;
             }
             token = "str_literal";
-            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
+            printf("Lexeme : %s\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -200,7 +145,7 @@ void getLexemes(char *str)
             {
                 // gives new upperbound value after extracting the operator
                 int new_upperbound = identifyOperator(str, upperbound);
-                upperbound = new_upperbound; // upperbound
+                upperbound = new_upperbound; // upperbound++
             }
             // IDENTIFY DELIMITER
             else
@@ -222,27 +167,30 @@ void getLexemes(char *str)
             char *subStr = getSubString(str, lowerbound, upperbound - 1);
 
             if (isKeyword(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else if (isReservedword(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else if (isNoiseword(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else if (isIntegerLiteral(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else if (isFloatLiteral(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else if (isIdentifier(subStr) == true)
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t%s\n", subStr, token);
+                printf("Lexeme : %s\t%s\n", subStr, token);
             else
-                fprintf(outputptr, "Unknown input : \t\t\t\t\t\t\t%s\n", subStr);
+                printf("Unknown input : %s\n", subStr);
+
             lowerbound = upperbound;
         }
     }
+
     return;
 }
 
 bool isSeparator(char ch)
 {
+
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
                             '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n'};
 
@@ -257,6 +205,7 @@ bool isSeparator(char ch)
 
 void identifyDelimiter(char ch)
 {
+
     if (ch == '(')
     {
         token = "(";
@@ -294,11 +243,12 @@ void identifyDelimiter(char ch)
         token = ":";
     }
 
-    fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\t%s\n", ch, token);
+    printf("Lexeme : %c\t%s\n", ch, token);
 }
 
 bool isOperator(char ch)
 {
+
     char operatorList[] = {'=', '+', '-', '*', '/', '%', '!', '>', '<', '\0'};
     int i = 0;
     while (i < strlen(operatorList))
@@ -315,6 +265,7 @@ bool isOperator(char ch)
 
 int identifyOperator(char *str, int upperbound)
 {
+
     char c[2] = "";
     char subStr[100] = "";
 
@@ -430,13 +381,14 @@ int identifyOperator(char *str, int upperbound)
     {
         token = "invalid operator";
     }
-    fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", subStr, token);
+    printf("Lexeme : %s\t%s\n", subStr, token);
 
     return upperbound;
 }
 
 bool isIdentifier(char *str)
 {
+
     // first checkpoint
     // no alphabet = not qualified to be an identifier
     if (hasAlphabet(str) == false)
@@ -470,12 +422,14 @@ bool isIdentifier(char *str)
             return (true);
         }
     }
+
     token = "invalid identifier";
     return (true);
 }
 
 bool hasAlphabet(char *str)
 {
+
     char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -500,6 +454,7 @@ bool hasAlphabet(char *str)
 
 bool isIdentifierElement(char ch)
 {
+
     char identifierElements[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                                  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                                  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
@@ -513,11 +468,13 @@ bool isIdentifierElement(char ch)
             return (true);
         }
     }
+
     return (false);
 }
 
 bool isKeyword(char *subStr)
 {
+
     if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == '\0')
     {
         token = "boolean_keyword";
@@ -607,6 +564,7 @@ bool isKeyword(char *subStr)
     }
 
     // boolean
+
     else if (subStr[0] == 'y' && subStr[1] == '\0')
     {
         token = "and_op";
@@ -627,6 +585,7 @@ bool isKeyword(char *subStr)
 
 bool isReservedword(char *subStr)
 {
+
     if (subStr[0] == 'f' && subStr[1] == 'a' && subStr[2] == 'l' && subStr[3] == 's' && subStr[4] == 'o' &&
         subStr[5] == '\0')
     {
@@ -645,6 +604,7 @@ bool isReservedword(char *subStr)
 
 bool isNoiseword(char *subStr)
 {
+
     if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == 'e' &&
         subStr[5] == 'a' && subStr[6] == 'n' && subStr[7] == 'o' && subStr[8] == '\0')
     {
@@ -695,6 +655,7 @@ bool isNoiseword(char *subStr)
 
 bool isIntegerLiteral(char *str)
 {
+
     for (int i = 0; i < strlen(str); i++)
     {
         if (isaDigit(str[i]) == false)
@@ -707,6 +668,7 @@ bool isIntegerLiteral(char *str)
 
 bool isaDigit(char ch)
 {
+
     char digitList[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
     for (int i = 0; i < strlen(digitList); i++)
@@ -726,6 +688,7 @@ bool isaDigit(char ch)
 
 bool isFloatLiteral(char *str)
 {
+
     for (int i = 0; i < strlen(str); i++)
     {
         if (isaDigit(str[i]) == false && str[i] != '.')
@@ -758,6 +721,7 @@ bool isFloatLiteral(char *str)
 
 char *getSubString(char *str, int lowerbound, int upperbound)
 {
+
     char subs[300];
     int i = 0;
 
