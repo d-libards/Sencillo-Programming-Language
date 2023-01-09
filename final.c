@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-char *removeNewline(char *string);
 void fileChecker(char str[]);
 void getLexemes(char *str);
 bool isSeparator(char ch);
@@ -38,34 +37,12 @@ int main()
 
     while (fgets(content, sizeof(content), inputptr))
     {
-        strcat(string, content);
-        removeNewline(string);
+        getLexemes(content);
     }
-    getLexemes(string);
     fclose(outputptr);
     fclose(inputptr);
 
     return (0);
-}
-
-char *removeNewline(char *string)
-{
-    // non_newline to keep the frequency of non newline characters
-    int non_newline = 0;
-
-    // Traverse a string and if it is non space character then, place it at index non_newline
-    for (int i = 0; string[i] != '\n'; i++)
-    {
-        if (string[i] != '\n')
-        {
-            string[non_newline] = string[i];
-            non_newline++; // non_newline incremented
-        }
-    }
-
-    // Finally placing final character at the string end
-    string[non_newline] = ' ';
-    return string;
 }
 
 void fileChecker(char str[])
@@ -201,12 +178,12 @@ void getLexemes(char *str)
             {
                 // gives new upperbound value after extracting the operator
                 int new_upperbound = identifyOperator(str, upperbound);
-                upperbound = new_upperbound;
+                upperbound = new_upperbound; // upperbound
             }
             // IDENTIFY DELIMITER
             else
             {
-                if (str[upperbound] != ' ')
+                if (str[upperbound] != ' ' && str[upperbound] != '\n')
                 {
                     identifyDelimiter(str[upperbound]);
                 }
@@ -244,16 +221,6 @@ void getLexemes(char *str)
 
 bool isSeparator(char ch)
 {
-    /*
-    if (ch == '\n' || ch == ' ' || ch == '+' || ch == '-' || ch == '*' ||
-        ch == '/' || ch == '%' || ch == '>' || ch == '<' ||
-        ch == '!' || ch == '=' || ch == '[' || ch == ']' ||
-        ch == '{' || ch == '}' || ch == '(' || ch == ')' || ch == ':' ||
-        ch == ';' || ch == ',')
-        return (true);
-    return (false);
-    */
-
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
                             '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n'};
 

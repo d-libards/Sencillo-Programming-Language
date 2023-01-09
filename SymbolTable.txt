@@ -22,10 +22,10 @@ Lexeme : 					invalid char_literal
 Lexeme : a					char_literal
 Lexeme : aaa					invalid char_literal
 Lexeme :  					char_literal
-Lexeme : \					str_literal
-Lexeme :  \					str_literal
-Lexeme : a\					str_literal
+Lexeme :  					str_literal
+Lexeme : a					str_literal
 Lexeme : 930232							int_literal
+Lexeme : 							int_literal
 Lexeme : 34.34							float_literal
 Lexeme : 0.3.0							invalid float_literal
 Lexeme : 2.2323.232							invalid float_literal
