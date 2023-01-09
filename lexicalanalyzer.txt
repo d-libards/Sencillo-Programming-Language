@@ -24,7 +24,7 @@ char *token;
 
 int main(){
 
-    char str[500] ="(){}[];:,5$ @ \n name _name 14name name14 $name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' \"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
+    char str[500] ="\n(){}[];:,5$ @h name _name 14name name14 $name name_14 /* /*zz*/\n'' 'a' 'aaa' ' '\n\"\" \" \" \"a\" 930232 34.34 0.3.0 2.2323.232 87634 345.4 = += -=  *=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir";
     printf("Program: \n\n'%s' \n\n", str);
     getLexemes(str);
 
@@ -46,11 +46,17 @@ void getLexemes(char* str) {
             int i = 0;
 
             // string inside the /* */ will be stored in subs variable one by one
-            while(str[upperbound] != '*' && str[upperbound+1] != '/'){
-                subs[i] = str[upperbound];
-                upperbound++;
-                i++;
+
+            while(upperbound <= length){
+                if(str[upperbound] == '*' && str[upperbound+1] == '/')
+                    break;
+                else{
+                    subs[i] = str[upperbound];
+                    upperbound++;
+                    i++;
+                }
             }
+
             subs[i] = '\0';
             token = "comment";
 
@@ -621,3 +627,4 @@ char* getSubString(char* str, int lowerbound, int upperbound) {
 
     return (subStr);
 }
+
