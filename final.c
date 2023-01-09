@@ -105,12 +105,18 @@ void getLexemes(char *str)
             int i = 0;
 
             // string inside the /* */ will be stored in subs variable one by one
-            while (str[upperbound] != '*' && str[upperbound + 1] != '/')
+            while (upperbound <= length)
             {
-                subs[i] = str[upperbound];
-                upperbound++;
-                i++;
+                if (str[upperbound] == '*' && str[upperbound + 1] == '/')
+                    break;
+                else
+                {
+                    subs[i] = str[upperbound];
+                    upperbound++;
+                    i++;
+                }
             }
+
             subs[i] = '\0';
             token = "comment";
 

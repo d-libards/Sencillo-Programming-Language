@@ -1,4 +1,10 @@
 Lexeme : myname							identifier
+Lexeme : _name							invalid identifier
+Lexeme : tite							identifier
+Lexeme : Identifier					comment
+Lexeme : dom							identifier
+Lexeme : my_name							identifier
+Lexeme : name14							identifier
 Lexeme : bool							boolean_keyword
 Lexeme : cuer							string_keyword
 Lexeme : dec							elif_keyword
@@ -10,10 +16,27 @@ Lexeme : flot							float_keyword
 Lexeme : hacer							do_keyword
 Lexeme : impri							printf_keyword
 Lexeme : mas							else_keyword
-Lexeme : Identifier					comment
-Lexeme : dom							identifier
-Lexeme : my_name							identifier
-Lexeme : name14							identifier
+Lexeme : mientras							while_keyword
+Lexeme : ni							or_op
+Lexeme : no							not_op
+Lexeme : perso							char_keyword
+Lexeme : por							for_keyword
+Lexeme : retorno							return_keyword
+Lexeme : sequir							continue_keyword
+Lexeme : si							if_keyword
+Lexeme : vacio							void_keyword
+Lexeme : vamos							goto_keyword
+Lexeme : y							and_op
+Lexeme : falso							false_reserved
+Lexeme : verdad							true_reserved
+Lexeme : booleano							boolean_noiseword
+Lexeme : decontra							elif_noiseword
+Lexeme : personaje							char_noiseword
+Lexeme : entero							integer_noiseword
+Lexeme : escanear							scanf_noiseword
+Lexeme : flotar							float_noiseword
+Lexeme : cuerda							string_noiseword
+Lexeme : imprimir							printf_noiseword
 Lexeme : Unary Operators					comment
 Lexeme : ++								++
 Lexeme : --								--
@@ -86,6 +109,8 @@ Unknown input : 							@
 Lexeme : _num							invalid identifier
 Lexeme : */								invalid operator
 Lexeme : invalid					invalid char_literal
+Lexeme : 12name							invalid identifier
+Lexeme : _name							invalid identifier
 Lexeme : constant value					comment
 Lexeme : 9							int_literal
 Lexeme : 4.5							float_literal
