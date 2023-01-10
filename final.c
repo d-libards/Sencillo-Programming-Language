@@ -61,7 +61,6 @@ char *removeNewline(char *string)
             non_newline++; // non_newline incremented
         }
     }
-
     // Finally placing final character at the string end
     string[non_newline] = ' ';
     return string;
