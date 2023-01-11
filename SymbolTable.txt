@@ -1,31 +1,11 @@
-Lexeme : 4							int_literal
-Lexeme : 4.6							float_literal
-Lexeme : 1.2.3							invalid float_literal
-Lexeme : 1							int_literal
-Lexeme : 2							int_literal
-Lexeme : 3							int_literal
-Lexeme : 4							int_literal
-Lexeme : 5							int_literal
-Lexeme : 6							int_literal
-Lexeme : 7							int_literal
-Lexeme : 8							int_literal
-Lexeme : 9							int_literal
-Lexeme : 0							int_literal
-Lexeme : 2.34							float_literal
-Lexeme : .1							float_literal
-Lexeme : name&							invalid identifier
-Lexeme : name_							identifier
-Lexeme : na_me							identifier
-Lexeme : #name							invalid identifier
-Lexeme : $name							invalid identifier
-Lexeme : #name							invalid identifier
-Lexeme : _nume							invalid identifier
-Lexeme : 12name							invalid identifier
-Lexeme : na12me							identifier
-Lexeme : name12							identifier
-Lexeme : domskrt							identifier
+Lexeme : myname							identifier
+Lexeme : 14name							invalid identifier
+Lexeme : my_name							identifier
+Lexeme : 3.14.14							invalid float_literal
+Lexeme : cat								invalid char_literal
 Lexeme : Identifier					comment
 Lexeme : dom							identifier
+Lexeme : domskrt							identifier
 Lexeme : my_name							identifier
 Lexeme : name14							identifier
 Lexeme : Assignment Operators					comment
@@ -108,6 +88,8 @@ Unknown input : 							@
 Lexeme : _num							invalid identifier
 Lexeme : */								invalid operator
 Lexeme : invalid								invalid char_literal
+Lexeme : 12name							invalid identifier
+Lexeme : 1.2.3							invalid float_literal
 Lexeme : constant value					comment
 Lexeme : 9							int_literal
 Lexeme : 4.5							float_literal

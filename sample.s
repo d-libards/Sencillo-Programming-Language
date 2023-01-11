@@ -1,26 +1,15 @@
-4
-4.6
-1.2.3
-1 2 3 4 5 6 7 8 9 0 
-2.34
-.1
-name&
-name_
-na_me
-#name
-$name
-#name
-_nume
-12name
-na12me
-name12
-domskrt
+myname
+14name
+my_name
+3.14.14
+'cat'
 /*Identifier*/
 dom
+domskrt
 my_name
 name14
 /*Assignment Operators*/
-= += -=  *=  /=  %=  //= 
+= += -=  *=  /=  %=  //=
 /*Unary Operators*/
 ++ -- 
 /*Arithmetic Operators*/
@@ -37,15 +26,20 @@ falso verdad
 booleano decontra personaje entero escanear flotar cuerda imprimir
 /*Delimeters*/
 : () [ ] { } , ;
-
 /*invalid*/
 @
 _num
 */
 'invalid'
-
+12name
+1.2.3
 /*constant value*/
 9
 4.5
 "string"
 'c'
+
+
+
+
+

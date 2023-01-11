@@ -30,9 +30,6 @@ er
 'ss\'s\''
 '\\h\\'
 'holla\\\''
-
-
-
 /*Identifier*/
 dom
 my_name
@@ -55,24 +52,19 @@ falso verdad
 booleano decontra personaje entero escanear flotar cuerda imprimir
 /*Delimeters*/
 : () [ ] { } , ;
-
 /*invalid*/
 @
 _num
 */
 'invalid'
-
 /*constant value*/
 9
 4.5
 "string"
 'c'
-
 myname
 14name
 my_name
-
-
 ### na$me namee$ na14me 
 na_me name_
 (){}[];:,5$ @ name _name 14name name14 \n 
@@ -89,5 +81,3 @@ vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cu
 myname
 14name
 my_name
-
-
