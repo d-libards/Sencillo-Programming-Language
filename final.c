@@ -357,7 +357,7 @@ void getLexemes(char *str)
 bool isSeparator(char ch)
 {
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
-                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n'};
+                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0'};
 
     for (int i = 0; i < strlen(separatorList); i++)
     {
@@ -573,7 +573,7 @@ bool isIdentifier(char *str)
     char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '\0'};
 
     for (int i = 0; i < strlen(alphabet); i++)
     {
@@ -592,7 +592,7 @@ bool hasAlphabet(char *str)
     char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '\0'};
 
     for (int i = 0; i < strlen(str); i++)
     {
@@ -617,7 +617,7 @@ bool isIdentifierElement(char ch)
                                  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                                  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                                  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_'};
+                                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '\0'};
 
     for (int i = 0; i < strlen(identifierElements); i++)
     {
@@ -820,7 +820,7 @@ bool isIntegerLiteral(char *str)
 
 bool isaDigit(char ch)
 {
-    char digitList[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    char digitList[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 
     for (int i = 0; i < strlen(digitList); i++)
     {
