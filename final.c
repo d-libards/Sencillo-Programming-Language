@@ -554,6 +554,21 @@ bool isIdentifier(char *str)
     // no alphabet = not qualified to be an identifier
     if (hasAlphabet(str) == false)
         return (false);
+    /*
+    int counter = 0;
+    for (int i = 0; i < strlen(str); i++)
+    {
+        if (isalpha(str[i]) != 0)
+        {
+            counter++;
+        }
+    }
+
+    if (counter == 0)
+    {
+        return (false);
+    }
+    */
 
     // second checkpoint
     // checks if each character in the str is an identifier element (a-zA-z,0-9,_)
@@ -570,18 +585,11 @@ bool isIdentifier(char *str)
     // third checkpoint
     // checks if the first character is an alphabet
     // if not, then tag the str as an invalid identifier
-    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                       'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                       'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '\0'};
 
-    for (int i = 0; i < strlen(alphabet); i++)
+    if (isalpha(str[0]) != 0)
     {
-        if (alphabet[i] == str[0])
-        {
-            token = "identifier";
-            return (true);
-        }
+        token = "identifier";
+        return (true);
     }
     token = "invalid identifier";
     return (true);

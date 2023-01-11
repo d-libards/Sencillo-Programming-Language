@@ -1,5 +1,9 @@
+%
 4.5.6.7
 4
+na+me
+na%me
+#name
 $name
 _nume
 12name
