@@ -570,7 +570,7 @@ bool isIdentifier(char *str)
     // third checkpoint
     // checks if the first character is an alphabet
     // if not, then tag the str as an invalid identifier
-    /*char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
                        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
                        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -582,14 +582,6 @@ bool isIdentifier(char *str)
             token = "identifier";
             return (true);
         }
-    }
-    token = "invalid identifier";
-    return (true);
-    */
-    if (isalpha(str[0]) != 0)
-    {
-        token = "identifier";
-        return (true);
     }
     token = "invalid identifier";
     return (true);

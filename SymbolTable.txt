@@ -1,3 +1,5 @@
+Lexeme : 4.5.6.7							invalid float_literal
+Lexeme : 4							int_literal
 Lexeme : $name							invalid identifier
 Lexeme : _nume							invalid identifier
 Lexeme : 12name							invalid identifier
@@ -215,3 +217,4 @@ Lexeme : c								char_literal
 Lexeme : myname							identifier
 Lexeme : 14name							invalid identifier
 Lexeme : my_name							identifier
+Lexeme : 							int_literal
