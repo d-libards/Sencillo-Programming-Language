@@ -27,8 +27,8 @@ FILE *inputptr;
 int main()
 {
     char filepath[100];
-    char string[1000] = "";
-    char content[1000] = "";
+    char string[2000] = "";
+    char content[2000] = "";
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
