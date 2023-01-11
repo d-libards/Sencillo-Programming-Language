@@ -1,14 +1,44 @@
-myname _name
-sample
+name&
+name_
+na_me
+#name
+$name
+#name
+_nume
+12name
+na12me
+name12
+domskrt
+1
+12.3
+1.2.3
+er
+"\"no\""
+"\\backward slash\\"
+"\"\""
+"\""
+"\\"
+"efren \"bata\" reyes"
+''
+' '
+'\''
+'\\'
+'"'
+'hello'
+'h'
+'\'hello\''
+'ss\'s\''
+'\\h\\'
+'holla\\\''
+
+
 
 /*Identifier*/
 dom
 my_name
 name14
-bool cuer dec descanso doble ent escan flot hacer impri mas mientras ni no perso por retorno sequir si vacio vamos y
-falso verdad
-booleano decontra personaje entero escanear flotar cuerda imprimir
-
+/*Assignment Operators*/
+= += -=  *=  /=  %=  //= 
 /*Unary Operators*/
 ++ -- 
 /*Arithmetic Operators*/
@@ -31,8 +61,6 @@ booleano decontra personaje entero escanear flotar cuerda imprimir
 _num
 */
 'invalid'
-12name
-_name
 
 /*constant value*/
 9
@@ -43,3 +71,23 @@ _name
 myname
 14name
 my_name
+
+
+### na$me namee$ na14me 
+na_me name_
+(){}[];:,5$ @ name _name 14name name14 \n 
+$name name_14 /**/ /*zz*/'' 'a' 'aaa' ' ' " " "a" 930232 
+34.34 0.3.0 2.2323.232 87634 345.4 = += -=  
+*=  /=  %=  //= ++ -- + - * / % ** //  == != > y ni no < >= <= bool 
+cuer dec descanso doble ent escan flot hacer 
+impri mas mientras ni no perso por retorno sequir si 
+vacio vamos y falso verdad booleano decontra personaje entero escanear flotar cuerda imprimir
+9
+4.5
+"string"
+'c'
+myname
+14name
+my_name
+
+

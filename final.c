@@ -19,8 +19,6 @@ bool isReservedword(char *subStr);
 bool isNoiseword(char *subStr);
 int identifyOperator(char *str, int upperbound);
 void identifyDelimiter(char ch);
-bool isaDigit(char ch);
-bool hasAlphabet(char *str);
 bool isIdentifierElement(char ch);
 
 char *token;
@@ -552,23 +550,19 @@ bool isIdentifier(char *str)
 {
     // first checkpoint
     // no alphabet = not qualified to be an identifier
-    if (hasAlphabet(str) == false)
-        return (false);
-    /*
-    int counter = 0;
+    int alphacount = 0;
     for (int i = 0; i < strlen(str); i++)
     {
         if (isalpha(str[i]) != 0)
         {
-            counter++;
+            alphacount++;
         }
     }
 
-    if (counter == 0)
+    if (alphacount == 0)
     {
         return (false);
     }
-    */
 
     // second checkpoint
     // checks if each character in the str is an identifier element (a-zA-z,0-9,_)
@@ -593,30 +587,6 @@ bool isIdentifier(char *str)
     }
     token = "invalid identifier";
     return (true);
-}
-
-bool hasAlphabet(char *str)
-{
-    char alphabet[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                       'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                       'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                       'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '\0'};
-
-    for (int i = 0; i < strlen(str); i++)
-    {
-        for (int j = 0; j < strlen(alphabet); j++)
-        {
-            if (str[i] == alphabet[j])
-            {
-                return (true);
-            }
-        }
-    }
-    return (false);
-    /*
-        if the string has as an alphabet, return true
-        if the loop ends, then str has no alphabet, return false
-    */
 }
 
 bool isIdentifierElement(char ch)
@@ -818,7 +788,7 @@ bool isIntegerLiteral(char *str)
 {
     for (int i = 0; i < strlen(str); i++)
     {
-        if (isaDigit(str[i]) == false)
+        if (isdigit(str[i]) == 0)
             return (false);
     }
 
@@ -826,30 +796,11 @@ bool isIntegerLiteral(char *str)
     return (true);
 }
 
-bool isaDigit(char ch)
-{
-    char digitList[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-
-    for (int i = 0; i < strlen(digitList); i++)
-    {
-        if (ch == digitList[i])
-        {
-            return (true);
-        }
-    }
-    return (false);
-    /*
-        gets every element in digitList, compares it to the digit stored in ch variable
-        if a similar element/digit is found, then return true
-        if the loop ends but no element is similar, then return false
-    */
-}
-
 bool isFloatLiteral(char *str)
 {
     for (int i = 0; i < strlen(str); i++)
     {
-        if (isaDigit(str[i]) == false && str[i] != '.')
+        if (isdigit(str[i]) == 0 && str[i] != '.')
             return (false);
     }
 
