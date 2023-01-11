@@ -26,7 +26,7 @@ FILE *inputptr;
 
 int main()
 {
-    char filepath[100];
+    char filepath[100] = "";
     char string[2000] = "";
     char content[2000] = "";
     printf("Input filepath: ");
@@ -809,7 +809,7 @@ bool isFloatLiteral(char *str)
 
 char *getSubString(char *str, int lowerbound, int upperbound)
 {
-    char subs[300];
+    char subs[300] = "";
     int i = 0;
 
     while (lowerbound <= upperbound)
