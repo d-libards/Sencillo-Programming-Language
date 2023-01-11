@@ -1,3 +1,23 @@
+"\"no\""
+"\\backward slash\\"
+"\"\""
+"\""
+"\\"
+"efren \"bata\" reyes"
+''
+' '
+'\''
+'\\'
+'"'
+'hello'
+'h'
+'\'hello\''
+'ss\'s\''
+'\\h\\'
+'holla\\\''
+
+
+
 /*Identifier*/
 dom
 my_name
