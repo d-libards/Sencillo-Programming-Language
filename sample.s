@@ -1,3 +1,31 @@
+4.5.6.7
+4
+$name
+_nume
+12name
+na12me
+name12
+domskrt
+"\"no\""
+"\\backward slash\\"
+"\"\""
+"\""
+"\\"
+"efren \"bata\" reyes"
+''
+' '
+'\''
+'\\'
+'"'
+'hello'
+'h'
+'\'hello\''
+'ss\'s\''
+'\\h\\'
+'holla\\\''
+
+
+
 /*Identifier*/
 dom
 my_name

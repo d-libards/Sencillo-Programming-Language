@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 char *removeNewline(char *string);
 void fileChecker(char str[]);
@@ -129,40 +130,128 @@ void getLexemes(char *str)
         // CHARACTER LITERAL
         if (str[upperbound] == '\'')
         {
-            char c[2] = "";
+            upperbound++;
             char subs[300] = ""; // stores the char literal
+            int charIndex = 0;
 
-            // if ch='' or empty character literal
-            if (str[upperbound + 1] == '\'')
+            // if '' (empty character literal)
+            if (str[upperbound] == '\'')
             {
-                upperbound++;
                 token = "invalid char_literal";
             }
-            // if the third character is not '
-            else if (str[upperbound + 2] != '\'')
+            // if '\''
+            else if (str[upperbound] == '\\' && str[upperbound + 1] == '\'' && str[upperbound + 2] == '\'')
             {
-                upperbound++;
-
-                // gets values between ' '
-                while (str[upperbound] != '\'')
+                subs[charIndex] = '\'';
+                token = "char_literal";
+                upperbound += 2;
+            }
+            // if '\\'
+            else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\' && str[upperbound + 2] == '\'')
+            {
+                subs[charIndex] = '\\';
+                token = "char_literal";
+                upperbound += 2;
+            }
+            // if '\'a', output: 'a
+            else if (str[upperbound] == '\\' && str[upperbound + 1] == '\'' && str[upperbound + 2] != '\'')
+            {
+                while (upperbound <= length)
                 {
-                    c[0] = str[upperbound];
-                    strcat(subs, c);
+                    if (str[upperbound] == '\\' && str[upperbound + 1] == '\'')
+                    {
+                        subs[charIndex] = '\'';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\')
+                    {
+                        subs[charIndex] = '\\';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\'')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        subs[charIndex] = str[upperbound];
+                        charIndex++;
+                    }
                     upperbound++;
                 }
                 token = "invalid char_literal";
             }
-            // if normal character
+            // if '\\a', output: \a
+            else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\' && str[upperbound + 2] != '\'')
+            {
+                while (upperbound <= length)
+                {
+                    if (str[upperbound] == '\\' && str[upperbound + 1] == '\'')
+                    {
+                        subs[charIndex] = '\'';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\')
+                    {
+                        subs[charIndex] = '\\';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\'')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        subs[charIndex] = str[upperbound];
+                        charIndex++;
+                    }
+                    upperbound++;
+                }
+                token = "invalid char_literal";
+            }
+
+            // if the third character is not ' ex: 'aaa'
+            else if (str[upperbound + 1] != '\'')
+            {
+                while (upperbound <= length)
+                {
+                    if (str[upperbound] == '\\' && str[upperbound + 1] == '\'')
+                    {
+                        subs[charIndex] = '\'';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\')
+                    {
+                        subs[charIndex] = '\\';
+                        charIndex++;
+                        upperbound++;
+                    }
+                    else if (str[upperbound] == '\'')
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        subs[charIndex] = str[upperbound];
+                        charIndex++;
+                    }
+                    upperbound++;
+                }
+                token = "invalid char_literal";
+            }
             else
             {
-                upperbound++;
-                c[0] = str[upperbound];
-                strcat(subs, c);
+                subs[charIndex] = str[upperbound];
                 token = "char_literal";
                 upperbound++;
             }
 
-            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
@@ -176,14 +265,33 @@ void getLexemes(char *str)
             char subs[300] = ""; // stores the str literal
 
             // gets values between " "
-            while (str[upperbound] != '\"')
+            while (upperbound <= length)
             {
-                c[0] = str[upperbound];
-                strcat(subs, c);
-                upperbound++;
+                if (str[upperbound] == '\"')
+                {
+                    break;
+                }
+                else if (str[upperbound] == '\\' && str[upperbound + 1] == '\"')
+                {
+                    c[0] = '\"';
+                    strcat(subs, c);
+                    upperbound += 2;
+                }
+                else if (str[upperbound] == '\\' && str[upperbound + 1] == '\\')
+                {
+                    c[0] = '\\';
+                    strcat(subs, c);
+                    upperbound += 2;
+                }
+                else
+                {
+                    c[0] = str[upperbound];
+                    strcat(subs, c);
+                    upperbound++;
+                }
             }
             token = "str_literal";
-            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t%s\n", subs, token);
+            fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", subs, token);
 
             upperbound++;
             lowerbound = upperbound;
