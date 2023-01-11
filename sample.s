@@ -1,3 +1,9 @@
+$name
+_nume
+12name
+na12me
+name12
+domskrt
 "\"no\""
 "\\backward slash\\"
 "\"\""

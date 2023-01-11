@@ -1,20 +1,26 @@
-Lexeme : "no"					str_literal
-Lexeme : \backward slash\					str_literal
-Lexeme : ""					str_literal
-Lexeme : "					str_literal
-Lexeme : \					str_literal
-Lexeme : efren "bata" reyes					str_literal
-Lexeme : 	invalid char_literal
-Lexeme :  	char_literal
-Lexeme : '	char_literal
-Lexeme : \	char_literal
-Lexeme : "	char_literal
-Lexeme : hello	invalid char_literal
-Lexeme : h	char_literal
-Lexeme : 'hello'	invalid char_literal
-Lexeme : ss's'	invalid char_literal
-Lexeme : \h\	invalid char_literal
-Lexeme : holla\'	invalid char_literal
+Lexeme : $name							invalid identifier
+Lexeme : _nume							invalid identifier
+Lexeme : 12name							invalid identifier
+Lexeme : na12me							identifier
+Lexeme : name12							identifier
+Lexeme : domskrt							identifier
+Lexeme : "no"								str_literal
+Lexeme : \backward slash\								str_literal
+Lexeme : ""								str_literal
+Lexeme : "								str_literal
+Lexeme : \								str_literal
+Lexeme : efren "bata" reyes								str_literal
+Lexeme : 								invalid char_literal
+Lexeme :  								char_literal
+Lexeme : '								char_literal
+Lexeme : \								char_literal
+Lexeme : "								char_literal
+Lexeme : hello								invalid char_literal
+Lexeme : h								char_literal
+Lexeme : 'hello'								invalid char_literal
+Lexeme : ss's'								invalid char_literal
+Lexeme : \h\								invalid char_literal
+Lexeme : holla\'								invalid char_literal
 Lexeme : Identifier					comment
 Lexeme : dom							identifier
 Lexeme : my_name							identifier
@@ -98,12 +104,12 @@ Lexeme : invalid					comment
 Unknown input : 							@
 Lexeme : _num							invalid identifier
 Lexeme : */								invalid operator
-Lexeme : invalid	invalid char_literal
+Lexeme : invalid								invalid char_literal
 Lexeme : constant value					comment
 Lexeme : 9							int_literal
 Lexeme : 4.5							float_literal
-Lexeme : string					str_literal
-Lexeme : c	char_literal
+Lexeme : string								str_literal
+Lexeme : c								char_literal
 Lexeme : myname							identifier
 Lexeme : 14name							invalid identifier
 Lexeme : my_name							identifier
@@ -133,12 +139,12 @@ Lexeme : $name							invalid identifier
 Lexeme : name_14							identifier
 Lexeme : 					comment
 Lexeme : zz					comment
-Lexeme : 	invalid char_literal
-Lexeme : a	char_literal
-Lexeme : aaa	invalid char_literal
-Lexeme :  	char_literal
-Lexeme :  					str_literal
-Lexeme : a					str_literal
+Lexeme : 								invalid char_literal
+Lexeme : a								char_literal
+Lexeme : aaa								invalid char_literal
+Lexeme :  								char_literal
+Lexeme :  								str_literal
+Lexeme : a								str_literal
 Lexeme : 930232							int_literal
 Lexeme : 34.34							float_literal
 Lexeme : 0.3.0							invalid float_literal
@@ -204,8 +210,8 @@ Lexeme : cuerda							string_noiseword
 Lexeme : imprimir							printf_noiseword
 Lexeme : 9							int_literal
 Lexeme : 4.5							float_literal
-Lexeme : string					str_literal
-Lexeme : c	char_literal
+Lexeme : string								str_literal
+Lexeme : c								char_literal
 Lexeme : myname							identifier
 Lexeme : 14name							invalid identifier
 Lexeme : my_name							identifier
