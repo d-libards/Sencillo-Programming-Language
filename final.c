@@ -50,7 +50,7 @@ void fileChecker(char str[])
     int checker = 0;
 
     // check if the file path have proper length
-    if (len <= 1)
+    if (len <= 2)
         printf("Invalid file path\n");
     // check file extension
     else if (str[len - 1] == 's' && str[len - 2] == '.')
@@ -72,8 +72,8 @@ void getLexemes(char *str)
 
     while (upperbound <= length && lowerbound <= upperbound)
     {
-
         // COMMENT
+
         if (str[upperbound] == '/' && str[upperbound + 1] == '*')
         {
             upperbound += 2;
