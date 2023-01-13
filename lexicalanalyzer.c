@@ -26,18 +26,27 @@ FILE *inputptr;
 
 int main()
 {
+    int ch;
     char filepath[100] = "";
-    char string[2000] = "";
     char content[2000] = "";
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
 
-    while (fgets(content, sizeof(content), inputptr))
+    do
     {
-        strcat(string, content);
-    }
-    getLexemes(string);
+        if (feof(inputptr))
+        {
+            break;
+        }
+        for (int i = 0; ch != EOF; i++)
+        {
+            ch = fgetc(inputptr);
+            content[i] = ch;
+        }
+    } while (ch != EOF);
+
+    getLexemes(content);
     fclose(outputptr);
     fclose(inputptr);
 
@@ -68,7 +77,7 @@ void fileChecker(char str[])
 void getLexemes(char *str)
 {
     int lowerbound = 0, upperbound = 0;
-    int length = strlen(str);
+    int length = strlen(str) - 1;
 
     while (upperbound <= length && lowerbound <= upperbound)
     {
