@@ -421,100 +421,100 @@ int identifyOperator(char *str, int upperbound)
 
     if (subStr[0] == '+' && subStr[1] == '\0')
     {
-        token = "add_op";
+        token = "+";
     }
     else if (subStr[0] == '-' && subStr[1] == '\0')
     {
-        token = "sub_op";
+        token = "-";
     }
     else if (subStr[0] == '/' && subStr[1] == '\0')
     {
-        token = "div_op";
+        token = "/";
     }
     else if (subStr[0] == '*' && subStr[1] == '\0')
     {
-        token = "multi_op";
+        token = "*";
     }
     else if (subStr[0] == '%' && subStr[1] == '\0')
     {
-        token = "mod_op";
+        token = "%";
     }
     else if (subStr[0] == '*' && subStr[1] == '*' && subStr[2] == '\0')
     {
-        token = "expo_op";
+        token = "**";
     }
     else if (subStr[0] == '/' && subStr[1] == '/' && subStr[2] == '\0')
     {
-        token = "int_div_op";
+        token = "//";
     }
 
     // assignment operator
 
     else if (subStr[0] == '=' && subStr[1] == '\0')
     {
-        token = "ass_op";
+        token = "=";
     }
     else if (subStr[0] == '+' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "add_ass_op";
+        token = "+=";
     }
     else if (subStr[0] == '-' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "sub_ass_op";
+        token = "-=";
     }
     else if (subStr[0] == '*' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "multi_ass_op";
+        token = "*=";
     }
     else if (subStr[0] == '%' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "mod_ass_op";
+        token = "%=";
     }
     else if (subStr[0] == '/' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "div_ass_op";
+        token = "/=";
     }
     else if (subStr[0] == '/' && subStr[1] == '/' && subStr[2] == '=' && subStr[3] == '\0')
     {
-        token = "int_div_ass_op";
+        token = "//=";
     }
 
     // increment & decrement
 
     else if (subStr[0] == '+' && subStr[1] == '+' && subStr[2] == '\0')
     {
-        token = "increment_op";
+        token = "++";
     }
     else if (subStr[0] == '-' && subStr[1] == '-' && subStr[2] == '\0')
     {
-        token = "decrement_op";
+        token = "--";
     }
 
     // boolean relational
 
     else if (subStr[0] == '=' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "equal_op";
+        token = "==";
     }
     else if (subStr[0] == '!' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "not_equal_op";
+        token = "!=";
     }
     else if (subStr[0] == '>' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "greater_or_equal_op";
+        token = ">=";
     }
     else if (subStr[0] == '<' && subStr[1] == '=' && subStr[2] == '\0')
     {
-        token = "less_or_equal_op";
+        token = "<=";
     }
     else if (subStr[0] == '>' && subStr[1] == '\0')
     {
-        token = "greater_than_op";
+        token = ">";
     }
     else if (subStr[0] == '<' && subStr[1] == '\0')
     {
-        token = "less_than_op";
+        token = "<";
     }
     else
     {
