@@ -23,8 +23,9 @@ bool isIdentifierElement(char ch);
 char *token;
 FILE *outputptr;
 FILE *inputptr;
-int ch;
-char content[2000] = "";
+
+char ch;
+char content[2000];
 char filepath[200];
 
 int main()
@@ -41,39 +42,44 @@ int main()
 
 void fileChecker(char str[])
 {
-    int len = strlen(str);
-    int checker = 0;
+    char *ext;
+    ext = strrchr(str, '.');
 
-    // check if the file path have proper length
-    if (len <= 2)
-        printf("Invalid file path\n");
     // check file extension
-    else if (str[len - 1] == 's' && str[len - 2] == '.')
+    if (ext[0] == '.' && ext[1] == 's')
     {
         inputptr = fopen(str, "r");
         outputptr = fopen("SymbolTable.txt", "w");
-        checker = 1;
-        do
+        if (inputptr == NULL)
         {
+            printf("Error opening file\n");
+            exit(0);
+        }
+
+        while (true)
+        {
+            int i;
+
             if (feof(inputptr))
             {
                 break;
             }
-            for (int i = 0; ch != EOF; i++)
+            for (i = 0; ch != EOF; i++)
             {
                 ch = fgetc(inputptr);
                 content[i] = ch;
             }
-        } while (ch != EOF);
+            content[i - 1] = '\0';
+        }
     }
-    else if (len > 1 && checker != 1)
+    else
         printf("Invalid file extension\n.\n.\nProgram will now close");
 }
 
 void getLexemes(char *str)
 {
     int lowerbound = 0, upperbound = 0;
-    int length = strlen(str) - 1;
+    int length = strlen(str);
 
     while (upperbound <= length && lowerbound <= upperbound)
     {
