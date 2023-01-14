@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-void fileChecker(char *str);
+void fileChecker(char str[]);
 void getLexemes(char *str);
 bool isSeparator(char ch);
 bool isOperator(char ch);
@@ -25,10 +25,10 @@ FILE *outputptr;
 FILE *inputptr;
 int ch;
 char content[2000] = "";
+char filepath[200];
 
 int main()
 {
-    char *filepath;
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
@@ -39,7 +39,7 @@ int main()
     return (0);
 }
 
-void fileChecker(char *str)
+void fileChecker(char str[])
 {
     int len = strlen(str);
     int checker = 0;
@@ -53,8 +53,6 @@ void fileChecker(char *str)
         inputptr = fopen(str, "r");
         outputptr = fopen("SymbolTable.txt", "w");
         checker = 1;
-        if (inputptr == NULL)
-            printf("\nFile doesn't exist\n");
         do
         {
             if (feof(inputptr))
