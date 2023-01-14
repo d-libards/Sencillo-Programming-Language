@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-void fileChecker(char str[]);
+void fileChecker(char *str);
 void getLexemes(char *str);
 bool isSeparator(char ch);
 bool isOperator(char ch);
@@ -23,29 +23,15 @@ bool isIdentifierElement(char ch);
 char *token;
 FILE *outputptr;
 FILE *inputptr;
+int ch;
+char content[2000] = "";
 
 int main()
 {
-    int ch;
-    char filepath[100] = "";
-    char content[2000] = "";
+    char *filepath;
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
-
-    do
-    {
-        if (feof(inputptr))
-        {
-            break;
-        }
-        for (int i = 0; ch != EOF; i++)
-        {
-            ch = fgetc(inputptr);
-            content[i] = ch;
-        }
-    } while (ch != EOF);
-
     getLexemes(content);
     fclose(outputptr);
     fclose(inputptr);
@@ -53,7 +39,7 @@ int main()
     return (0);
 }
 
-void fileChecker(char str[])
+void fileChecker(char *str)
 {
     int len = strlen(str);
     int checker = 0;
@@ -69,6 +55,18 @@ void fileChecker(char str[])
         checker = 1;
         if (inputptr == NULL)
             printf("\nFile doesn't exist\n");
+        do
+        {
+            if (feof(inputptr))
+            {
+                break;
+            }
+            for (int i = 0; ch != EOF; i++)
+            {
+                ch = fgetc(inputptr);
+                content[i] = ch;
+            }
+        } while (ch != EOF);
     }
     else if (len > 1 && checker != 1)
         printf("Invalid file extension\n.\n.\nProgram will now close");
