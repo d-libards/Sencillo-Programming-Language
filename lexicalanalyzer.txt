@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 void fileChecker(char str[]);
+void getLexeme();
 bool isSeparator(char ch);
 bool isOperator(char ch);
 void identifyOperator(char *subStr);
@@ -21,216 +22,28 @@ char *token;
 FILE *outputptr;
 FILE *inputptr;
 
+int i;
+char ch1 = ' ';
+char ch2 = ' ';
+char comment[1000];
+char charLit[100];
+char strLit[100];
+char operators[100];
+char string[1000];
+int strIndex = 0;
+
 int main()
 {
     char filepath[100];
-    char content[1000] = "";
     printf("Input filepath: ");
     scanf("%s", filepath);
     fileChecker(filepath);
 
-    int i;
-
-    char ch1 = ' ';
-    char ch2 = ' ';
-    char comment[1000];
-    char charLit[100];
-    char strLit[100];
-    char operators[100];
-    char string[1000];
-    int strIndex = 0;
-
     if(inputptr == NULL)
         return 0;
 
-    do
-    {
-        // comment
-        if(ch1 == '/' && ch2 == '*'){
-            i=0;
-            ch1 = fgetc(inputptr);
-            ch2 = fgetc(inputptr);
+    getLexeme();
 
-            while(!feof(inputptr)){
-                if(ch1 == '*' && ch2 == '/'){
-                    comment[i] = '\0';
-                    fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\tcomment\n", comment);
-                    printf("%s comment\n", comment);
-                    // next character
-                    ch1 = fgetc(inputptr);
-                    ch2 = fgetc(inputptr);
-                    break;
-                }
-                else{
-                    comment[i] = ch1;
-                    i++;
-                    ch1 = ch2;
-                    ch2 = fgetc(inputptr);
-                }
-            }
-        }
-
-        // char lit
-        else if(ch1 == '\''){
-            ch1 = ch2;
-            ch2 = fgetc(inputptr);
-
-            if(ch1 == '\''){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\tinvalid\n", comment);
-                printf("! invalid empty\n");
-                ch1 = ch2;
-                ch2 = fgetc(inputptr);
-            }
-            else if(ch1 == '\\' && ch2 == '\''){
-                fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
-                printf("%c \tchar lit\n", ch2);
-                fgetc(inputptr);
-                ch1 = fgetc(inputptr);
-                ch2 = fgetc(inputptr);
-            }
-            else if(ch1 == '\\' && ch2 == '\\'){
-                fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
-                printf("%c \tchar lit\n", ch2);
-                fgetc(inputptr);
-                ch1 = fgetc(inputptr);
-                ch2 = fgetc(inputptr);
-            }
-            else if(ch2 != '\''){
-                i = 0;
-                charLit[i] = ch1;
-                i++;
-                charLit[i] = ch2;
-                i++;
-                ch1 = fgetc(inputptr);
-
-                while(!feof(inputptr)){
-                    if(ch1 == '\''){
-                        charLit[i] = '\0';
-                        fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\tinvalid\n", charLit);
-                        printf("%s \tinvalid char lit\n", charLit);
-                        ch1 = fgetc(inputptr);
-                        ch2 = fgetc(inputptr);
-                        break;
-                    }
-                    else{
-                        charLit[i] = ch1;
-                        i++;
-                        ch1 = fgetc(inputptr);
-                    }
-                }
-            }
-            else{
-                fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\tchar_lit\n", ch1);
-                printf("%c \t char lit\n", ch1);
-                ch1 = fgetc(inputptr);
-                ch2 = fgetc(inputptr);
-            }
-        }
-
-        // string lit
-        else if(ch1 == '\"'){
-            ch1 = ch2;
-            i=0;
-            while (!feof(inputptr)){
-                ch2 = fgetc(inputptr);
-
-                if (ch1 == '\"'){
-                    strLit[i] = '\0';
-                    ch1 = ch2;
-                    ch2 = fgetc(inputptr);
-                    fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\tstr_lit\n", strLit);
-                    printf("%s \tstring\n", strLit);
-                    break;
-                }
-                else if (ch1 == '\\' && ch2 == '\"'){
-                    strLit[i] = '\"';
-                    i++;
-                    ch1 = fgetc(inputptr);
-                }
-                else if (ch1 == '\\' && ch2 == '\\'){
-                    strLit[i] = '\\';
-                    i++;
-                    ch1 = fgetc(inputptr);
-                }
-                else{
-                    strLit[i] = ch1;
-                    i++;
-                    ch1 = ch2;
-                }
-            }
-        }
-
-        else if(isSeparator(ch1) == false){
-            string[strIndex] = ch1;
-            strIndex++;
-            ch1 = ch2;
-            ch2 = fgetc(inputptr);
-        }
-        else if(isSeparator(ch1) == true && strIndex == 0){
-            if(isOperator(ch1)){
-                i = 0;
-                while(isOperator(ch1)){
-                    operators[i] = ch1;
-                    i++;
-                    ch1 = ch2;
-                    ch2 = fgetc(inputptr);
-                }
-                operators[i] = '\0';
-                identifyOperator(operators);
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", operators, token);
-                printf("%s \t%s\n",operators,token);
-            }
-            else{
-                if(ch1 != ' ' && ch1 != '\n'){
-                    identifyDelimiter(ch1);
-                    fprintf(outputptr, "Lexeme : %c\t\t\t\t\t\t\t\t%s\n", ch1, token);
-                    printf("%c \t%s\n",ch1,token);
-
-                }
-                ch1 = ch2;
-                ch2 = fgetc(inputptr);
-            }
-        }
-        else if(isSeparator(ch1) == true && strIndex > 0){
-            string[strIndex] = '\0';
-
-            if(isKeyword(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t%s\n", string, token);
-            }
-            else if(isReservedword(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t\t%s\n", string, token);
-            }
-            else if(isNoiseword(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t\t%s\n", string, token);
-            }
-            else if(isIntegerLiteral(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t\t%s\n", string, token);
-            }
-            else if(isFloatLiteral(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t\t%s\n", string, token);
-            }
-            else if(isIdentifier(string) == true){
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t%s\n", string, token);
-                printf("%s \t\t%s\n", string, token);
-            }
-            else{
-                fprintf(outputptr, "Lexeme : %s\t\t\t\t\t\t\t\t! unrecognized input\n", string);
-                printf("%s \t\t! unrecognized input\n", string);
-            }
-
-            strIndex = 0;
-        }
-        else{
-            ch1 = ch2;
-            ch2 = fgetc(inputptr);
-        }
-
-    } while(!feof(inputptr));
 
     fclose(outputptr);
     fclose(inputptr);
@@ -257,6 +70,205 @@ void fileChecker(char str[])
     }
     else if (len > 1 && checker != 1)
         printf("Invalid file extension\n.\n.\nProgram will now close");
+}
+
+void getLexeme(){
+
+    do{
+        // comment
+        if(ch1 == '/' && ch2 == '*'){
+            i=0;
+            ch1 = fgetc(inputptr);
+            ch2 = fgetc(inputptr);
+
+            while(!feof(inputptr)){
+                if(ch1 == '*' && ch2 == '/'){
+                    comment[i] = '\0';
+                    fprintf(outputptr, "%s\t\t\t\t\t\t\t\tcomment\n", comment);
+                    printf("%s comment\n", comment);
+                    // next character
+                    ch1 = fgetc(inputptr);
+                    ch2 = fgetc(inputptr);
+                    break;
+                }
+                else{
+                    comment[i] = ch1;
+                    i++;
+                    ch1 = ch2;
+                    ch2 = fgetc(inputptr);
+                }
+            }
+        }
+
+        // char lit
+        else if(ch1 == '\''){
+            ch1 = ch2;
+            ch2 = fgetc(inputptr);
+
+            if(ch1 == '\''){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\tinvalid\n", comment);
+                printf("! invalid empty\n");
+                ch1 = ch2;
+                ch2 = fgetc(inputptr);
+            }
+            else if(ch1 == '\\' && ch2 == '\''){
+                fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
+                printf("%c \tchar lit\n", ch2);
+                fgetc(inputptr);
+                ch1 = fgetc(inputptr);
+                ch2 = fgetc(inputptr);
+            }
+            else if(ch1 == '\\' && ch2 == '\\'){
+                fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
+                printf("%c \tchar lit\n", ch2);
+                fgetc(inputptr);
+                ch1 = fgetc(inputptr);
+                ch2 = fgetc(inputptr);
+            }
+            else if(ch2 != '\''){
+                i = 0;
+                charLit[i] = ch1;
+                i++;
+                charLit[i] = ch2;
+                i++;
+                ch1 = fgetc(inputptr);
+
+                while(!feof(inputptr)){
+                    if(ch1 == '\''){
+                        charLit[i] = '\0';
+                        fprintf(outputptr, "%s\t\t\t\t\t\t\t\tinvalid\n", charLit);
+                        printf("%s \tinvalid char lit\n", charLit);
+                        ch1 = fgetc(inputptr);
+                        ch2 = fgetc(inputptr);
+                        break;
+                    }
+                    else{
+                        charLit[i] = ch1;
+                        i++;
+                        ch1 = fgetc(inputptr);
+                    }
+                }
+            }
+            else{
+                fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch1);
+                printf("%c \t char lit\n", ch1);
+                ch1 = fgetc(inputptr);
+                ch2 = fgetc(inputptr);
+            }
+        }
+
+        // string lit
+        else if(ch1 == '\"'){
+            ch1 = ch2;
+            i=0;
+            while (!feof(inputptr)){
+                ch2 = fgetc(inputptr);
+
+                if (ch1 == '\"'){
+                    strLit[i] = '\0';
+                    ch1 = ch2;
+                    ch2 = fgetc(inputptr);
+                    fprintf(outputptr, "%s\t\t\t\t\t\t\t\tstr_lit\n", strLit);
+                    printf("%s \tstring\n", strLit);
+                    break;
+                }
+                else if (ch1 == '\\' && ch2 == '\"'){
+                    strLit[i] = '\"';
+                    i++;
+                    ch1 = fgetc(inputptr);
+                }
+                else if (ch1 == '\\' && ch2 == '\\'){
+                    strLit[i] = '\\';
+                    i++;
+                    ch1 = fgetc(inputptr);
+                }
+                else{
+                    strLit[i] = ch1;
+                    i++;
+                    ch1 = ch2;
+                }
+            }
+        }
+
+        // format specifier
+        else if(ch1 == '%' && (ch2 == 'd' || ch2 == 'e' || ch2 == 's')){
+                fprintf(outputptr, "%c%c\t\t\t\t\t\t\t\tformat_specs\n", ch1,ch2);
+                printf("%c%c \tformat\n",ch1,ch2);
+                ch1 = fgetc(inputptr);
+                ch2 = fgetc(inputptr);
+        }
+        else if(isSeparator(ch1) == false){
+            string[strIndex] = ch1;
+            strIndex++;
+            ch1 = ch2;
+            ch2 = fgetc(inputptr);
+        }
+        else if(isSeparator(ch1) == true && strIndex == 0){
+            if(isOperator(ch1)){
+                i = 0;
+                while(isOperator(ch1)){
+                    operators[i] = ch1;
+                    i++;
+                    ch1 = ch2;
+                    ch2 = fgetc(inputptr);
+                }
+                operators[i] = '\0';
+                identifyOperator(operators);
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", operators, token);
+                printf("%s \t%s\n",operators,token);
+            }
+            else{
+                if(ch1 != ' ' && ch1 != '\n'){
+                    identifyDelimiter(ch1);
+                    fprintf(outputptr, "%c\t\t\t\t\t\t\t\t%s\n", ch1, token);
+                    printf("%c \t%s\n",ch1,token);
+
+                }
+                ch1 = ch2;
+                ch2 = fgetc(inputptr);
+            }
+        }
+        else if(isSeparator(ch1) == true && strIndex > 0){
+            string[strIndex] = '\0';
+
+            if(isKeyword(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t%s\n", string, token);
+            }
+            else if(isReservedword(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t\t%s\n", string, token);
+            }
+            else if(isNoiseword(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t\t%s\n", string, token);
+            }
+            else if(isIntegerLiteral(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t\t%s\n", string, token);
+            }
+            else if(isFloatLiteral(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t\t%s\n", string, token);
+            }
+            else if(isIdentifier(string) == true){
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t%s\n", string, token);
+                printf("%s \t\t%s\n", string, token);
+            }
+            else{
+                fprintf(outputptr, "%s\t\t\t\t\t\t\t\t! unrecognized input\n", string);
+                printf("%s \t\t! unrecognized input\n", string);
+            }
+
+            strIndex = 0;
+        }
+        else{
+            ch1 = ch2;
+            ch2 = fgetc(inputptr);
+        }
+
+     }while(!feof(inputptr));
+
 }
 
 bool isSeparator(char ch)
@@ -481,19 +493,11 @@ bool isIdentifier(char *str)
 
 bool isIdentifierElement(char ch)
 {
-    char identifierElements[] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                                 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-                                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-                                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-                                 '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', '\0'};
-
-    for (int i = 0; i < strlen(identifierElements); i++)
+    if (isalpha(ch) || isdigit(ch) || ch == '_')
     {
-        if (identifierElements[i] == ch)
-        {
-            return (true);
-        }
+        return (true);
     }
+
     return (false);
 }
 
