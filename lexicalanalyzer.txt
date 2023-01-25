@@ -27,6 +27,13 @@ void stmt();
 void scan_stmt();
 void print_stmt();
 void ident_symbol();
+void declaration_stmt();
+void assign_stmt();
+void iterative_stmt();
+void condition();
+void increment();
+void rel_op();
+
 void error();
 
 char *token;
@@ -313,8 +320,12 @@ void getLexeme(){
 
 void parse(){
 
-    stmt();
+    getToken();
+    do{
 
+        stmt();
+
+    }while(!feof(fptr));
 }
 
 void getToken(){
@@ -350,22 +361,18 @@ void getToken(){
 
 void stmt(){
 
-    getToken();
+    scan_stmt();
+    print_stmt();
+    declaration_stmt();
+    assign_stmt();
 
-    do{
-
-        scan_stmt();
-        print_stmt();
-
-
-    }while(!feof(fptr));
 }
 
 void scan_stmt(){
 
 
     if(strcmp(currentToken,"scanf_keyword") != 0){  // escan
-        return 0;
+        return;
     }
     else{
         printf("Enter <scan_stmt>\n");
@@ -392,7 +399,7 @@ void scan_stmt(){
                     error();
                 else{
                     getToken();
-                    if(strcmp(currentToken,"identifier") != 0) // id
+                    if(strcmp(currentToken,"id") != 0) // id
                         error();
                     else{
                         getToken();
@@ -402,7 +409,7 @@ void scan_stmt(){
                                 error();
                             else{
                                 getToken();
-                                if(strcmp(currentToken,"identifier") != 0)
+                                if(strcmp(currentToken,"id") != 0)
                                     error();
                                 else
                                     getToken();
@@ -429,7 +436,7 @@ void scan_stmt(){
 void print_stmt(){
 
     if(strcmp(currentToken,"printf_keyword") != 0)  // impri
-        return 0;
+        return;
     else{
         printf("Enter <print_stmt>\n");
         getToken();
@@ -454,7 +461,7 @@ void print_stmt(){
                         getToken();
                         if(strcmp(currentToken,",") == 0){  // ,
                             getToken();
-                            if(strcmp(currentToken,"identifier") == 0){  // id
+                            if(strcmp(currentToken,"id") == 0){  // id
                                 getToken();
                                 if(strcmp(currentToken,")") == 0){ // )
                                     getToken();
@@ -485,7 +492,7 @@ void print_stmt(){
                 getToken();
                 if(strcmp(currentToken,",") == 0){  // ,
                     getToken();
-                    if(strcmp(currentToken,"identifier") == 0){  // id
+                    if(strcmp(currentToken,"id") == 0){  // id
                         getToken();
                         if(strcmp(currentToken,")") == 0){ // )
                             getToken();
@@ -513,6 +520,113 @@ void print_stmt(){
     }
 
 }
+
+void declaration_stmt(){
+
+    if(strcmp(currentToken,"integer_keyword") != 0 && strcmp(currentToken,"boolean_keyword") != 0 &&
+       strcmp(currentToken,"float_keyword") != 0 && strcmp(currentToken,"string_keyword") != 0 &&
+       strcmp(currentToken,"double_keyword") != 0 && strcmp(currentToken,"char_keyword") != 0){
+        return;
+    }
+    else{
+        printf("Enter <declaration_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"id") == 0){
+            getToken();
+            if(strcmp(currentToken,":") == 0){
+                printf("Exit <declaration_stmt>\n");
+                getToken();
+            }
+            else
+                error();
+        }
+        else
+            error();
+    }
+
+
+}
+
+void assign_stmt(){
+
+    if(strcmp(currentToken,"id) != 0)
+        return;
+    else{
+        printf("Enter <assign_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"=") == 0){
+            getToken();
+            if(strcmp(currentToken,"id") == 0 || strcmp(currentToken,"int_lit") == 0 || strcmp(currentToken,"float_lit") == 0 ||
+               strcmp(currentToken,"char_lit") == 0 || strcmp(currentToken,"str_lit") == 0){
+                getToken();
+                if(strcmp(currentToken,":") == 0){ // : ; or none
+                    printf("Exit <assign_stmt>\n");
+                    getToken();
+                }
+                else
+                    {
+                        printf("Exit <assign_stmt>\n");
+                        getToken();
+
+                    }
+            }
+            else
+                error();
+        }
+        else
+            error();
+    }
+}
+
+void iterative_stmt(){
+
+    if(strcmp(currentToken,"for_keyword") != 0)  // por
+        return;
+    else{
+        printf("Enter <iterative_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"(") == 0){  // (
+            assign_stmt();
+            if(strcmp(currentToken,";") == 0){
+                getToken();
+                condition();
+                if(strcmp(currentToken,";")){
+                    getToken();
+                    increment();
+                    if(strcmp(currentToken,")") == 0){ // )
+                        getToken();
+                        if(strcmp(currentToken,"{") == 0){
+                            stmt();
+                            if(strcmp(currentToken,"}") == 0){
+                                printf("Exit <iterative_stmt>\n");
+                                getToken();
+                            }
+                            else
+                                error();
+                        }
+                        else
+                            error();
+                    }
+                    else
+                        error();
+                }
+                else
+                    error();
+            }
+            else
+                error();
+        }
+        else
+            error();
+    }
+}
+
+void condition(){
+    if(strcmp(currentToken,"id"))
+
+}
+void increment(){}
+void rel_op(){}
 
 void ident_symbol(){
     printf("Enter <ident_symbol>\n");
@@ -743,7 +857,7 @@ bool isIdentifier(char *str)
 
     if (isalpha(str[0]) != 0)
     {
-        token = "identifier";
+        token = "id";
         return (true);
     }
     token = "invalid";
