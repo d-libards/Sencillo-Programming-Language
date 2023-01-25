@@ -1185,3 +1185,4 @@ bool isFloatLiteral(char *str)
         if the first loop ends w/o returning, then the str contains only numeric values and decimal
     */
 }
+
