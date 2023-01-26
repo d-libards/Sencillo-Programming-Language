@@ -132,7 +132,6 @@ void getLexeme()
                 {
                     comment[i] = '\0';
                     fprintf(outputptr, "%s\t\t\t\t\t\t\t\tcomment\n", comment);
-                    // printf("%s comment\n", comment);
                     //  next character
                     ch1 = fgetc(inputptr);
                     ch2 = fgetc(inputptr);
@@ -157,14 +156,12 @@ void getLexeme()
             if (ch1 == '\'')
             {
                 fprintf(outputptr, "%s\t\t\t\t\t\t\t\tinvalid\n", comment);
-                // printf("! invalid empty\n");
                 ch1 = ch2;
                 ch2 = fgetc(inputptr);
             }
             else if (ch1 == '\\' && ch2 == '\'')
             {
                 fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
-                // printf("%c \tchar lit\n", ch2);
                 fgetc(inputptr);
                 ch1 = fgetc(inputptr);
                 ch2 = fgetc(inputptr);
@@ -172,7 +169,6 @@ void getLexeme()
             else if (ch1 == '\\' && ch2 == '\\')
             {
                 fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch2);
-                // printf("%c \tchar lit\n", ch2);
                 fgetc(inputptr);
                 ch1 = fgetc(inputptr);
                 ch2 = fgetc(inputptr);
@@ -192,7 +188,6 @@ void getLexeme()
                     {
                         charLit[i] = '\0';
                         fprintf(outputptr, "%s\t\t\t\t\t\t\t\tinvalid\n", charLit);
-                        // printf("%s \tinvalid char lit\n", charLit);
                         ch1 = fgetc(inputptr);
                         ch2 = fgetc(inputptr);
                         break;
@@ -208,7 +203,6 @@ void getLexeme()
             else
             {
                 fprintf(outputptr, "%c\t\t\t\t\t\t\t\tchar_lit\n", ch1);
-                // printf("%c \t char lit\n", ch1);
                 ch1 = fgetc(inputptr);
                 ch2 = fgetc(inputptr);
             }
@@ -229,20 +223,9 @@ void getLexeme()
                     ch1 = ch2;
                     ch2 = fgetc(inputptr);
                     fprintf(outputptr, "%s\t\t\t\t\t\t\t\tstr_lit\n", strLit);
-                    // printf("%s \tstring\n", strLit);
                     break;
                 }
-                /*
-                else if (ch1 == '%' && (ch2 == 'd' || ch2 == 'c' || ch2 == 's' || ch2 == 'f')){
-                    fprintf(outputptr, "\"\t\t\t\t\t\t\t\t\"\n");
-                    fprintf(outputptr, "%c%c\t\t\t\t\t\t\t\tformat_specs\n", ch1,ch2);
-                    ch1 = fgetc(inputptr);
-                    fprintf(outputptr, "%c\t\t\t\t\t\t\t\t\"\n", ch1);
-                    ch1 = fgetc(inputptr);
-                    ch2 = fgetc(inputptr);
-                    break;
-                }
-                */
+
                 else if (ch1 == '\\' && ch2 == '\"')
                 {
                     strLit[i] = '\"';
@@ -738,17 +721,15 @@ void assign_stmt()
         printToken();
         getToken();
         assign_op(); // op
-        // expr();
-        arith_expr();
-        arith_expr();
-        /*while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
+        expr();
+        while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
                ((currentToken[0] == '*' && currentToken[1] == '*') == true) || ((currentToken[0] == '/' && currentToken[1] == '/') == true))
         {
             printToken();
             getToken();
-            arith_expr();
+            expr();
+            // arithemic
         }
-        */
         if ((currentToken[0] == ':') == true)
         { // : ; or none
             printToken();
