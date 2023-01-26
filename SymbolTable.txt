@@ -1,197 +1,3 @@
- Error 								comment
-
-impri								printf_keyword
-(								(
-this number is								str_lit
-,								,
-%d								%d
-,								,
-num3								id
-:								:
-
-
-max								id
-=								=
-ent								integer_keyword
-+								+
-9								int_lit
-:								:
-
-
-escan								scanf_keyword
-(								(
-c								id
-,								,
-&								special_char
-ch1								id
-)								)
-:								:
-
-
-
-input								comment
-
-escan								scanf_keyword
-(								(
-%d								%d
-,								,
-&								special_char
-num1								id
-)								)
-:								:
-
-escan								scanf_keyword
-(								(
-%f								%f
-,								,
-&								special_char
-num2								id
-)								)
-:								:
-
-escan								scanf_keyword
-(								(
-%c								%c
-,								,
-&								special_char
-ch1								id
-)								)
-:								:
-
-escan								scanf_keyword
-(								(
-%s								%s
-,								,
-&								special_char
-str								id
-)								)
-:								:
-
-
-output								comment
-
-impri								printf_keyword
-(								(
-hi								str_lit
-)								)
-:								:
-
-impri								printf_keyword
-(								(
-%d								%d
-,								,
-num1								id
-)								)
-:								:
-
-impri								printf_keyword
-(								(
-this number is								str_lit
-,								,
-%d								%d
-,								,
-num3								id
-)								)
-:								:
-
-impri								printf_keyword
-(								(
-hi								str_lit
-,								,
-%d								%d
-,								,
-%c								%c
-,								,
-num2								id
-,								,
-ch2								id
-)								)
-:								:
-
-
-Declaration								comment
-
-bool								boolean_keyword
-found								id
-:								:
-
-flot								float_keyword
-num3								id
-:								:
-
-ent								integer_keyword
-num2								id
-:								:
-
-cuer								string_keyword
-str								id
-:								:
-
-doble								double_keyword
-n								id
-:								:
-
-perso								char_keyword
-ch								id
-:								:
-
-ent								integer_keyword
-age								id
-,								,
-year								id
-,								,
-month								id
-:								:
-
-ent								integer_keyword
-age								id
-=								=
-7								int_lit
-:								:
-
-ent								integer_keyword
-age								id
-,								,
-year								id
-=								=
-0								int_lit
-,								,
-day								id
-:								:
-
-ent								integer_keyword
-day								id
-,								,
-age								id
-=								=
-year								id
-+								+
-1								int_lit
-:								:
-
-
- Assignment 								comment
-
-val								id
-=								=
-7								int_lit
-:								:
-
-temp								id
-=								=
-45.54								float_lit
-:								:
-
-ch								id
-=								=
-c								char_lit
-:								:
-
-str								id
-=								=
-hello								str_lit
-:								:
-
 a								id
 =								=
 x								id
@@ -208,185 +14,38 @@ b								id
 2								int_lit
 :								:
 
-
- Iterative 								comment
-
-por								for_keyword
-(								(
 a								id
 =								=
-0								int_lit
-;								;
-a								id
-<								<
+3								int_lit
+*								*
+4								int_lit
++								+
 5								int_lit
-;								;
-a								id
-++								++
-)								)
-{								{
-
-impri								printf_keyword
-(								(
-this number is								str_lit
-,								,
-%d								%d
-,								,
-val								id
-)								)
 :								:
 
-val								id
+f								id
 =								=
-0								int_lit
+e								id
+/								/
+b								id
 :								:
 
-}								}
-
-
-por								for_keyword
-(								(
-i								id
+d								id
 =								=
-0								int_lit
-;								;
-i								id
-<								<
-10								int_lit
-;								;
-i								id
-++								++
-)								)
-{								{
+4								int_lit
+**								**
+6								int_lit
+:								:
 
-por								for_keyword
-(								(
-j								id
+dr								id
 =								=
-0								int_lit
-;								;
-j								id
-<								<
-10								int_lit
-;								;
-j								id
-++								++
-)								)
-{								{
-
-impri								printf_keyword
 (								(
-this number is								str_lit
-,								,
-%d								%d
-,								,
-num3								id
+e								id
++								+
+s								id
 )								)
+*								*
+3								int_lit
+-								-
+1								int_lit
 :								:
-
-}								}
-
-}								}
-
-
-
- Conditional								comment
-
-si								if_keyword
-(								(
-num								id
-==								==
-num2								id
-)								)
-{								{
-
-impri								printf_keyword
-(								(
-two numbers are equal								str_lit
-)								)
-:								:
-
-}								}
-
-
-si								if_keyword
-(								(
-num1								id
->								>
-num2								id
-y								and_op
-num1								id
->								>
-num3								id
-)								)
-{								{
-
-impri								printf_keyword
-(								(
-num1 max								str_lit
-)								)
-:								:
-
-}								}
-mas								else_keyword
-{								{
-
-impri								printf_keyword
-(								(
-num1 min								str_lit
-)								)
-:								:
-
-}								}
-
-
-si								if_keyword
-(								(
-num								id
-<=								<=
-100								int_lit
-y								and_op
-
-num								id
-<=								<=
-0								int_lit
-)								)
-{								{
-
-si								if_keyword
-(								(
-num								id
->								>
-5								int_lit
-)								)
-{								{
-
-impri								printf_keyword
-(								(
-hi								str_lit
-)								)
-:								:
-
-}								}
-mas								else_keyword
-{								{
-
-impri								printf_keyword
-(								(
-hello								str_lit
-)								)
-:								:
-
-}								}
-
-}								}
-mas								else_keyword
-{								{
-
-impri								printf_keyword
-(								(
-hi								str_lit
-)								)
-:								:
-
-}								}

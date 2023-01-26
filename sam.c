@@ -40,6 +40,10 @@ void bool_expr();
 void bool_term();
 void bool_factor();
 void conditional_stmt();
+void arith_expr();
+void arith_term();
+void arith_power();
+void arith_factor();
 
 void error();
 
@@ -734,15 +738,7 @@ void assign_stmt()
         printToken();
         getToken();
         assign_op(); // op
-        expr();
-        while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
-               ((currentToken[0] == '*' && currentToken[1] == '*') == true) || ((currentToken[0] == '/' && currentToken[1] == '/') == true))
-        {
-            printToken();
-            getToken();
-            expr();
-            // arithemic
-        }
+        arith_expr();
         if ((currentToken[0] == ':') == true)
         { // : ; or none
             printToken();
@@ -991,6 +987,61 @@ void conditional_stmt()
                     }
                 }
             }
+        }
+    }
+}
+
+void arith_expr()
+{
+    arith_term();
+    while (((currentToken[0] == '+') || (currentToken[0] == '-')) == true)
+    {
+        printToken();
+        getToken();
+        arith_term();
+    }
+}
+void arith_term()
+{
+    arith_power();
+    while (((currentToken[0] == '*') || (currentToken[0] == '/') || (currentToken[0] == '%') ||
+            (currentToken[0] == '/' && currentToken[1] == '/')) == true)
+    {
+        printToken();
+        getToken();
+        arith_power();
+    }
+}
+void arith_power()
+{
+    arith_factor();
+    while ((currentToken[0] == '*' && currentToken[1] == '*') == true)
+    {
+        printToken();
+        getToken();
+        arith_factor();
+    }
+}
+void arith_factor()
+{
+    if (((currentToken[0] == 'i' && currentToken[1] == 'd') == true) || ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
+        ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'l' && currentToken[7] == 'i' && currentToken[8] == 't') == true) ||
+        ((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'l' && currentToken[6] == 'i' && currentToken[7] == 't') == true) ||
+        ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true))
+    { // id const
+        printToken();
+        getToken();
+    }
+
+    if ((currentToken[0] == '(') == true)
+    {
+        printToken();
+        getToken();
+        arith_expr();
+        if ((currentToken[0] == ')') == true)
+        {
+            printToken();
+            getToken();
         }
     }
 }
