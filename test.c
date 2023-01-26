@@ -105,6 +105,8 @@ void conditional_stmt();
 
 void error();
 
+void parsesuccess();
+
 char *token;
 FILE *outputptr;
 FILE *inputptr;
@@ -121,6 +123,7 @@ char string[1000];
 int strIndex = 0;
 char currentLexeme[100];
 char currentToken[20];
+int errrorcount = 0;
 
 int lineNo = 1;
 
@@ -438,6 +441,8 @@ void parse()
         stmt();
 
     } while (!feof(fptr));
+
+    return;
 }
 
 void getToken()
@@ -511,12 +516,13 @@ void errorskipper()
 
 void scan_stmt()
 {
-    do
+    for (int j = 0; j < 1; j++)
     {
 
         if ((currentToken[0] == 's' && currentToken[1] == 'c' && currentToken[2] == 'a' && currentToken[3] == 'n' && currentToken[4] == 'f' && currentToken[5] == '_' && currentToken[6] == 'k' && currentToken[7] == 'e' && currentToken[8] == 'y' && currentToken[9] == 'w' && currentToken[10] == 'o' && currentToken[11] == 'r' && currentToken[12] == 'd') != true)
         { // escan
             return;
+            break;
         }
         else
         {
@@ -581,6 +587,7 @@ void scan_stmt()
                                 else
                                 {
                                     printf("Exit <scan_stmt>\n");
+                                    parsesuccess();
                                     getToken();
                                 }
                             }
@@ -589,7 +596,7 @@ void scan_stmt()
                 }
             }
         }
-    } while (currentLexeme[0] != ':');
+    }
 }
 
 void print_stmt()
@@ -821,6 +828,7 @@ void expr()
     { // id const
         getToken();
     }
+
     else
         error();
 }
@@ -1078,7 +1086,20 @@ void error()
 {
     printf("    ! error token: %s\n", currentToken);
     printf("    ! error in line: %d\n", lineNo);
+    errrorcount++;
     getToken();
+}
+
+void parsesuccess()
+{
+    if (errrorcount == 0)
+    {
+        printf("\nparse successful!");
+    }
+    else
+    {
+        printf("\nparse unsuccessful");
+    }
 }
 
 bool isSeparator(char ch)
