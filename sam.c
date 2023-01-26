@@ -34,31 +34,34 @@ por(i=0; i<10; i++){
 
     }
 }
-
 /* if
-si(num==num2){
-    impri("two numbers are equal"):
+si(num == num2){
+    impri("two numbers are equal") :
 }
 */
-
 /* if else
-si(num1>num2 y num1>num3){
-    impri("num1 max"):
-}mas{
-    impri("num1 min"):
+si(num1 > num2 y num1 > num3){
+    impri("num1 max") :
+} mas{
+    impri("num1 min") :
+}
+*/
+
+/*nested if else
+si(num5 >= 0)
+{
+    si(num5 > 5){
+        impri("hi") :
+    } mas
+    {
+        impri("hello") :
+    }
+}
+mas{
+    impri("hi") :
 }
 
-*/
-/*nested if else
-    si(num5 > 5){
-        impri("hi"):
-    }mas{
-        impri("hello"):
-    }
-}mas{
-    impri("hi"):
-}
-*/
+    */
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -504,7 +507,7 @@ void stmt()
 void scan_stmt()
 {
 
-    if ((currentToken[0] == 's' && currentToken[1] == 'c' && currentToken[2] == 'a' && currentToken[3] == 'n' && currentToken[4] == 'f' && currentToken[5] == '_' && currentToken[6] == 'k' && currentToken[7] == 'e' && currentToken[8] == 'y' && currentToken[9] == 'w' && currentToken[10] == 'o' && currentToken[11] == 'r' && currentToken[12] == 'd') != true)
+    if (strcmp(currentToken, "scanf_keyword") != 0)
     { // escan
         return;
     }
@@ -512,57 +515,58 @@ void scan_stmt()
     {
         printf("Enter <scan_stmt>\n");
         getToken();
-        if ((currentToken[0] == '(') != true) // (
+        if (strcmp(currentToken, "(") != 0) // (
             error();
         else
         {
             getToken();
-            if (((currentToken[0] == '%' && currentToken[1] == 'd') != true) && ((currentToken[0] == '%' && currentToken[1] == 'f') != true) && ((currentToken[0] == '%' && currentToken[1] == 'c') != true) && ((currentToken[0] == '%' && currentToken[1] == 's') != true))
+            if (strcmp(currentToken, "%d") != 0 && strcmp(currentToken, "%f") != 0 && strcmp(currentToken, "%c") != 0 &&
+                strcmp(currentToken, "%s") != 0)
                 error();
             else
             {
                 getToken();
-                while ((currentToken[0] == ',') == true)
+                while (strcmp(currentToken, ",") == 0)
                 { // ,
                     getToken();
-                    if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) || ((currentToken[0] == '%' && currentToken[1] == 'f') == true) ||
-                        ((currentToken[0] == '%' && currentToken[1] == 'c') == true) || ((currentToken[0] == '%' && currentToken[1] == 's') == true))
+                    if (strcmp(currentToken, "%d") == 0 || strcmp(currentToken, "%f") == 0 ||
+                        strcmp(currentToken, "%c") == 0 || strcmp(currentToken, "%s") == 0)
                     {
                         getToken();
                     }
                     else
                         break;
                 }
-                if ((currentToken[0] == 's' && currentToken[1] == 'p' && currentToken[2] == 'e' && currentToken[3] == 'c' && currentToken[4] == 'i' && currentToken[5] == 'a' && currentToken[6] == 'l' && currentToken[7] == '_' && currentToken[8] == 'c' && currentToken[9] == 'h' && currentToken[10] == 'a' && currentToken[11] == 'r') != true) // &
+                if (strcmp(currentToken, "special_char") != 0) // &
                     error();
                 else
                 {
                     getToken();
-                    if ((currentToken[0] == 'i' && currentToken[1] == 'd') != true) // id
+                    if (strcmp(currentToken, "id") != 0) // id
                         error();
                     else
                     {
                         getToken();
-                        while ((currentToken[0] == ',') == true)
+                        while (strcmp(currentToken, ",") == 0)
                         {
                             getToken();
-                            if ((currentToken[0] == 's' && currentToken[1] == 'p' && currentToken[2] == 'e' && currentToken[3] == 'c' && currentToken[4] == 'i' && currentToken[5] == 'a' && currentToken[6] == 'l' && currentToken[7] == '_' && currentToken[8] == 'c' && currentToken[9] == 'h' && currentToken[10] == 'a' && currentToken[11] == 'r') != true) // &
+                            if (strcmp(currentToken, "special_char") != 0) // &
                                 error();
                             else
                             {
                                 getToken();
-                                if ((currentToken[0] == 'i' && currentToken[1] == 'd') != true)
+                                if (strcmp(currentToken, "id") != 0)
                                     error();
                                 else
                                     getToken();
                             }
                         }
-                        if ((currentToken[0] == ')') != true)
+                        if (strcmp(currentToken, ")") != 0)
                             error();
                         else
                         {
                             getToken();
-                            if ((currentToken[0] == ':') != true)
+                            if (strcmp(currentToken, ":") != 0)
                                 error();
                             else
                             {
@@ -580,25 +584,23 @@ void scan_stmt()
 void print_stmt()
 {
 
-    if ((currentToken[0] == 'p' && currentToken[1] == 'r' && currentToken[2] == 'i' && currentToken[3] == 'n' && currentToken[4] == 't' && currentToken[5] == 'f' && currentToken[6] == '_' && currentToken[7] == 'k' && currentToken[8] == 'e' && currentToken[9] == 'y' && currentToken[10] == 'w' && currentToken[11] == 'o' && currentToken[12] == 'r' && currentToken[13] == 'd') != true) // impri
+    if (strcmp(currentToken, "printf_keyword") != 0) // impri
         return;
     else
     {
         printf("Enter <print_stmt>\n");
         getToken();
-        if ((currentToken[0] == '(') == true)
+        if (strcmp(currentToken, "(") == 0)
         { // (
             getToken();
-            if (((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'l' && currentToken[6] == 'i' && currentToken[7] == 't') == true) ||
-                ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
-                ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
-                ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'l' && currentToken[7] == 'i' && currentToken[8] == 't') == true))
+            if (strcmp(currentToken, "char_lit") == 0 || strcmp(currentToken, "str_lit") == 0 ||
+                strcmp(currentToken, "int_lit") == 0 || strcmp(currentToken, "float_lit") == 0)
             { // const
                 getToken();
-                if ((currentToken[0] == ')') == true)
+                if (strcmp(currentToken, ")") == 0)
                 { // )
                     getToken();
-                    if ((currentToken[0] == ':') == true)
+                    if (strcmp(currentToken, ":") == 0)
                     { // :
                         printf("Exit <print_stmt>\n");
                         getToken();
@@ -606,36 +608,36 @@ void print_stmt()
                     else
                         error();
                 }
-                else if ((currentToken[0] == ',') == true)
+                else if (strcmp(currentToken, ",") == 0)
                 { // impri("hi",
-                    while ((currentToken[0] == ',') == true)
+                    while (strcmp(currentToken, ",") == 0)
                     {
                         getToken();
-                        if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) || ((currentToken[0] == '%' && currentToken[1] == 'f') == true) ||
-                            ((currentToken[0] == '%' && currentToken[1] == 'c') == true) || ((currentToken[0] == '%' && currentToken[1] == 's') == true))
+                        if (strcmp(currentToken, "%d") == 0 || strcmp(currentToken, "%f") == 0 ||
+                            strcmp(currentToken, "%c") == 0 || strcmp(currentToken, "%s") == 0)
                         { // %d
                             getToken();
                         }
                         else
                             break;
                     }
-                    if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+                    if (strcmp(currentToken, "id") == 0)
                     { // id
                         getToken();
-                        while ((currentToken[0] == ',') == true)
+                        while (strcmp(currentToken, ",") == 0)
                         {
                             getToken();
-                            if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+                            if (strcmp(currentToken, "id") == 0)
                             { // id
                                 getToken();
                             }
                             else
                                 error();
                         }
-                        if ((currentToken[0] == ')') == true)
+                        if (strcmp(currentToken, ")") == 0)
                         { // )
                             getToken();
-                            if ((currentToken[0] == ':') == true)
+                            if (strcmp(currentToken, ":") == 0)
                             { // :
                                 printf("Exit <print_stmt>\n");
                                 getToken();
@@ -693,12 +695,9 @@ void print_stmt()
 void declaration_stmt()
 {
 
-    if (((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == 'e' && currentToken[4] == 'g' && currentToken[5] == 'e' && currentToken[6] == 'r' && currentToken[7] == '_' && currentToken[8] == 'k' && currentToken[9] == 'e' && currentToken[10] == 'y' && currentToken[11] == 'w' && currentToken[12] == 'o' && currentToken[13] == 'r' && currentToken[14] == 'd') != true) &&
-        ((currentToken[0] == 'b' && currentToken[1] == 'o' && currentToken[2] == 'o' && currentToken[3] == 'l' && currentToken[4] == 'e' && currentToken[5] == 'a' && currentToken[6] == 'n' && currentToken[7] == '_' && currentToken[8] == 'k' && currentToken[9] == 'e' && currentToken[10] == 'y' && currentToken[11] == 'w' && currentToken[12] == 'o' && currentToken[13] == 'r' && currentToken[14] == 'd') != true) &&
-        ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'k' && currentToken[7] == 'e' && currentToken[8] == 'y' && currentToken[9] == 'w' && currentToken[10] == 'o' && currentToken[11] == 'r' && currentToken[12] == 'd') != true) &&
-        ((currentToken[0] == 'd' && currentToken[1] == 'o' && currentToken[2] == 'u' && currentToken[3] == 'b' && currentToken[4] == 'l' && currentToken[5] == 'e' && currentToken[6] == '_' && currentToken[7] == 'k' && currentToken[8] == 'e' && currentToken[9] == 'y' && currentToken[10] == 'w' && currentToken[11] == 'o' && currentToken[12] == 'r' && currentToken[13] == 'd') != true) &&
-        ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == 'i' && currentToken[4] == 'n' && currentToken[5] == 'g' && currentToken[6] == '_' && currentToken[7] == 'k' && currentToken[8] == 'e' && currentToken[9] == 'y' && currentToken[10] == 'w' && currentToken[11] == 'o' && currentToken[12] == 'r' && currentToken[13] == 'd') != true) &&
-        ((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'k' && currentToken[6] == 'e' && currentToken[7] == 'y' && currentToken[8] == 'w' && currentToken[9] == 'o' && currentToken[10] == 'r' && currentToken[11] == 'd') != true))
+    if (strcmp(currentToken, "integer_keyword") != 0 && strcmp(currentToken, "boolean_keyword") != 0 &&
+        strcmp(currentToken, "float_keyword") != 0 && strcmp(currentToken, "string_keyword") != 0 &&
+        strcmp(currentToken, "double_keyword") != 0 && strcmp(currentToken, "char_keyword") != 0)
     {
         return;
     }
@@ -706,24 +705,23 @@ void declaration_stmt()
     {
         printf("Enter <declaration_stmt>\n");
         getToken();
-        if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+        if (strcmp(currentToken, "id") == 0)
         {               // id
             getToken(); // ,
-            while ((currentToken[0] == ',') == true)
+            while (strcmp(currentToken, ",") == 0)
             {               // if <data-type><id> , ... (comma)
                 getToken(); // id
-                if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+                if (strcmp(currentToken, "id") == 0)
                 {
                     getToken(); // , or ass op, if ass op go to while
-                    while (((currentToken[0] == '=') == true) || ((currentToken[0] == '+' && currentToken[1] == '=') == true) || ((currentToken[0] == '-' && currentToken[1] == '=') == true) ||
-                           ((currentToken[0] == '*' && currentToken[1] == '=') == true) || ((currentToken[0] == '/' && currentToken[1] == '=') == true) || ((currentToken[0] == '%' && currentToken[1] == '=') == true) ||
-                           ((currentToken[0] == '/' && currentToken[1] == '/' && currentToken[2] == '=') == true))
-
+                    while (strcmp(currentToken, "=") == 0 || strcmp(currentToken, "+=") == 0 || strcmp(currentToken, "-=") == 0 ||
+                           strcmp(currentToken, "*=") == 0 || strcmp(currentToken, "/=") == 0 || strcmp(currentToken, "%=") == 0 ||
+                           strcmp(currentToken, "//=") == 0)
                     {
                         getToken();
                         expr(); // id or const
-                        while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
-                               ((currentToken[0] == '*' && currentToken[1] == '*') == true) || ((currentToken[0] == '/' && currentToken[1] == '/') == true))
+                        while (strcmp(currentToken, "+") == 0 || strcmp(currentToken, "-") == 0 || strcmp(currentToken, "*") == 0 ||
+                               strcmp(currentToken, "**") == 0 || strcmp(currentToken, "/") == 0 || strcmp(currentToken, "//") == 0 || strcmp(currentToken, "%") == 0)
                         {
                             getToken(); // id or const
                             expr();
@@ -733,20 +731,20 @@ void declaration_stmt()
                 else
                     error();
             } // while END
-            while (((currentToken[0] == '=') == true) || ((currentToken[0] == '+' && currentToken[1] == '=') == true) || ((currentToken[0] == '-' && currentToken[1] == '=') == true) ||
-                   ((currentToken[0] == '*' && currentToken[1] == '=') == true) || ((currentToken[0] == '/' && currentToken[1] == '=') == true) || ((currentToken[0] == '%' && currentToken[1] == '=') == true) ||
-                   ((currentToken[0] == '/' && currentToken[1] == '/' && currentToken[2] == '=') == true))
+            while (strcmp(currentToken, "=") == 0 || strcmp(currentToken, "+=") == 0 || strcmp(currentToken, "-=") == 0 ||
+                   strcmp(currentToken, "*=") == 0 || strcmp(currentToken, "/=") == 0 || strcmp(currentToken, "%=") == 0 ||
+                   strcmp(currentToken, "//=") == 0)
             { // if <data-type><id><assignop>...
                 getToken();
                 expr();
-                while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
-                       ((currentToken[0] == '*' && currentToken[1] == '*') == true) || ((currentToken[0] == '/' && currentToken[1] == '/') == true))
+                while (strcmp(currentToken, "+") == 0 || strcmp(currentToken, "-") == 0 || strcmp(currentToken, "*") == 0 ||
+                       strcmp(currentToken, "**") == 0 || strcmp(currentToken, "/") == 0 || strcmp(currentToken, "//") == 0 || strcmp(currentToken, "%") == 0)
                 {
                     getToken();
                     expr();
                 }
             } // while END
-            if ((currentToken[0] == ':') == true)
+            if (strcmp(currentToken, ":") == 0)
             {
                 printf("Exit <declaration_stmt>\n");
                 getToken();
@@ -762,7 +760,7 @@ void declaration_stmt()
 void assign_stmt()
 {
 
-    if ((currentToken[0] == 'i' && currentToken[1] == 'd') != true) // id
+    if (strcmp(currentToken, "id") != 0) // id
         return;
     else
     {
@@ -770,13 +768,13 @@ void assign_stmt()
         getToken();
         assign_op(); // op
         expr();
-        while (((currentToken[0] == '+') == true) || ((currentToken[0] == '-') == true) || ((currentToken[0] == '*') == true) || ((currentToken[0] == '/') == true) || ((currentToken[0] == '%') == true) ||
-               ((currentToken[0] == '*' && currentToken[1] == '*') == true) || ((currentToken[0] == '/' && currentToken[1] == '/') == true))
+        while (strcmp(currentToken, "+") == 0 || strcmp(currentToken, "-") == 0 || strcmp(currentToken, "*") == 0 ||
+               strcmp(currentToken, "**") == 0 || strcmp(currentToken, "/") == 0 || strcmp(currentToken, "//") == 0 || strcmp(currentToken, "%") == 0)
         {
             getToken();
             expr();
         }
-        if ((currentToken[0] == ':') == true)
+        if (strcmp(currentToken, ":") == 0)
         { // : ; or none
             printf("Exit <assign_stmt>\n");
             getToken();
@@ -790,9 +788,8 @@ void assign_stmt()
 
 void assign_op()
 {
-    if (((currentToken[0] == '=') == true) || ((currentToken[0] == '+' && currentToken[1] == '=') == true) || ((currentToken[0] == '-' && currentToken[1] == '=') == true) ||
-        ((currentToken[0] == '*' && currentToken[1] == '=') == true) || ((currentToken[0] == '/' && currentToken[1] == '=') == true) || ((currentToken[0] == '%' && currentToken[1] == '=') == true) ||
-        ((currentToken[0] == '/' && currentToken[1] == '/' && currentToken[2] == '=') == true))
+    if (strcmp(currentToken, "=") == 0 || strcmp(currentToken, "+=") == 0 || strcmp(currentToken, "-=") == 0 ||
+        strcmp(currentToken, "*=") == 0 || strcmp(currentToken, "/=") == 0 || strcmp(currentToken, "%=") == 0 || strcmp(currentToken, "//=") == 0)
         getToken();
     else
         error();
@@ -800,11 +797,8 @@ void assign_op()
 
 void expr()
 {
-    if (((currentToken[0] == 'i' && currentToken[1] == 'd') == true) || ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
-        ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'l' && currentToken[7] == 'i' && currentToken[8] == 't') == true) ||
-        ((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'l' && currentToken[6] == 'i' && currentToken[7] == 't') == true) ||
-        ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true))
-
+    if (strcmp(currentToken, "id") == 0 || strcmp(currentToken, "int_lit") == 0 || strcmp(currentToken, "float_lit") == 0 ||
+        strcmp(currentToken, "char_lit") == 0 || strcmp(currentToken, "str_lit") == 0)
     { // id const
         getToken();
     }
@@ -814,37 +808,36 @@ void expr()
 
 void iterative_stmt()
 {
-    // por
-    if ((currentToken[0] == 'f' && currentToken[1] == 'o' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'k' && currentToken[5] == 'e' && currentToken[6] == 'y' && currentToken[7] == 'w' && currentToken[8] == 'o' && currentToken[9] == 'r' && currentToken[10] == 'd') != true)
-        return;
 
+    if (strcmp(currentToken, "for_keyword") != 0) // por
+        return;
     else
     {
         printf("Enter <iterative_stmt>\n");
         getToken();
-        if ((currentToken[0] == '(') == true)
+        if (strcmp(currentToken, "(") == 0)
         { // (
             getToken();
             assign_stmt();
-            if ((currentToken[0] == ';') == true)
+            if (strcmp(currentToken, ";") == 0)
             {
                 getToken();
                 condition();
-                if ((currentToken[0] == ';') == true)
+                if (strcmp(currentToken, ";") == 0)
                 {
                     getToken();
                     increment();
-                    if ((currentToken[0] == ')') == true)
+                    if (strcmp(currentToken, ")") == 0)
                     { // )
                         getToken();
-                        if ((currentToken[0] == '{') == true)
+                        if (strcmp(currentToken, "{") == 0)
                         {
                             getToken();
-                            while ((currentToken[0] == '}') != true)
+                            while (strcmp(currentToken, "}") != 0)
                             {
                                 stmt();
                             }
-                            if ((currentToken[0] == '}') == true)
+                            if (strcmp(currentToken, "}") == 0)
                             {
                                 printf("Exit <iterative_stmt>\n");
                                 getToken();
@@ -872,11 +865,11 @@ void iterative_stmt()
 void condition()
 {
     printf("Enter <condition>\n");
-    if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+    if (strcmp(currentToken, "id") == 0)
     {
         getToken();
         rel_op();
-        if (((currentToken[0] == 'i' && currentToken[1] == 'd') == true) || ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true))
+        if (strcmp(currentToken, "id") == 0 || strcmp(currentToken, "int_lit") == 0)
         {
             getToken();
         }
@@ -891,11 +884,10 @@ void condition()
 void increment()
 {
     printf("Enter <increment>\n");
-    if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
-
+    if (strcmp(currentToken, "id") == 0)
     {
         getToken();
-        if (((currentToken[0] == '+' && currentToken[1] == '+') == true) || ((currentToken[0] == '-' && currentToken[1] == '-') == true))
+        if (strcmp(currentToken, "++") == 0 || strcmp(currentToken, "--") == 0)
         {
             getToken();
         }
@@ -910,17 +902,13 @@ void increment()
 void rel_expr()
 {
     printf("Enter <rel_expr>\n");
-    if (((currentToken[0] == 'i' && currentToken[1] == 'd') == true) || ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
-        ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'l' && currentToken[7] == 'i' && currentToken[8] == 't') == true) ||
-        ((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'l' && currentToken[6] == 'i' && currentToken[7] == 't') == true) ||
-        ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true))
+    if (strcmp(currentToken, "id") == 0 || strcmp(currentToken, "int_lit") == 0 || strcmp(currentToken, "float_lit") == 0 ||
+        strcmp(currentToken, "char_lit") == 0 || strcmp(currentToken, "str_lit") == 0)
     { // id cnst
         getToken();
         rel_op(); // op
-        if (((currentToken[0] == 'i' && currentToken[1] == 'd') == true) || ((currentToken[0] == 'i' && currentToken[1] == 'n' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true) ||
-            ((currentToken[0] == 'f' && currentToken[1] == 'l' && currentToken[2] == 'o' && currentToken[3] == 'a' && currentToken[4] == 't' && currentToken[5] == '_' && currentToken[6] == 'l' && currentToken[7] == 'i' && currentToken[8] == 't') == true) ||
-            ((currentToken[0] == 'c' && currentToken[1] == 'h' && currentToken[2] == 'a' && currentToken[3] == 'r' && currentToken[4] == '_' && currentToken[5] == 'l' && currentToken[6] == 'i' && currentToken[7] == 't') == true) ||
-            ((currentToken[0] == 's' && currentToken[1] == 't' && currentToken[2] == 'r' && currentToken[3] == '_' && currentToken[4] == 'l' && currentToken[5] == 'i' && currentToken[6] == 't') == true))
+        if (strcmp(currentToken, "id") == 0 || strcmp(currentToken, "int_lit") == 0 || strcmp(currentToken, "float_lit") == 0 ||
+            strcmp(currentToken, "char_lit") == 0 || strcmp(currentToken, "str_lit") == 0)
         {
             getToken();
         }
@@ -935,8 +923,8 @@ void rel_expr()
 void rel_op()
 {
     printf("Enter <rel_op>\n");
-    if (((currentToken[0] == '<') == true) || ((currentToken[0] == '>') == true) || ((currentToken[0] == '>' && currentToken[1] == '=') == true) ||
-        ((currentToken[0] == '<' && currentToken[1] == '=') == true) || ((currentToken[0] == '=' && currentToken[1] == '=') == true) || ((currentToken[0] == '!' && currentToken[1] == '=') == true))
+    if (strcmp(currentToken, "<") == 0 || strcmp(currentToken, ">") == 0 || strcmp(currentToken, ">=") == 0 ||
+        strcmp(currentToken, "<=") == 0 || strcmp(currentToken, "==") == 0 || strcmp(currentToken, "!=") == 0)
         getToken();
     else
     {
@@ -949,7 +937,7 @@ void rel_op()
 
 void conditional_stmt()
 {
-    if ((currentToken[0] == 'i' && currentToken[1] == 'f' && currentToken[2] == '_' && currentToken[3] == 'k' && currentToken[4] == 'e' && currentToken[5] == 'y' && currentToken[6] == 'w' && currentToken[7] == 'o' && currentToken[8] == 'r' && currentToken[9] == 'd') != true)
+    if (strcmp(currentToken, "if_keyword") != 0)
     { // if
         return;
     }
@@ -957,34 +945,34 @@ void conditional_stmt()
     {
         printf("Enter <conditional_stmt>\n");
         getToken();
-        if ((currentToken[0] == '(') != true) // (
+        if (strcmp(currentToken, "(") != 0) // (
             error();
         else
         {
             getToken();
             bool_expr();
-            if ((currentToken[0] == ')') != true) // )
+            if (strcmp(currentToken, ")") != 0) // (
                 error();
             else
             {
                 getToken();
-                if ((currentToken[0] == '{') != true) // {
+                if (strcmp(currentToken, "{") != 0) // {
                     error();
                 else
                 {
                     getToken();
-                    while ((currentToken[0] == '}') != true) //}
+                    while (strcmp(currentToken, "}") != 0)
                     {
                         stmt();
                     }
                     getToken();
-                    if ((currentToken[0] == 'e' && currentToken[1] == 'l' && currentToken[2] == 's' && currentToken[3] == 'e' && currentToken[4] == '_' && currentToken[5] == 'k' && currentToken[6] == 'e' && currentToken[7] == 'y' && currentToken[8] == 'w' && currentToken[9] == 'o' && currentToken[10] == 'r' && currentToken[11] == 'd') == true)
+                    if (strcmp(currentToken, "else_keyword") == 0)
                     {
                         getToken();
-                        if ((currentToken[0] == '{') == true)
+                        if (strcmp(currentToken, "{") == 0)
                         {
                             getToken();
-                            while ((currentToken[0] == '}') != true)
+                            while (strcmp(currentToken, "}") != 0)
                             {
                                 stmt();
                             }
@@ -1001,7 +989,7 @@ void conditional_stmt()
 void bool_expr()
 {
     bool_term();
-    while (((currentToken[0] == 'o' && currentToken[1] == 'r' && currentToken[2] == '_' && currentToken[3] == 'o' && currentToken[4] == 'p') == true))
+    while (strcmp(currentToken, "or_op") == 0)
     {
         getToken();
         bool_term();
@@ -1010,7 +998,7 @@ void bool_expr()
 void bool_term()
 {
     bool_factor();
-    while (((currentToken[0] == 'a' && currentToken[1] == 'n' && currentToken[2] == 'd' && currentToken[3] == '_' && currentToken[4] == 'o' && currentToken[5] == 'p') == true))
+    while (strcmp(currentToken, "and_op") == 0)
     {
         getToken();
         bool_factor();
@@ -1018,26 +1006,26 @@ void bool_term()
 }
 void bool_factor()
 {
-    if (((currentToken[0] == 'n' && currentToken[1] == 'o' && currentToken[2] == 't' && currentToken[3] == '_' && currentToken[4] == 'o' && currentToken[5] == 'p') == true))
+    if (strcmp(currentToken, "not_op") == 0)
     {
         getToken();
-        if ((currentToken[0] == 'i' && currentToken[1] == 'd') == true)
+        if (strcmp(currentToken, "id") == 0)
         {
             getToken();
         }
-        else if ((currentToken[0] == '(') == true)
+        else if (strcmp(currentToken, "(") == 0)
         {
             bool_expr();
-            if ((currentToken[0] == ')') == true)
+            if (strcmp(currentToken, ")") == 0)
             {
                 getToken();
             }
         }
     }
-    else if ((currentToken[0] == '(') == true)
+    else if (strcmp(currentToken, "(") == 0)
     {
         bool_expr();
-        if ((currentToken[0] == ')') == true)
+        if (strcmp(currentToken, ")") == 0)
         {
             getToken();
         }
@@ -1051,8 +1039,8 @@ void bool_factor()
 void ident_symbol()
 {
     printf("Enter <ident_symbol>\n");
-    if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) || ((currentToken[0] == '%' && currentToken[1] == 'f') == true) ||
-        ((currentToken[0] == '%' && currentToken[1] == 'c') == true) || ((currentToken[0] == '%' && currentToken[1] == 's') == true))
+    if (strcmp(currentToken, "%d") == 0 || strcmp(currentToken, "%f") == 0 ||
+        strcmp(currentToken, "%c") == 0 || strcmp(currentToken, "%s") == 0)
     {
         getToken();
     }

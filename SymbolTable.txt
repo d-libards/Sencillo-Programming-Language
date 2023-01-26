@@ -1,7 +1,69 @@
-escan								scanf_keyword
-)								)
-%d								%d
-,								,
-&								special_char
-number								id
+si								if_keyword
 (								(
+num1								id
+>								>
+num2								id
+y								and_op
+num1								id
+>								>
+num3								id
+)								)
+{								{
+
+impri								printf_keyword
+(								(
+num1 max								str_lit
+)								)
+:								:
+
+}								}
+mas								else_keyword
+{								{
+
+impri								printf_keyword
+(								(
+num1 min								str_lit
+)								)
+:								:
+
+}								}
+
+
+
+si								if_keyword
+(								(
+num5								id
+>								>
+5								int_lit
+)								)
+{								{
+
+impri								printf_keyword
+(								(
+hi								str_lit
+)								)
+:								:
+
+}								}
+mas								else_keyword
+{								{
+
+impri								printf_keyword
+(								(
+hello								str_lit
+)								)
+:								:
+
+}								}
+
+}								}
+mas								else_keyword
+{								{
+
+impri								printf_keyword
+(								(
+hi								str_lit
+)								)
+:								:
+
+}								}
