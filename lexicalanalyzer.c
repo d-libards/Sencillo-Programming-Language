@@ -424,6 +424,7 @@ void leftparen()
         ident_sym();
     else
     {
+        printf("1");
         error();
         ident_sym();
     }
@@ -432,10 +433,11 @@ void leftparen()
 void ident_sym()
 {
     getToken();
-    if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) && ((currentToken[0] == '%' && currentToken[1] == 'f') != true) && ((currentToken[0] == '%' && currentToken[1] == 'c') == true) && ((currentToken[0] == '%' && currentToken[1] == 's') == true))
+    if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) || ((currentToken[0] == '%' && currentToken[1] == 'f') != true) || ((currentToken[0] == '%' && currentToken[1] == 'c') == true) || ((currentToken[0] == '%' && currentToken[1] == 's') == true))
         comma();
     else
     {
+        printf("2");
         error();
         comma();
     }
@@ -443,15 +445,22 @@ void ident_sym()
 
 void comma()
 {
-    getToken();
-    if ((currentToken[0] == ',') == true)
-        special();
-    /*else
-    {
-        error();
-        special();
+    while ((currentToken[0] == 'c' && currentToken[1] == 'o' && currentToken[2] == 'm' && currentToken[3] == 'm' && currentToken[4] == 'a') == true)
+    { // ,
+        getToken();
+        if (((currentToken[0] == '%' && currentToken[1] == 'd') == true) || ((currentToken[0] == '%' && currentToken[1] == 'f') == true) ||
+            ((currentToken[0] == '%' && currentToken[1] == 'c') == true) || ((currentToken[0] == '%' && currentToken[1] == 's') == true))
+        {
+            special();
+        }
+        else
+        {
+            printf("3");
+            error();
+            special();
+            break;
+        }
     }
-    */
 }
 
 void special()
@@ -461,6 +470,7 @@ void special()
         idd();
     else
     {
+        printf("4");
         error();
         idd();
     }
@@ -473,6 +483,7 @@ void idd()
         rightparen();
     else
     {
+        printf("5");
         error();
         rightparen();
     }
@@ -481,10 +492,11 @@ void idd()
 void rightparen()
 {
     getToken();
-    if ((currentToken[0] == ')') == true)
+    if (currentToken[0] == ')')
         colon();
     else
     {
+        printf("6");
         error();
         colon();
     }
@@ -500,13 +512,10 @@ void colon()
     }
     else
     {
+        printf("7");
         error();
-        skipper();
+        getToken();
     }
-}
-void skipper()
-{
-    getToken();
 }
 
 void parse_checker()
@@ -897,7 +906,7 @@ void identifyDelimiter(char ch)
     }
     else if (ch == ',')
     {
-        token = ",";
+        token = "comma";
     }
     else if (ch == ':')
     {
