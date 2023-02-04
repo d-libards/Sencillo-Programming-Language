@@ -28,6 +28,54 @@ ch1								id
 :								:
 
 
+si								if_keyword
+(								(
+num								id
+num2								id
+)								)
+{								{
+
+impri								printf_keyword
+(								(
+two numbers are equal								str_lit
+)								)
+:								:
+
+}								}
+
+
+por								for_keyword
+(								(
+a								id
+=								=
+0								int_lit
+a								id
+<								<
+5								int_lit
+;								;
+a								id
+++								++
+)								)
+{								{
+
+impri								printf_keyword
+(								(
+this number is								str_lit
+,								,
+%d								%d
+,								,
+val								id
+)								)
+:								:
+
+val								id
+=								=
+0								int_lit
+:								:
+
+}								}
+
+
 
 input								comment
 
@@ -170,6 +218,7 @@ year								id
 :								:
 
 
+
  Assignment 								comment
 
 val								id
@@ -206,6 +255,22 @@ a								id
 b								id
 +								+
 2								int_lit
+:								:
+
+Dd								id
+=								=
+a								id
++								+
+b								id
+:								:
+
+c								id
+=								=
+3								int_lit
++								+
+6								int_lit
+/								/
+3								int_lit
 :								:
 
 
@@ -398,5 +463,9 @@ hi								str_lit
 :								:
 
 }								}
+
+
+
+
 
 

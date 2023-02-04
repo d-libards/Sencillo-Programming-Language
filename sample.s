@@ -5,6 +5,15 @@ max = ent + 9 :
 
 escan(c, &ch1) :
 
+si(num num2){
+    impri("two numbers are equal"):
+}
+
+por(a = 0 a<5; a++){
+    impri("this number is", %d, val):
+    val = 0:
+}
+
 
 /*input*/
 escan(%d, &num1) : 
@@ -30,6 +39,7 @@ ent age=7:
 ent age,year = 0, day:
 ent day, age = year+1:
 
+
 /* Assignment */
 val = 7:
 temp = 45.54:
@@ -37,6 +47,8 @@ ch = 'c':
 str = "hello":
 a = x + 3:
 d = a + b + 2:
+Dd = a + b:
+c = 3 + 6 / 3:
 
 /* Iterative */
 por(a = 0; a<5; a++){
@@ -71,5 +83,9 @@ si(no((num <= 45 y num > 0) ni num == 1)){
 }mas{
     impri("hi"):
 }
+
+
+
+
 
 
