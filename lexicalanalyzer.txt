@@ -480,26 +480,20 @@ void print_stmt(){
                             error(",",":");
                         else{
                             getToken();
-                            if(strcmp(currentToken,"&") != 0) // &
-                                error("&",":");
+                            if(strcmp(currentToken,"identifier") != 0) // identifier
+                                error("identifier",":");
                             else{
                                 getToken();
-                                if(strcmp(currentToken,"identifier") != 0) // identifier
-                                    error("identifier",":");
+                                if (strcmp(currentToken,")") != 0) // )
+                                    error(")",":");
                                 else{
                                     getToken();
-                                    if (strcmp(currentToken,")") != 0) // )
-                                        error(")",":");
+                                    if(strcmp(currentToken,":") != 0) // :
+                                        error(":",":");
                                     else{
+                                        printf("Exit <print_stmt>\n");
                                         getToken();
-                                        if(strcmp(currentToken,":") != 0) // :
-                                            error(":",":");
-                                        else{
-                                            printf("Exit <print_stmt>\n");
-                                            getToken();
-                                        }
                                     }
-
                                 }
                             }
                         }
@@ -523,28 +517,24 @@ void print_stmt(){
                     error(",",":");
                 else{
                     getToken();
-                    if(strcmp(currentToken,"&") != 0) // &
-                        error("&",":");
+                    if(strcmp(currentToken,"identifier") != 0) // identifier
+                        error("identifier",":");
                     else{
                         getToken();
-                        if(strcmp(currentToken,"identifier") != 0) // identifier
-                            error("identifier",":");
+                        if (strcmp(currentToken,")") != 0) // )
+                            error(")",":");
                         else{
                             getToken();
-                            if (strcmp(currentToken,")") != 0) // )
-                                error(")",":");
+                            if(strcmp(currentToken,":") != 0) // :
+                                error(":",":");
                             else{
+                                printf("Exit <print_stmt>\n");
                                 getToken();
-                                if(strcmp(currentToken,":") != 0) // :
-                                    error(":",":");
-                                else{
-                                    printf("Exit <print_stmt>\n");
-                                    getToken();
-                                }
                             }
-
                         }
+
                     }
+
                 }
             }
             else
@@ -714,9 +704,15 @@ void iterative_stmt(){
                             error("{","}");
                         else{
                             getToken();
-                            if(currentToken[0] != '}')  // (
+                            while(strcmp(currentToken,"scanf_keyword") == 0 || strcmp(currentToken,"printf_keyword") == 0 ||
+                                  strcmp(currentToken,"data_type") == 0 || strcmp(currentToken,"identifier") == 0 ||
+                                  strcmp(currentToken,"for_keyword") == 0 || strcmp(currentToken,"if_keyword") == 0){
+                                    stmt();
+                            }
+                            if(currentToken[0] != '}')  // }
                                 error("}","}");
                             else{
+                                printf("Exit <iterative_stmt>\n");
                                 getToken();
                             }
                         }
@@ -784,8 +780,8 @@ void increment(){
         error("id or unary-op",")");
 }
 void error(char *token, char *delimiter){
-    printf("! error token: %s\n", currentToken);
-    printf("! expected token: %s\n", token);
+    printf("    ! error token: %s\n", currentToken);
+    printf("    ! expected token: %s\n", token);
 
     if(strcmp(delimiter,";") == 0 || strcmp(delimiter,")") == 0){
         error_recovery(delimiter);
