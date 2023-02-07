@@ -52,7 +52,12 @@ void iterative_assign_stmt();
 void declaration_assign_stmt();
 void condition();
 void increment();
-
+void conditional_stmt();
+void bool_expr();
+void bool_term();
+void bool_factor();
+void rel_expr();
+void rel_op();
 void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
 
@@ -411,6 +416,7 @@ void stmt(){
     declaration_stmt();
     assignment_stmt();
     iterative_stmt();
+    conditional_stmt();
 }
 
 void scan_stmt(){
@@ -779,6 +785,144 @@ void increment(){
     else
         error("id or unary-op",")");
 }
+
+void conditional_stmt(){
+    if(strcmp(currentToken,"if_keyword") != 0)
+        return;
+    else{
+        printf("Enter <conditional_stmt>\n");
+        getToken();
+        if(currentToken[0] !='(') // (
+            error("(","}");
+        else{
+            getToken();
+            bool_expr();  // boolean expr
+            if(currentToken[0] != ')')  // )
+                error(")","}");
+            else{
+                getToken();
+                if(currentToken[0] != '{')  // {
+                    error("{","}");
+                else{
+                    getToken();
+                    while(strcmp(currentToken,"scanf_keyword") == 0 || strcmp(currentToken,"printf_keyword") == 0 ||
+                          strcmp(currentToken,"data_type") == 0 || strcmp(currentToken,"identifier") == 0 ||
+                          strcmp(currentToken,"for_keyword") == 0 || strcmp(currentToken,"if_keyword") == 0){
+                            stmt();
+                    }
+                    if(currentToken[0] != '}') // }
+                        error("}","proceed");
+                    else{
+                        printf("Exit <conditional_stmt>\n");
+                        getToken();
+                        if(strcmp(currentToken,"else_keyword") == 0){ // else
+                            getToken();
+                            if(currentToken[0] != '{') // {
+                                error("{","}");
+                            else{
+                                getToken();
+                                while(strcmp(currentToken,"scanf_keyword") == 0 || strcmp(currentToken,"printf_keyword") == 0 ||
+                                      strcmp(currentToken,"data_type") == 0 || strcmp(currentToken,"identifier") == 0 ||
+                                      strcmp(currentToken,"for_keyword") == 0 || strcmp(currentToken,"if_keyword") == 0){
+                                        stmt();
+                                }
+                                if(currentToken[0] != '}')
+                                    error("}","proceed");
+                                else{
+                                    printf("Exit <else_stmt>\n");
+                                    getToken();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void bool_expr()
+{
+    bool_term();
+    while (strcmp(currentToken,"or_op") == 0)
+    {
+        getToken();
+        bool_term();
+    }
+}
+void bool_term()
+{
+    bool_factor();
+    while (strcmp(currentToken,"and_op") == 0)
+    {
+        getToken();
+        bool_factor();
+    }
+}
+void bool_factor()
+{
+    if (strcmp(currentToken,"not_op") == 0)
+    {
+        getToken();
+        if (strcmp(currentToken,"identifier") == 0)
+        {
+            getToken();
+        }
+        else if ((currentToken[0] == '(') == true)
+        {
+            getToken();
+            bool_expr();
+            if ((currentToken[0] == ')') == true)
+            {
+                getToken();
+            }
+            else
+                error(")","proceed");
+        }
+    }
+    else if ((currentToken[0] == '(') == true)
+    {
+        getToken();
+        bool_expr();
+        if ((currentToken[0] == ')') == true)
+        {
+            getToken();
+        }
+    }
+    else
+    {
+        rel_expr();
+    }
+}
+
+void rel_expr(){
+    //printf("Enter <rel_expr>\n");
+    if(strcmp(currentToken,"identifier") == 0 || strcmp(currentToken,"int_const") == 0 || strcmp(currentToken,"float_const") == 0 ||
+       strcmp(currentToken,"char_const") == 0 || strcmp(currentToken,"str_const") == 0){ // id cnst
+        getToken();
+        rel_op(); // op
+        if(strcmp(currentToken,"identifier") == 0 || strcmp(currentToken,"int_const") == 0 || strcmp(currentToken,"float_const") == 0 ||
+           strcmp(currentToken,"char_const") == 0 || strcmp(currentToken,"str_const") == 0){
+            getToken();
+        }
+        else
+            error("id or const","}");
+    }
+    else
+        error("id or const","}");
+    //printf("Exit <rel_expr>\n");
+}
+
+void rel_op(){
+    if(strcmp(currentToken,"<") == 0 || strcmp(currentToken,">") == 0 || strcmp(currentToken,">=") == 0 ||
+       strcmp(currentToken,"<=") == 0 || strcmp(currentToken,"==") == 0 || strcmp(currentToken,"!=") == 0)
+        getToken();
+    else{
+        error("rel-op","}");
+    }
+}
+
+
 void error(char *token, char *delimiter){
     printf("    ! error token: %s\n", currentToken);
     printf("    ! expected token: %s\n", token);
