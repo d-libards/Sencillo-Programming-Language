@@ -41,6 +41,12 @@ void getToken();
 void stmt();
 void scan_stmt();
 void print_stmt();
+void declaration_stmt();
+void assignment_stmt();
+void arith_expr();
+void arith_term();
+void arith_power();
+void arith_factor();
 
 
 void error(char *token, char *delimiter);
@@ -398,6 +404,8 @@ void getToken()
 void stmt(){
     scan_stmt();
     print_stmt();
+    declaration_stmt();
+    assignment_stmt();
 }
 
 void scan_stmt(){
@@ -445,13 +453,239 @@ void scan_stmt(){
     }
 }
 
-void print_stmt(){}
+void print_stmt(){
+    if(strcmp(currentToken,"printf_keyword") != 0) // print
+        return;
+    else{
+        printf("Enter <print_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"(") != 0) // (
+            error("(",":");
+        else{
+            getToken();
+            if(strcmp(currentToken,"str_const") == 0){  // str_const
+                getToken();
+                if(strcmp(currentToken,",") == 0){  // ,
+                    getToken();
+                    if(strcmp(currentToken,"id_symbol") != 0) // id_symbol
+                        error("id_symbol",":");
+                    else{
+                        getToken();
+                        if(strcmp(currentToken,",") != 0) // ,
+                            error(",",":");
+                        else{
+                            getToken();
+                            if(strcmp(currentToken,"&") != 0) // &
+                                error("&",":");
+                            else{
+                                getToken();
+                                if(strcmp(currentToken,"identifier") != 0) // identifier
+                                    error("identifier",":");
+                                else{
+                                    getToken();
+                                    if (strcmp(currentToken,")") != 0) // )
+                                        error(")",":");
+                                    else{
+                                        getToken();
+                                        if(strcmp(currentToken,":") != 0) // :
+                                            error(":",":");
+                                        else{
+                                            printf("Exit <print_stmt>\n");
+                                            getToken();
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+                else if(strcmp(currentToken,")") == 0){ // )
+                    getToken();
+                    if(strcmp(currentToken,":") != 0) // :
+                        error(":",":");
+                    else{
+                        printf("Exit <print_stmt>\n");
+                        getToken();
+                    }
+                }
+                else
+                    error(", or )",":");
+            } // end str_const
+            else if(strcmp(currentToken,"id_symbol") == 0){  // id_symbol
+                getToken();
+                if(strcmp(currentToken,",") != 0) // ,
+                    error(",",":");
+                else{
+                    getToken();
+                    if(strcmp(currentToken,"&") != 0) // &
+                        error("&",":");
+                    else{
+                        getToken();
+                        if(strcmp(currentToken,"identifier") != 0) // identifier
+                            error("identifier",":");
+                        else{
+                            getToken();
+                            if (strcmp(currentToken,")") != 0) // )
+                                error(")",":");
+                            else{
+                                getToken();
+                                if(strcmp(currentToken,":") != 0) // :
+                                    error(":",":");
+                                else{
+                                    printf("Exit <print_stmt>\n");
+                                    getToken();
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            else
+                error("str_const or id_symbol",":");
+        }
+    }
+}
+
+void declaration_stmt(){
+    if(strcmp(currentToken,"data_type") != 0) // data type
+        return;
+    else{
+        printf("Enter <declaration_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"identifier") != 0)  // id
+            error("identifier",":");
+        else{
+            getToken();
+            if(strcmp(currentToken,":") == 0){  // :
+                printf("Exit <declaration_stmt>\n");
+                getToken();
+            }
+            else if(currentToken[0] == ','){ // ,
+                while(currentToken[0] == ','){
+                    getToken();
+                    arith_expr();
+                    if(currentToken[0] == '='){
+                        getToken();
+                        arith_expr();
+                    }
+                }
+                if(currentToken[0] != ':')
+                    error(":",":");
+                else{
+                    printf("Exit <declaration_stmt>\n");
+                    getToken();
+                }
+
+            }
+            else if(strcmp(currentToken,"=") == 0){ // =
+                getToken();
+                arith_expr();
+                while(currentToken[0] == ','){
+                    getToken();
+                    arith_expr();
+                    if(currentToken[0] == '='){
+                        getToken();
+                        arith_expr();
+                    }
+                }
+                if(currentToken[0] != ':')
+                    error(":",":");
+                else{
+                    printf("Exit <declaration_stmt>\n");
+                    getToken();
+                }
+            }
+            else
+                error(": or , or assign_op",":");
+        }
+    }
+}
+
+void assignment_stmt(){
+    if(strcmp(currentToken,"identifier") != 0)
+        return;
+    else{
+        printf("Enter <assignment_stmt>\n");
+        getToken();
+        if(strcmp(currentToken,"=") != 0)
+            error("=",":");
+        else{
+            getToken();
+            arith_expr();
+            if(strcmp(currentToken,":") != 0)
+                error(":",":");
+            else{
+                printf("Exit <assignment_stmt>\n");
+                getToken();
+            }
+        }
+    }
+}
+
+void arith_expr()
+{
+    arith_term();
+    while (((currentToken[0] == '+') || (currentToken[0] == '-')) == true)
+    {
+        getToken();
+        arith_term();
+    }
+}
+void arith_term()
+{
+    arith_power();
+    while (((currentToken[0] == '*') || (currentToken[0] == '/') || (currentToken[0] == '%') ||
+            (currentToken[0] == '/' && currentToken[1] == '/')) == true)
+    {
+        getToken();
+        arith_power();
+    }
+}
+
+void arith_power()
+{
+    arith_factor();
+    while ((currentToken[0] == '*' && currentToken[1] == '*') == true)
+    {
+        getToken();
+        arith_factor();
+    }
+}
+
+void arith_factor()
+{
+    if (strcmp(currentToken,"identifier")== 0 || strcmp(currentToken,"int_const")== 0 || strcmp(currentToken,"float_const")== 0
+        || strcmp(currentToken,"char_const")== 0 || strcmp(currentToken,"str_const") == 0)
+    { // id const
+        getToken();
+    }
+    else if ((currentToken[0] == '(') == true)
+    {
+        getToken();
+        arith_expr();
+
+        if ((currentToken[0] == ')') == true)
+        {
+            getToken();
+        }
+        else
+        {
+            error(")","proceed");
+        }
+    }
+    else
+        error("id or const","proceed");
+}
 
 void error(char *token, char *delimiter){
     printf("! error token: %s\n", currentToken);
     printf("! expected token: %s\n", token);
-    error_recovery(delimiter);
-    getToken();
+    if(strcmp(delimiter,"proceed") != 0){
+        error_recovery(delimiter);
+        getToken();
+    }
 }
 
 void error_recovery(char *delimiter){
