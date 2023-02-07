@@ -47,7 +47,11 @@ void arith_expr();
 void arith_term();
 void arith_power();
 void arith_factor();
-
+void iterative_stmt();
+void iterative_assign_stmt();
+void declaration_assign_stmt();
+void condition();
+void increment();
 
 void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
@@ -406,6 +410,7 @@ void stmt(){
     print_stmt();
     declaration_stmt();
     assignment_stmt();
+    iterative_stmt();
 }
 
 void scan_stmt(){
@@ -633,6 +638,7 @@ void arith_expr()
         arith_term();
     }
 }
+
 void arith_term()
 {
     arith_power();
@@ -679,10 +685,112 @@ void arith_factor()
         error("id or const","proceed");
 }
 
+void iterative_stmt(){
+    if(strcmp(currentToken,"for_keyword") != 0)
+        return;
+    else{
+        printf("Enter <iterative_stmt>\n");
+        getToken();
+        if(currentToken[0] != '(') // (
+            error("(","}");
+        else{
+            getToken();
+            iterative_assign_stmt(); // assign_stmt
+            if(currentToken[0] != ';') // ;
+                error(";","}");
+            else{
+                getToken();
+                condition();  // condition
+                if(currentToken[0] != ';')  // ;
+                    error(";","}");
+                else{
+                    getToken();
+                    increment();   // increment
+                    if(currentToken[0] != ')')
+                        error(")","}");  // )
+                    else{
+                        getToken();
+                        if(currentToken[0] != '{')  // {
+                            error("{","}");
+                        else{
+                            getToken();
+                            if(currentToken[0] != '}')  // (
+                                error("}","}");
+                            else{
+                                getToken();
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+void iterative_assign_stmt(){
+    if(strcmp(currentToken,"data_type") != 0)
+        error("data_type",";");
+    else{
+        getToken();
+        declaration_assign_stmt();
+    }
+}
+
+void declaration_assign_stmt(){
+    if(strcmp(currentToken,"identifier") != 0)
+        error("identifier",";");
+    else{
+        getToken();
+        if(currentToken[0] != '=')
+            error("=",";");
+        else{
+            getToken();
+            arith_expr();
+        }
+    }
+}
+
+void condition(){
+    if(strcmp(currentToken,"identifier") != 0)
+        error("identifier",";");
+    else{
+        getToken();
+        if(currentToken[0] == '>' || currentToken[0] == '<' || strcmp(currentToken,"!=") == 0 ||
+           strcmp(currentToken,"==") == 0 || strcmp(currentToken,">=") == 0 || strcmp(currentToken,"<=") == 0){
+            getToken();
+            if(strcmp(currentToken,"identifier") == 0 || strcmp(currentToken,"int_const") == 0 || strcmp(currentToken,"float_const") == 0 ||
+               strcmp(currentToken,"char_const") == 0 || strcmp(currentToken,"str_const") == 0){
+                   getToken();
+            }
+            else
+                error("id or const",";");
+        }
+        else
+            error("rel-op",";");
+    }
+}
+
+void increment(){
+    if(strcmp(currentToken,"identifier") == 0 || strcmp(currentToken,"++") == 0 || strcmp(currentToken,"--") == 0){
+        getToken();
+        if(strcmp(currentToken,"identifier") == 0 || strcmp(currentToken,"++") == 0 || strcmp(currentToken,"--") == 0){
+            getToken();
+        }
+        else
+            error("id or unary-op",")");
+    }
+    else
+        error("id or unary-op",")");
+}
 void error(char *token, char *delimiter){
     printf("! error token: %s\n", currentToken);
     printf("! expected token: %s\n", token);
-    if(strcmp(delimiter,"proceed") != 0){
+
+    if(strcmp(delimiter,";") == 0 || strcmp(delimiter,")") == 0){
+        error_recovery(delimiter);
+    }
+    else if(strcmp(delimiter,"proceed") != 0){
         error_recovery(delimiter);
         getToken();
     }
