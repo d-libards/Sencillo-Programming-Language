@@ -450,7 +450,7 @@ void scan_stmt(){
                             else{
                                 getToken();
                                 if(strcmp(currentToken,":") != 0)  // :
-                                    error(":",":");
+                                    error(":","proceed");
                                 else{
                                     printf("Exit <scan_stmt>\n");
                                     getToken();
@@ -476,13 +476,13 @@ void print_stmt(){
             getToken();
             if(strcmp(currentToken,"str_const") == 0){  // str_const
                 getToken();
-                if(strcmp(currentToken,",") == 0){  // ,
+                if(currentToken[0] == ','){  // ,
                     getToken();
                     if(strcmp(currentToken,"id_symbol") != 0) // id_symbol
                         error("id_symbol",":");
                     else{
                         getToken();
-                        if(strcmp(currentToken,",") != 0) // ,
+                        if(currentToken[0] != ',') // ,
                             error(",",":");
                         else{
                             getToken();
@@ -490,12 +490,12 @@ void print_stmt(){
                                 error("identifier",":");
                             else{
                                 getToken();
-                                if (strcmp(currentToken,")") != 0) // )
+                                if (currentToken[0] != ')') // )
                                     error(")",":");
                                 else{
                                     getToken();
-                                    if(strcmp(currentToken,":") != 0) // :
-                                        error(":",":");
+                                    if(currentToken[0] != ':') // :
+                                        error(":","proceed");
                                     else{
                                         printf("Exit <print_stmt>\n");
                                         getToken();
@@ -505,10 +505,10 @@ void print_stmt(){
                         }
                     }
                 }
-                else if(strcmp(currentToken,")") == 0){ // )
+                else if(currentToken[0] == ')'){ // )
                     getToken();
-                    if(strcmp(currentToken,":") != 0) // :
-                        error(":",":");
+                    if(currentToken[0] != ':') // :
+                        error(":","proceed");
                     else{
                         printf("Exit <print_stmt>\n");
                         getToken();
@@ -519,7 +519,7 @@ void print_stmt(){
             } // end str_const
             else if(strcmp(currentToken,"id_symbol") == 0){  // id_symbol
                 getToken();
-                if(strcmp(currentToken,",") != 0) // ,
+                if(currentToken[0] != ',')  // ,
                     error(",",":");
                 else{
                     getToken();
@@ -532,15 +532,13 @@ void print_stmt(){
                         else{
                             getToken();
                             if(strcmp(currentToken,":") != 0) // :
-                                error(":",":");
+                                error(":","proceed");
                             else{
                                 printf("Exit <print_stmt>\n");
                                 getToken();
                             }
                         }
-
                     }
-
                 }
             }
             else
@@ -559,7 +557,7 @@ void declaration_stmt(){
             error("identifier",":");
         else{
             getToken();
-            if(strcmp(currentToken,":") == 0){  // :
+            if(currentToken[0] == ':'){  // :
                 printf("Exit <declaration_stmt>\n");
                 getToken();
             }
@@ -572,8 +570,8 @@ void declaration_stmt(){
                         arith_expr();
                     }
                 }
-                if(currentToken[0] != ':')
-                    error(":",":");
+                if(currentToken[0] != ':') // :
+                    error(":","proceed");
                 else{
                     printf("Exit <declaration_stmt>\n");
                     getToken();
@@ -592,7 +590,7 @@ void declaration_stmt(){
                     }
                 }
                 if(currentToken[0] != ':')
-                    error(":",":");
+                    error(":","proceed");
                 else{
                     printf("Exit <declaration_stmt>\n");
                     getToken();
@@ -610,13 +608,13 @@ void assignment_stmt(){
     else{
         printf("Enter <assignment_stmt>\n");
         getToken();
-        if(strcmp(currentToken,"=") != 0)
+        if(currentToken[0] != '=')
             error("=",":");
         else{
             getToken();
             arith_expr();
-            if(strcmp(currentToken,":") != 0)
-                error(":",":");
+            if(currentToken[0] != ':')
+                error(":","proceed");
             else{
                 printf("Exit <assignment_stmt>\n");
                 getToken();
@@ -716,7 +714,7 @@ void iterative_stmt(){
                                     stmt();
                             }
                             if(currentToken[0] != '}')  // }
-                                error("}","}");
+                                error("}","proceed");
                             else{
                                 printf("Exit <iterative_stmt>\n");
                                 getToken();
@@ -816,6 +814,7 @@ void conditional_stmt(){
                         printf("Exit <conditional_stmt>\n");
                         getToken();
                         if(strcmp(currentToken,"else_keyword") == 0){ // else
+                            printf("Enter <else_stmt>\n");
                             getToken();
                             if(currentToken[0] != '{') // {
                                 error("{","}");
@@ -918,7 +917,7 @@ void rel_op(){
        strcmp(currentToken,"<=") == 0 || strcmp(currentToken,"==") == 0 || strcmp(currentToken,"!=") == 0)
         getToken();
     else{
-        error("rel-op","}");
+        error("rel-op","next");
     }
 }
 
@@ -934,6 +933,8 @@ void error(char *token, char *delimiter){
         error_recovery(delimiter);
         getToken();
     }
+    // if delimiter=proceed, as is
+    // no getToken, return to stmt() then makakahanap ng next stmt
 }
 
 void error_recovery(char *delimiter){
