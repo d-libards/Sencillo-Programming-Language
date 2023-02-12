@@ -12,15 +12,8 @@ void getString();
 void storeChar();
 void invalid();
 bool isSeparator(char ch);
-bool isOperator(char ch);
-void identifyOperator(char *subStr);
 void identifyDelimiter(char ch);
 bool isIdentifierElement(char ch);
-bool isKeyword(char *subStr);
-bool isReservedword(char *subStr);
-bool isNoiseword(char *subStr);
-bool isIntegerLiteral(char *str);
-bool isFloatLiteral(char *str);
 bool isIdentifier(char *str);
 
 char *token;
@@ -34,7 +27,6 @@ char ch2 = ' ';
 char comment[1000];
 char charLit[100];
 char strLit[100];
-char operators[100];
 char string[1000];
 int strIndex = 0;
 
@@ -66,7 +58,6 @@ void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
 
 FILE *fptr;
-
 char currentLexeme[100];
 char currentToken[20];
 
