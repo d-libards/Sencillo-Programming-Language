@@ -78,7 +78,7 @@ int main()
     {
         getLexeme();
     }
-    while(!feof(inputptr));
+    while(ch != EOF);
 
     fclose(outputptr);
     fclose(inputptr);
