@@ -53,7 +53,6 @@ void bool_expr();
 void bool_term();
 void bool_factor();
 void rel_expr();
-void rel_op();
 void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
 
@@ -2508,18 +2507,6 @@ void rel_expr()
     else
         error("id or const",")");
 }
-
-void rel_op()
-{
-    if(strcmp(currentToken,"<") == 0 || strcmp(currentToken,">") == 0 || strcmp(currentToken,">=") == 0 ||
-            strcmp(currentToken,"<=") == 0 || strcmp(currentToken,"==") == 0 || strcmp(currentToken,"!=") == 0)
-        getToken();
-    else
-    {
-        error("rel-op","}");
-    }
-}
-
 
 void error(char *token, char *delimiter)
 {
