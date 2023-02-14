@@ -9,10 +9,7 @@ escan(%f, &num2):
 escan(%c, &ch1):
 escan(%s ,&str):
 
-/* Output */
-impri("A Cup of Coffee",%s name):
-impri("idk") 
-impri(%d, sum:
+escan(c, &ch1) :
 
 impri("Hello Word!"):
 impri(%d,num1):
@@ -30,7 +27,7 @@ flot sum = 500.34:
 cuer name = firstname:
 ent age, year, month:
 ent age,year = 0, day:
-ent day, age = (year+1)*10:
+ent day, age = year+1:
 
 /* Assignment */
 day = :
@@ -41,10 +38,8 @@ val = 7:
 temp = 45.54:
 ch = 'c':
 str = "hello":
-a = 100:
-b = a:
-d = ((a*b)/80)+95**2:
-c = (a+d+6)/3:
+a = x + 3:
+d = a + b + 2:
 
 /* Iterative */
 por(ent a = 0 a<5; a++){
@@ -99,3 +94,5 @@ si(no((num <= 45 y num > 0) ni num == 1)){
 }mas{
     impri("hi"):
 }
+
+
