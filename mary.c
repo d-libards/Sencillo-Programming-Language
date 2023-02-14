@@ -10,17 +10,12 @@ void fileChecker(char str[]);
 void getLexeme();
 void getString();
 void storeChar();
+void invalid();
 bool isSeparator(char ch);
-bool isOperator(char ch);
-void identifyOperator(char *subStr);
 void identifyDelimiter(char ch);
 bool isIdentifierElement(char ch);
-bool isKeyword(char *subStr);
-bool isReservedword(char *subStr);
-bool isNoiseword(char *subStr);
-bool isIntegerLiteral(char *str);
-bool isFloatLiteral(char *str);
 bool isIdentifier(char *str);
+void floatConst();
 
 char *token;
 FILE *outputptr;
@@ -33,9 +28,10 @@ char ch2 = ' ';
 char comment[1000];
 char charLit[100];
 char strLit[100];
-char operators[100];
 char string[1000];
 int strIndex = 0;
+
+int lineno = 1;
 
 // parser
 
@@ -60,12 +56,10 @@ void bool_expr();
 void bool_term();
 void bool_factor();
 void rel_expr();
-void rel_op();
 void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
 
 FILE *fptr;
-
 char currentLexeme[100];
 char currentToken[20];
 
@@ -85,7 +79,7 @@ int main()
     do
     {
         getLexeme();
-    } while (!feof(inputptr));
+    } while (ch != EOF);
 
     fclose(outputptr);
     fclose(inputptr);
@@ -947,8 +941,8 @@ void getLexeme()
                         {
                             fprintf(outputptr, "\t\t\t\t\t\t\t\tscanf_keyword\n");
                         }
-                        else if (ch == 'e')
-                        { // escanear
+                        else if (ch == 'e') // escanear
+                        {
                             storeChar();
                             fprintf(outputptr, "%c", ch);
                             ch = fgetc(inputptr);
@@ -1309,8 +1303,8 @@ void getLexeme()
             else
                 getString();
         }
-        else if (ch == 'i')
-        { // mientras
+        else if (ch == 'i') // mientras
+        {
             storeChar();
             fprintf(outputptr, "%c", ch);
             ch = fgetc(inputptr);
@@ -1566,8 +1560,8 @@ void getLexeme()
         fprintf(outputptr, "%c", ch);
         ch = fgetc(inputptr);
 
-        if (ch == 'e')
-        { // sequir
+        if (ch == 'e') // sequir
+        {
             storeChar();
             fprintf(outputptr, "%c", ch);
             ch = fgetc(inputptr);
@@ -1762,6 +1756,34 @@ void getLexeme()
         else
             getString();
     }
+
+    else if (isdigit(ch))
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+
+        while (isSeparator(ch) == false)
+        {
+            if (isdigit(ch))
+            {
+                fprintf(outputptr, "%c", ch);
+            }
+            else if (ch == '.')
+            {
+                fprintf(outputptr, "%c", ch);
+                floatConst();
+                return;
+            }
+            else
+            {
+                invalid();
+                return;
+            }
+            ch = fgetc(inputptr);
+        }
+
+        fprintf(outputptr, "\t\t\t\t\t\t\t\tint_const\n");
+    }
     else
     {
         if (ch != ' ' && ch != '\n')
@@ -1769,6 +1791,51 @@ void getLexeme()
         else
             ch = fgetc(inputptr);
     }
+}
+
+void floatConst()
+{
+    ch = fgetc(inputptr);
+
+    // if the character after decimal is still a digit, proceed, else invalid
+    if (isdigit(ch))
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+    }
+    else
+    {
+        invalid();
+        return;
+    }
+
+    while (isSeparator(ch) == false)
+    {
+        if (isdigit(ch))
+        {
+            fprintf(outputptr, "%c", ch);
+        }
+        else
+        {
+            invalid();
+            return;
+        }
+        ch = fgetc(inputptr);
+    }
+
+    fprintf(outputptr, "\t\t\t\t\t\t\t\tfloat_const\n");
+}
+
+void invalid()
+{
+
+    while (isSeparator(ch) == false)
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+    }
+
+    fprintf(outputptr, "\t\t\t\t\t\t\t\tinvalid\n");
 }
 
 void storeChar()
@@ -1788,15 +1855,7 @@ void getString()
     }
     string[i] = '\0';
 
-    if (isIntegerLiteral(string) == true)
-    {
-        fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
-    }
-    else if (isFloatLiteral(string) == true)
-    {
-        fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
-    }
-    else if (isIdentifier(string) == true)
+    if (isIdentifier(string) == true)
     {
         fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
     }
@@ -1852,6 +1911,7 @@ void getToken()
     }
     else
     {
+        lineno++;
         printf("Lexeme: %s\t", currentLexeme);
         printf("Token: %s\n", currentToken);
     }
@@ -1859,8 +1919,8 @@ void getToken()
 
 void stmt()
 {
-    scan_stmt();
     print_stmt();
+    scan_stmt();
     declaration_stmt();
     assignment_stmt();
     iterative_stmt();
@@ -1934,11 +1994,11 @@ void print_stmt()
         else
         {
             getToken();
-            if (strcmp(currentToken, "str_const") == 0)
-            { // str_const
+            if (strcmp(currentToken, "str_const") == 0) // str_const
+            {
                 getToken();
-                if (currentToken[0] == ',')
-                { // ,
+                if (currentToken[0] == ',') // ,
+                {
                     getToken();
                     if (strcmp(currentToken, "id_symbol") != 0) // id_symbol
                         error("id_symbol", ":");
@@ -1972,8 +2032,8 @@ void print_stmt()
                         }
                     }
                 }
-                else if (currentToken[0] == ')')
-                { // )
+                else if (currentToken[0] == ')') // )
+                {
                     getToken();
                     if (currentToken[0] != ':') // :
                         error(":", "proceed");
@@ -1985,9 +2045,9 @@ void print_stmt()
                 }
                 else
                     error(", or )", ":");
-            } // end str_const
-            else if (strcmp(currentToken, "id_symbol") == 0)
-            { // id_symbol
+            }                                                // end str_const
+            else if (strcmp(currentToken, "id_symbol") == 0) // id_symbol
+            {
                 getToken();
                 if (currentToken[0] != ',') // ,
                     error(",", ":");
@@ -2034,13 +2094,13 @@ void declaration_stmt()
         else
         {
             getToken();
-            if (currentToken[0] == ':')
-            { // :
+            if (currentToken[0] == ':') // :
+            {
                 printf("Exit <declaration_stmt>\n");
                 getToken();
             }
-            else if (currentToken[0] == ',')
-            { // ,
+            else if (currentToken[0] == ',') // ,
+            {
                 while (currentToken[0] == ',')
                 {
                     getToken();
@@ -2059,8 +2119,8 @@ void declaration_stmt()
                     getToken();
                 }
             }
-            else if (strcmp(currentToken, "=") == 0)
-            { // =
+            else if (strcmp(currentToken, "=") == 0) // =
+            {
                 getToken();
                 arith_expr();
                 while (currentToken[0] == ',')
@@ -2146,7 +2206,8 @@ void arith_power()
 void arith_factor()
 {
     if (strcmp(currentToken, "identifier") == 0 || strcmp(currentToken, "int_const") == 0 || strcmp(currentToken, "float_const") == 0 || strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0)
-    { // id const
+    {
+        // id const
         getToken();
     }
     else if ((currentToken[0] == '(') == true)
@@ -2294,19 +2355,19 @@ void increment()
 
 void conditional_stmt()
 {
-    if (strcmp(currentToken, "if_keyword") != 0) //
+    if (strcmp(currentToken, "if_keyword") != 0)
         return;
     else
     {
         printf("Enter <conditional_stmt>\n");
         getToken();
-        if (strcmp(currentToken, "(") != 0) // (
+        if (currentToken[0] != '(') // (
             error("(", "}");
         else
         {
             getToken();
-            bool_expr();                        // boolean expr
-            if (strcmp(currentToken, ")") != 0) // )
+            bool_expr();                // boolean expr
+            if (currentToken[0] != ')') // )
                 error(")", "}");
             else
             {
@@ -2323,13 +2384,13 @@ void conditional_stmt()
                         stmt();
                     }
                     if (currentToken[0] != '}') // }
-                        error("}", "proceed");
+                        error("}", "}");
                     else
                     {
                         printf("Exit <conditional_stmt>\n");
                         getToken();
-                        if (strcmp(currentToken, "else_keyword") == 0)
-                        { // else
+                        if (strcmp(currentToken, "else_keyword") == 0) // else
+                        {
                             printf("Enter <else_stmt>\n");
                             getToken();
                             if (currentToken[0] != '{') // {
@@ -2418,8 +2479,8 @@ void bool_factor()
 void rel_expr()
 {
     if (strcmp(currentToken, "identifier") == 0 || strcmp(currentToken, "int_const") == 0 || strcmp(currentToken, "float_const") == 0 ||
-        strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0)
-    { // id cnst
+        strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0) // id cnst
+    {
         getToken();
         if (strcmp(currentToken, "<") == 0 || strcmp(currentToken, ">") == 0 || strcmp(currentToken, ">=") == 0 ||
             strcmp(currentToken, "<=") == 0 || strcmp(currentToken, "==") == 0 || strcmp(currentToken, "!=") == 0)
@@ -2440,21 +2501,11 @@ void rel_expr()
         error("id or const", ")");
 }
 
-void rel_op()
-{
-    if (strcmp(currentToken, "<") == 0 || strcmp(currentToken, ">") == 0 || strcmp(currentToken, ">=") == 0 ||
-        strcmp(currentToken, "<=") == 0 || strcmp(currentToken, "==") == 0 || strcmp(currentToken, "!=") == 0)
-        getToken();
-    else
-    {
-        error("rel-op", "}");
-    }
-}
-
 void error(char *token, char *delimiter)
 {
     printf("    ! error token: %s\n", currentToken);
     printf("    ! expected token: %s\n", token);
+    printf("    ! error in line: %d\n", lineno);
 
     if (strcmp(delimiter, ";") == 0 || strcmp(delimiter, ")") == 0)
     {
@@ -2465,6 +2516,7 @@ void error(char *token, char *delimiter)
         error_recovery(delimiter);
         getToken();
     }
+
     // if delimiter=proceed, as is
     // no getToken, return to stmt() then makakahanap ng next stmt
 }
@@ -2480,7 +2532,7 @@ void error_recovery(char *delimiter)
 bool isSeparator(char ch)
 {
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
-                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0'};
+                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0', '\t'};
 
     for (int i = 0; i < strlen(separatorList); i++)
     {
@@ -2490,7 +2542,6 @@ bool isSeparator(char ch)
 
     return (false);
 }
-
 
 bool isIdentifier(char *str)
 {
@@ -2543,48 +2594,4 @@ bool isIdentifierElement(char ch)
     }
 
     return (false);
-}
-
-bool isIntegerLiteral(char *str)
-{
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (isdigit(str[i]) == 0)
-            return (false);
-    }
-
-    token = "int_const";
-    return (true);
-}
-
-bool isFloatLiteral(char *str)
-{
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (isdigit(str[i]) == 0 && str[i] != '.')
-            return (false);
-    }
-
-    int count = 0;
-
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (str[i] == '.')
-            count++;
-    }
-
-    if (count > 1)
-    {
-        token = "invalid";
-    }
-    else
-    {
-        token = "float_const";
-    }
-
-    return (true);
-    /*
-        if a character in the substring is neither a digit nor a '.', then return false
-        if the first loop ends w/o returning, then the str contains only numeric values and decimal
-    */
 }

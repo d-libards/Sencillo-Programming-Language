@@ -39,6 +39,8 @@ int strIndex = 0;
 
 // parser
 
+void trial();
+
 void parse();
 void getToken();
 void stmt();
@@ -1860,7 +1862,6 @@ void getToken()
 void stmt()
 {
     scan_stmt();
-    print_stmt();
     declaration_stmt();
     assignment_stmt();
     iterative_stmt();
@@ -2294,20 +2295,20 @@ void increment()
 
 void conditional_stmt()
 {
-    if (strcmp(currentToken, "if_keyword") != 0) //
+    if (strcmp(currentToken, "if_keyword") != 0)
         return;
     else
     {
         printf("Enter <conditional_stmt>\n");
         getToken();
-        if (strcmp(currentToken, "(") != 0) // (
+        if (currentToken[0] != '(') // (
             error("(", "}");
         else
         {
             getToken();
-            bool_expr();                        // boolean expr
-            if (strcmp(currentToken, ")") != 0) // )
-                error(")", "}");
+            bool_expr(); // condition
+            if (currentToken[0] != ')')
+                error(")", "}"); // )
             else
             {
                 getToken();
@@ -2316,9 +2317,7 @@ void conditional_stmt()
                 else
                 {
                     getToken();
-                    while (strcmp(currentToken, "scanf_keyword") == 0 || strcmp(currentToken, "printf_keyword") == 0 ||
-                           strcmp(currentToken, "data_type") == 0 || strcmp(currentToken, "identifier") == 0 ||
-                           strcmp(currentToken, "for_keyword") == 0 || strcmp(currentToken, "if_keyword") == 0)
+                    while (currentToken[0] != '}')
                     {
                         stmt();
                     }
@@ -2326,37 +2325,17 @@ void conditional_stmt()
                         error("}", "proceed");
                     else
                     {
-                        printf("Exit <conditional_stmt>\n");
+                        printf("Exit <condiitonal_stmt>\n");
                         getToken();
-                        if (strcmp(currentToken, "else_keyword") == 0)
-                        { // else
-                            printf("Enter <else_stmt>\n");
-                            getToken();
-                            if (currentToken[0] != '{') // {
-                                error("{", "}");
-                            else
-                            {
-                                getToken();
-                                while (strcmp(currentToken, "scanf_keyword") == 0 || strcmp(currentToken, "printf_keyword") == 0 ||
-                                       strcmp(currentToken, "data_type") == 0 || strcmp(currentToken, "identifier") == 0 ||
-                                       strcmp(currentToken, "for_keyword") == 0 || strcmp(currentToken, "if_keyword") == 0)
-                                {
-                                    stmt();
-                                }
-                                if (currentToken[0] != '}')
-                                    error("}", "proceed");
-                                else
-                                {
-                                    printf("Exit <else_stmt>\n");
-                                    getToken();
-                                }
-                            }
-                        }
                     }
                 }
             }
         }
     }
+}
+
+void trial()
+{
 }
 
 void bool_expr()
@@ -2491,6 +2470,21 @@ bool isSeparator(char ch)
     return (false);
 }
 
+bool isOperator(char ch)
+{
+    char operatorList[] = {'=', '+', '-', '*', '/', '%', '!', '>', '<', '\0'};
+    int i = 0;
+    while (i < strlen(operatorList))
+    {
+        if (ch == operatorList[i])
+        {
+            return (true);
+        }
+        i++;
+    }
+
+    return (false);
+}
 
 bool isIdentifier(char *str)
 {
@@ -2543,6 +2537,183 @@ bool isIdentifierElement(char ch)
     }
 
     return (false);
+}
+
+bool isKeyword(char *subStr)
+{
+    if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'c' && subStr[1] == 'u' && subStr[2] == 'e' && subStr[3] == 'r' && subStr[4] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 'c' && subStr[3] == '\0')
+    {
+        token = "elif_keyword";
+    }
+    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 's' && subStr[3] == 'c' &&
+             subStr[4] == 'a' && subStr[5] == 'n' && subStr[6] == 's' && subStr[7] == 'o' && subStr[8] == '\0')
+    {
+        token = "break_keyword";
+    }
+    else if (subStr[0] == 'd' && subStr[1] == 'o' && subStr[2] == 'b' && subStr[3] == 'l' &&
+             subStr[4] == 'e' && subStr[5] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'e' && subStr[1] == 'n' && subStr[2] == 't' && subStr[3] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'e' && subStr[1] == 's' && subStr[2] == 'c' && subStr[3] == 'a' && subStr[4] == 'n' &&
+             subStr[5] == '\0')
+    {
+        token = "scanf_keyword";
+    }
+    else if (subStr[0] == 'f' && subStr[1] == 'l' && subStr[2] == 'o' && subStr[3] == 't' && subStr[4] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'h' && subStr[1] == 'a' && subStr[2] == 'c' && subStr[3] == 'e' &&
+             subStr[4] == 'r' && subStr[5] == '\0')
+    {
+        token = "do_keyword";
+    }
+    else if (subStr[0] == 'i' && subStr[1] == 'm' && subStr[2] == 'p' && subStr[3] == 'r' && subStr[4] == 'i' &&
+             subStr[5] == '\0')
+    {
+        token = "printf_keyword";
+    }
+    else if (subStr[0] == 'm' && subStr[1] == 'a' && subStr[2] == 's' && subStr[3] == '\0')
+    {
+        token = "else_keyword";
+    }
+    else if (subStr[0] == 'm' && subStr[1] == 'i' && subStr[2] == 'e' && subStr[3] == 'n' &&
+             subStr[4] == 't' && subStr[5] == 'r' && subStr[6] == 'a' && subStr[7] == 's' && subStr[8] == '\0')
+    {
+        token = "while_keyword";
+    }
+    else if (subStr[0] == 'p' && subStr[1] == 'e' && subStr[2] == 'r' && subStr[3] == 's' && subStr[4] == 'o' &&
+             subStr[5] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'p' && subStr[1] == 'o' && subStr[2] == 'r' && subStr[3] == '\0')
+    {
+        token = "for_keyword";
+    }
+    else if (subStr[0] == 'r' && subStr[1] == 'e' && subStr[2] == 't' && subStr[3] == 'o' &&
+             subStr[4] == 'r' && subStr[5] == 'n' && subStr[6] == 'o' && subStr[7] == '\0')
+    {
+        token = "return_keyword";
+    }
+    else if (subStr[0] == 's' && subStr[1] == 'e' && subStr[2] == 'q' && subStr[3] == 'u' && subStr[4] == 'i' &&
+             subStr[5] == 'r' && subStr[6] == '\0')
+    {
+        token = "continue_keyword";
+    }
+    else if (subStr[0] == 's' && subStr[1] == 'i' && subStr[2] == '\0')
+    {
+        token = "if_keyword";
+    }
+    else if (subStr[0] == 'v' && subStr[1] == 'a' && subStr[2] == 'c' && subStr[3] == 'i' && subStr[4] == 'o' &&
+             subStr[5] == '\0')
+    {
+        token = "void_keyword";
+    }
+    else if (subStr[0] == 'v' && subStr[1] == 'a' && subStr[2] == 'm' && subStr[3] == 'o' && subStr[4] == 's' &&
+             subStr[5] == '\0')
+    {
+        token = "goto_keyword";
+    }
+
+    // Boolean Logical
+    else if (subStr[0] == 'y' && subStr[1] == '\0')
+    {
+        token = "and_op";
+    }
+    else if (subStr[0] == 'n' && subStr[1] == 'i' && subStr[2] == '\0')
+    {
+        token = "or_op";
+    }
+    else if (subStr[0] == 'n' && subStr[1] == 'o' && subStr[2] == '\0')
+    {
+        token = "not_op";
+    }
+    else
+        return (false);
+
+    return (true);
+}
+
+bool isReservedword(char *subStr)
+{
+    if (subStr[0] == 'f' && subStr[1] == 'a' && subStr[2] == 'l' && subStr[3] == 's' && subStr[4] == 'o' &&
+        subStr[5] == '\0')
+    {
+        token = "false_reserved";
+    }
+    else if (subStr[0] == 'v' && subStr[1] == 'e' && subStr[2] == 'r' && subStr[3] == 'd' && subStr[4] == 'a' &&
+             subStr[5] == 'd' && subStr[6] == '\0')
+    {
+        token = "true_reserved";
+    }
+    else
+        return (false);
+
+    return (true);
+}
+
+bool isNoiseword(char *subStr)
+{
+    if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == 'e' &&
+        subStr[5] == 'a' && subStr[6] == 'n' && subStr[7] == 'o' && subStr[8] == '\0')
+    {
+        token = "data_type";
+    }
+
+    else if (subStr[0] == 'c' && subStr[1] == 'u' && subStr[2] == 'e' && subStr[3] == 'r' && subStr[4] == 'd' &&
+             subStr[5] == 'a' && subStr[6] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 'c' && subStr[3] == 'o' && subStr[4] == 'n' &&
+             subStr[5] == 't' && subStr[6] == 'r' && subStr[7] == 'a' && subStr[8] == '\0')
+    {
+        token = "elif_noiseword";
+    }
+    else if (subStr[0] == 'e' && subStr[1] == 'n' && subStr[2] == 't' && subStr[3] == 'e' &&
+             subStr[4] == 'r' && subStr[5] == 'o' && subStr[6] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'e' && subStr[1] == 's' && subStr[2] == 'c' && subStr[3] == 'a' &&
+             subStr[4] == 'n' && subStr[5] == 'e' && subStr[6] == 'a' && subStr[7] == 'r' && subStr[8] == '\0')
+    {
+        token = "scanf_noiseword";
+    }
+    else if (subStr[0] == 'f' && subStr[1] == 'l' && subStr[2] == 'o' && subStr[3] == 't' && subStr[4] == 'a' &&
+             subStr[5] == 'r' && subStr[6] == '\0')
+    {
+        token = "data_type";
+    }
+    else if (subStr[0] == 'i' && subStr[1] == 'm' && subStr[2] == 'p' && subStr[3] == 'r' &&
+             subStr[4] == 'i' && subStr[5] == 'm' && subStr[6] == 'i' && subStr[7] == 'r' && subStr[8] == '\0')
+    {
+        token = "printf_noiseword";
+    }
+    else if (subStr[0] == 'p' && subStr[1] == 'e' && subStr[2] == 'r' &&
+             subStr[3] == 's' && subStr[4] == 'o' && subStr[5] == 'n' && subStr[6] == 'a' &&
+             subStr[7] == 'j' && subStr[8] == 'e' && subStr[9] == '\0')
+    {
+        token = "data_type";
+    }
+    else
+        return (false);
+
+    return (true);
 }
 
 bool isIntegerLiteral(char *str)
