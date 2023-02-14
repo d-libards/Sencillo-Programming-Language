@@ -31,7 +31,8 @@ char strLit[100];
 char string[1000];
 int strIndex = 0;
 
-int lineno = 1;
+int lineno = 0;
+int commentno = 0;
 
 // parser
 
@@ -1907,6 +1908,7 @@ void getToken()
     // skips comment
     if (strcmp(currentToken, "comment") == 0)
     {
+        commentno++;
         getToken();
     }
     else
@@ -2505,7 +2507,7 @@ void error(char *token, char *delimiter)
 {
     printf("    ! error token: %s\n", currentToken);
     printf("    ! expected token: %s\n", token);
-    printf("    ! error in line: %d\n", lineno);
+    printf("    ! error in line: %d\n", lineno + commentno);
 
     if (strcmp(delimiter, ";") == 0 || strcmp(delimiter, ")") == 0)
     {

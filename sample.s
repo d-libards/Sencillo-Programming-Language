@@ -62,9 +62,6 @@ por(ent i=0; i<10; i++){
         impri("omg"):
     }
 
-
-
-
 /* Conditional */
 
 si(num num2){
