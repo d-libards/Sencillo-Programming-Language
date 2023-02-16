@@ -59,7 +59,7 @@ por(ent a = 0; a<5; a++){
 
 por(ent i=0; i<10; i++){
     por(ent j=0; j<10; j++){
-        impri("omg"):
+        impri("omg 1111"):
     }
 
 

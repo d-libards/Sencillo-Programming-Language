@@ -33,6 +33,8 @@ int strIndex = 0;
 
 int lineno = 0;
 int commentno = 0;
+int leftflag = 0;
+int rightflag = 0;
 
 // parser
 
@@ -2265,6 +2267,9 @@ void iterative_stmt()
                             error("{", "}");
                         else
                         {
+                            leftflag++;
+                            // printf("leftflag: %d\n", leftflag);
+                            // printf("rightflag: %d\n", rightflag);
                             getToken();
                             while (strcmp(currentToken, "scanf_keyword") == 0 || strcmp(currentToken, "printf_keyword") == 0 ||
                                    strcmp(currentToken, "data_type") == 0 || strcmp(currentToken, "identifier") == 0 ||
@@ -2272,13 +2277,19 @@ void iterative_stmt()
                             {
                                 stmt();
                             }
-                            if (currentToken[0] != '}') // }
-                                error("}", "proceed");
-                            else
+                            if (currentToken[0] == '}') // }
                             {
-                                printf("Exit <iterative_stmt>\n");
-                                getToken();
+                                rightflag++;
+                                // printf("leftflag: %d\n", leftflag);
+                                // printf("rightflag: %d\n", rightflag);
                             }
+                        }
+                        if (rightflag != leftflag)
+                            error("}", "proceed");
+                        else
+                        {
+                            printf("Exit <iterative_stmt>\n");
+                            getToken();
                         }
                     }
                 }
