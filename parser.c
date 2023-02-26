@@ -10,17 +10,12 @@ void fileChecker(char str[]);
 void getLexeme();
 void getString();
 void storeChar();
+void invalid();
 bool isSeparator(char ch);
-bool isOperator(char ch);
-void identifyOperator(char *subStr);
 void identifyDelimiter(char ch);
 bool isIdentifierElement(char ch);
-bool isKeyword(char *subStr);
-bool isReservedword(char *subStr);
-bool isNoiseword(char *subStr);
-bool isIntegerLiteral(char *str);
-bool isFloatLiteral(char *str);
 bool isIdentifier(char *str);
+void floatConst();
 
 char *token;
 FILE *outputptr;
@@ -33,13 +28,13 @@ char ch2 = ' ';
 char comment[1000];
 char charLit[100];
 char strLit[100];
-char operators[100];
 char string[1000];
 int strIndex = 0;
 
-// parser
+int lineno = 0;
+int commentno = 0;
 
-void trial();
+// parser
 
 void parse();
 void getToken();
@@ -62,12 +57,10 @@ void bool_expr();
 void bool_term();
 void bool_factor();
 void rel_expr();
-void rel_op();
 void error(char *token, char *delimiter);
 void error_recovery(char *delimiter);
 
 FILE *fptr;
-
 char currentLexeme[100];
 char currentToken[20];
 
@@ -87,7 +80,7 @@ int main()
     do
     {
         getLexeme();
-    } while (!feof(inputptr));
+    } while (ch != EOF);
 
     fclose(outputptr);
     fclose(inputptr);
@@ -949,8 +942,8 @@ void getLexeme()
                         {
                             fprintf(outputptr, "\t\t\t\t\t\t\t\tscanf_keyword\n");
                         }
-                        else if (ch == 'e')
-                        { // escanear
+                        else if (ch == 'e') // escanear
+                        {
                             storeChar();
                             fprintf(outputptr, "%c", ch);
                             ch = fgetc(inputptr);
@@ -1311,8 +1304,8 @@ void getLexeme()
             else
                 getString();
         }
-        else if (ch == 'i')
-        { // mientras
+        else if (ch == 'i') // mientras
+        {
             storeChar();
             fprintf(outputptr, "%c", ch);
             ch = fgetc(inputptr);
@@ -1568,8 +1561,8 @@ void getLexeme()
         fprintf(outputptr, "%c", ch);
         ch = fgetc(inputptr);
 
-        if (ch == 'e')
-        { // sequir
+        if (ch == 'e') // sequir
+        {
             storeChar();
             fprintf(outputptr, "%c", ch);
             ch = fgetc(inputptr);
@@ -1764,6 +1757,34 @@ void getLexeme()
         else
             getString();
     }
+
+    else if (isdigit(ch))
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+
+        while (isSeparator(ch) == false)
+        {
+            if (isdigit(ch))
+            {
+                fprintf(outputptr, "%c", ch);
+            }
+            else if (ch == '.')
+            {
+                fprintf(outputptr, "%c", ch);
+                floatConst();
+                return;
+            }
+            else
+            {
+                invalid();
+                return;
+            }
+            ch = fgetc(inputptr);
+        }
+
+        fprintf(outputptr, "\t\t\t\t\t\t\t\tint_const\n");
+    }
     else
     {
         if (ch != ' ' && ch != '\n')
@@ -1771,6 +1792,51 @@ void getLexeme()
         else
             ch = fgetc(inputptr);
     }
+}
+
+void floatConst()
+{
+    ch = fgetc(inputptr);
+
+    // if the character after decimal is still a digit, proceed, else invalid
+    if (isdigit(ch))
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+    }
+    else
+    {
+        invalid();
+        return;
+    }
+
+    while (isSeparator(ch) == false)
+    {
+        if (isdigit(ch))
+        {
+            fprintf(outputptr, "%c", ch);
+        }
+        else
+        {
+            invalid();
+            return;
+        }
+        ch = fgetc(inputptr);
+    }
+
+    fprintf(outputptr, "\t\t\t\t\t\t\t\tfloat_const\n");
+}
+
+void invalid()
+{
+
+    while (isSeparator(ch) == false)
+    {
+        fprintf(outputptr, "%c", ch);
+        ch = fgetc(inputptr);
+    }
+
+    fprintf(outputptr, "\t\t\t\t\t\t\t\tinvalid\n");
 }
 
 void storeChar()
@@ -1790,15 +1856,7 @@ void getString()
     }
     string[i] = '\0';
 
-    if (isIntegerLiteral(string) == true)
-    {
-        fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
-    }
-    else if (isFloatLiteral(string) == true)
-    {
-        fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
-    }
-    else if (isIdentifier(string) == true)
+    if (isIdentifier(string) == true)
     {
         fprintf(outputptr, "\t\t\t\t\t\t\t\t%s\n", token);
     }
@@ -1850,10 +1908,12 @@ void getToken()
     // skips comment
     if (strcmp(currentToken, "comment") == 0)
     {
+        commentno++;
         getToken();
     }
     else
     {
+        lineno++;
         printf("Lexeme: %s\t", currentLexeme);
         printf("Token: %s\n", currentToken);
     }
@@ -1861,6 +1921,7 @@ void getToken()
 
 void stmt()
 {
+    print_stmt();
     scan_stmt();
     declaration_stmt();
     assignment_stmt();
@@ -1876,7 +1937,7 @@ void scan_stmt()
     {
         printf("Enter <scan_stmt>\n");
         getToken();
-        if (strcmp(currentToken, "(") != 0) // (
+        if (currentToken[0] != '(') // (
             error("(", ":");
         else
         {
@@ -1886,12 +1947,12 @@ void scan_stmt()
             else
             {
                 getToken();
-                if (strcmp(currentToken, ",") != 0) // ,
+                if (currentToken[0] != ',') // ,
                     error(",", ":");
                 else
                 {
                     getToken();
-                    if (strcmp(currentToken, "&") != 0) // &
+                    if (currentToken[0] != '&') // &
                         error("&", ":");
                     else
                     {
@@ -1901,12 +1962,12 @@ void scan_stmt()
                         else
                         {
                             getToken();
-                            if (strcmp(currentToken, ")") != 0) // )
+                            if (currentToken[0] != ')') // )
                                 error(")", ":");
                             else
                             {
                                 getToken();
-                                if (strcmp(currentToken, ":") != 0) // :
+                                if (currentToken[0] != ':') // :
                                     error(":", "proceed");
                                 else
                                 {
@@ -1930,16 +1991,16 @@ void print_stmt()
     {
         printf("Enter <print_stmt>\n");
         getToken();
-        if (strcmp(currentToken, "(") != 0) // (
+        if (currentToken[0] != '(') // (
             error("(", ":");
         else
         {
             getToken();
-            if (strcmp(currentToken, "str_const") == 0)
-            { // str_const
+            if (strcmp(currentToken, "str_const") == 0) // str_const
+            {
                 getToken();
-                if (currentToken[0] == ',')
-                { // ,
+                if (currentToken[0] == ',') // ,
+                {
                     getToken();
                     if (strcmp(currentToken, "id_symbol") != 0) // id_symbol
                         error("id_symbol", ":");
@@ -1973,8 +2034,8 @@ void print_stmt()
                         }
                     }
                 }
-                else if (currentToken[0] == ')')
-                { // )
+                else if (currentToken[0] == ')') // )
+                {
                     getToken();
                     if (currentToken[0] != ':') // :
                         error(":", "proceed");
@@ -1986,9 +2047,9 @@ void print_stmt()
                 }
                 else
                     error(", or )", ":");
-            } // end str_const
-            else if (strcmp(currentToken, "id_symbol") == 0)
-            { // id_symbol
+            }                                                // end str_const
+            else if (strcmp(currentToken, "id_symbol") == 0) // id_symbol
+            {
                 getToken();
                 if (currentToken[0] != ',') // ,
                     error(",", ":");
@@ -2035,21 +2096,31 @@ void declaration_stmt()
         else
         {
             getToken();
-            if (currentToken[0] == ':')
-            { // :
+            if (currentToken[0] == ':') // :
+            {
                 printf("Exit <declaration_stmt>\n");
                 getToken();
             }
-            else if (currentToken[0] == ',')
-            { // ,
+            else if (currentToken[0] == ',') // ,
+            {
                 while (currentToken[0] == ',')
                 {
                     getToken();
-                    arith_expr();
-                    if (currentToken[0] == '=')
+                    if (strcmp(currentToken, "identifier") != 0)
+                        error("identifier", ":");
+                    else
                     {
                         getToken();
-                        arith_expr();
+                        if (currentToken[0] == '=')
+                        {
+                            getToken();
+                            if (strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0 || strcmp(currentToken, "bool_const") == 0)
+                            {
+                                getToken();
+                            }
+                            else
+                                arith_expr();
+                        }
                     }
                 }
                 if (currentToken[0] != ':') // :
@@ -2060,18 +2131,33 @@ void declaration_stmt()
                     getToken();
                 }
             }
-            else if (strcmp(currentToken, "=") == 0)
-            { // =
+            else if (strcmp(currentToken, "=") == 0) // =
+            {
                 getToken();
-                arith_expr();
+                if (strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0 || strcmp(currentToken, "bool_const") == 0)
+                {
+                    getToken();
+                }
+                else
+                    arith_expr();
                 while (currentToken[0] == ',')
                 {
                     getToken();
-                    arith_expr();
-                    if (currentToken[0] == '=')
+                    if (strcmp(currentToken, "identifier") != 0)
+                        error("identifier", ":");
+                    else
                     {
                         getToken();
-                        arith_expr();
+                        if (currentToken[0] == '=')
+                        {
+                            getToken();
+                            if (strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0 || strcmp(currentToken, "bool_const") == 0)
+                            {
+                                getToken();
+                            }
+                            else
+                                arith_expr();
+                        }
                     }
                 }
                 if (currentToken[0] != ':')
@@ -2101,7 +2187,12 @@ void assignment_stmt()
         else
         {
             getToken();
-            arith_expr();
+            if (strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0 || strcmp(currentToken, "bool_const") == 0)
+            {
+                getToken();
+            }
+            else
+                arith_expr();
             if (currentToken[0] != ':')
                 error(":", "proceed");
             else
@@ -2146,8 +2237,9 @@ void arith_power()
 
 void arith_factor()
 {
-    if (strcmp(currentToken, "identifier") == 0 || strcmp(currentToken, "int_const") == 0 || strcmp(currentToken, "float_const") == 0 || strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0)
-    { // id const
+    if (strcmp(currentToken, "identifier") == 0 || strcmp(currentToken, "int_const") == 0 || strcmp(currentToken, "float_const") == 0)
+    {
+        // id const
         getToken();
     }
     else if ((currentToken[0] == '(') == true)
@@ -2306,9 +2398,9 @@ void conditional_stmt()
         else
         {
             getToken();
-            bool_expr(); // condition
-            if (currentToken[0] != ')')
-                error(")", "}"); // )
+            bool_expr();                // boolean expr
+            if (currentToken[0] != ')') // )
+                error(")", "}");
             else
             {
                 getToken();
@@ -2317,25 +2409,47 @@ void conditional_stmt()
                 else
                 {
                     getToken();
-                    while (currentToken[0] != '}')
+                    while (strcmp(currentToken, "scanf_keyword") == 0 || strcmp(currentToken, "printf_keyword") == 0 ||
+                           strcmp(currentToken, "data_type") == 0 || strcmp(currentToken, "identifier") == 0 ||
+                           strcmp(currentToken, "for_keyword") == 0 || strcmp(currentToken, "if_keyword") == 0)
                     {
                         stmt();
                     }
                     if (currentToken[0] != '}') // }
-                        error("}", "proceed");
+                        error("}", "}");
                     else
                     {
-                        printf("Exit <condiitonal_stmt>\n");
+                        printf("Exit <conditional_stmt>\n");
                         getToken();
+                        if (strcmp(currentToken, "else_keyword") == 0) // else
+                        {
+                            printf("Enter <else_stmt>\n");
+                            getToken();
+                            if (currentToken[0] != '{') // {
+                                error("{", "}");
+                            else
+                            {
+                                getToken();
+                                while (strcmp(currentToken, "scanf_keyword") == 0 || strcmp(currentToken, "printf_keyword") == 0 ||
+                                       strcmp(currentToken, "data_type") == 0 || strcmp(currentToken, "identifier") == 0 ||
+                                       strcmp(currentToken, "for_keyword") == 0 || strcmp(currentToken, "if_keyword") == 0)
+                                {
+                                    stmt();
+                                }
+                                if (currentToken[0] != '}')
+                                    error("}", "proceed");
+                                else
+                                {
+                                    printf("Exit <else_stmt>\n");
+                                    getToken();
+                                }
+                            }
+                        }
                     }
                 }
             }
         }
     }
-}
-
-void trial()
-{
 }
 
 void bool_expr()
@@ -2397,8 +2511,8 @@ void bool_factor()
 void rel_expr()
 {
     if (strcmp(currentToken, "identifier") == 0 || strcmp(currentToken, "int_const") == 0 || strcmp(currentToken, "float_const") == 0 ||
-        strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0)
-    { // id cnst
+        strcmp(currentToken, "char_const") == 0 || strcmp(currentToken, "str_const") == 0) // id cnst
+    {
         getToken();
         if (strcmp(currentToken, "<") == 0 || strcmp(currentToken, ">") == 0 || strcmp(currentToken, ">=") == 0 ||
             strcmp(currentToken, "<=") == 0 || strcmp(currentToken, "==") == 0 || strcmp(currentToken, "!=") == 0)
@@ -2419,21 +2533,11 @@ void rel_expr()
         error("id or const", ")");
 }
 
-void rel_op()
-{
-    if (strcmp(currentToken, "<") == 0 || strcmp(currentToken, ">") == 0 || strcmp(currentToken, ">=") == 0 ||
-        strcmp(currentToken, "<=") == 0 || strcmp(currentToken, "==") == 0 || strcmp(currentToken, "!=") == 0)
-        getToken();
-    else
-    {
-        error("rel-op", "}");
-    }
-}
-
 void error(char *token, char *delimiter)
 {
     printf("    ! error token: %s\n", currentToken);
     printf("    ! expected token: %s\n", token);
+    printf("    ! error in line: %d\n", lineno + commentno);
 
     if (strcmp(delimiter, ";") == 0 || strcmp(delimiter, ")") == 0)
     {
@@ -2444,6 +2548,7 @@ void error(char *token, char *delimiter)
         error_recovery(delimiter);
         getToken();
     }
+
     // if delimiter=proceed, as is
     // no getToken, return to stmt() then makakahanap ng next stmt
 }
@@ -2459,28 +2564,12 @@ void error_recovery(char *delimiter)
 bool isSeparator(char ch)
 {
     char separatorList[] = {' ', '+', '-', '*', '/', '%', '>', '<', '!', '=',
-                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0'};
+                            '[', ']', '{', '}', '(', ')', ':', ';', ',', '\n', '\0', '\t'};
 
     for (int i = 0; i < strlen(separatorList); i++)
     {
         if (separatorList[i] == ch)
             return (true);
-    }
-
-    return (false);
-}
-
-bool isOperator(char ch)
-{
-    char operatorList[] = {'=', '+', '-', '*', '/', '%', '!', '>', '<', '\0'};
-    int i = 0;
-    while (i < strlen(operatorList))
-    {
-        if (ch == operatorList[i])
-        {
-            return (true);
-        }
-        i++;
     }
 
     return (false);
@@ -2537,225 +2626,4 @@ bool isIdentifierElement(char ch)
     }
 
     return (false);
-}
-
-bool isKeyword(char *subStr)
-{
-    if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'c' && subStr[1] == 'u' && subStr[2] == 'e' && subStr[3] == 'r' && subStr[4] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 'c' && subStr[3] == '\0')
-    {
-        token = "elif_keyword";
-    }
-    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 's' && subStr[3] == 'c' &&
-             subStr[4] == 'a' && subStr[5] == 'n' && subStr[6] == 's' && subStr[7] == 'o' && subStr[8] == '\0')
-    {
-        token = "break_keyword";
-    }
-    else if (subStr[0] == 'd' && subStr[1] == 'o' && subStr[2] == 'b' && subStr[3] == 'l' &&
-             subStr[4] == 'e' && subStr[5] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'e' && subStr[1] == 'n' && subStr[2] == 't' && subStr[3] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'e' && subStr[1] == 's' && subStr[2] == 'c' && subStr[3] == 'a' && subStr[4] == 'n' &&
-             subStr[5] == '\0')
-    {
-        token = "scanf_keyword";
-    }
-    else if (subStr[0] == 'f' && subStr[1] == 'l' && subStr[2] == 'o' && subStr[3] == 't' && subStr[4] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'h' && subStr[1] == 'a' && subStr[2] == 'c' && subStr[3] == 'e' &&
-             subStr[4] == 'r' && subStr[5] == '\0')
-    {
-        token = "do_keyword";
-    }
-    else if (subStr[0] == 'i' && subStr[1] == 'm' && subStr[2] == 'p' && subStr[3] == 'r' && subStr[4] == 'i' &&
-             subStr[5] == '\0')
-    {
-        token = "printf_keyword";
-    }
-    else if (subStr[0] == 'm' && subStr[1] == 'a' && subStr[2] == 's' && subStr[3] == '\0')
-    {
-        token = "else_keyword";
-    }
-    else if (subStr[0] == 'm' && subStr[1] == 'i' && subStr[2] == 'e' && subStr[3] == 'n' &&
-             subStr[4] == 't' && subStr[5] == 'r' && subStr[6] == 'a' && subStr[7] == 's' && subStr[8] == '\0')
-    {
-        token = "while_keyword";
-    }
-    else if (subStr[0] == 'p' && subStr[1] == 'e' && subStr[2] == 'r' && subStr[3] == 's' && subStr[4] == 'o' &&
-             subStr[5] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'p' && subStr[1] == 'o' && subStr[2] == 'r' && subStr[3] == '\0')
-    {
-        token = "for_keyword";
-    }
-    else if (subStr[0] == 'r' && subStr[1] == 'e' && subStr[2] == 't' && subStr[3] == 'o' &&
-             subStr[4] == 'r' && subStr[5] == 'n' && subStr[6] == 'o' && subStr[7] == '\0')
-    {
-        token = "return_keyword";
-    }
-    else if (subStr[0] == 's' && subStr[1] == 'e' && subStr[2] == 'q' && subStr[3] == 'u' && subStr[4] == 'i' &&
-             subStr[5] == 'r' && subStr[6] == '\0')
-    {
-        token = "continue_keyword";
-    }
-    else if (subStr[0] == 's' && subStr[1] == 'i' && subStr[2] == '\0')
-    {
-        token = "if_keyword";
-    }
-    else if (subStr[0] == 'v' && subStr[1] == 'a' && subStr[2] == 'c' && subStr[3] == 'i' && subStr[4] == 'o' &&
-             subStr[5] == '\0')
-    {
-        token = "void_keyword";
-    }
-    else if (subStr[0] == 'v' && subStr[1] == 'a' && subStr[2] == 'm' && subStr[3] == 'o' && subStr[4] == 's' &&
-             subStr[5] == '\0')
-    {
-        token = "goto_keyword";
-    }
-
-    // Boolean Logical
-    else if (subStr[0] == 'y' && subStr[1] == '\0')
-    {
-        token = "and_op";
-    }
-    else if (subStr[0] == 'n' && subStr[1] == 'i' && subStr[2] == '\0')
-    {
-        token = "or_op";
-    }
-    else if (subStr[0] == 'n' && subStr[1] == 'o' && subStr[2] == '\0')
-    {
-        token = "not_op";
-    }
-    else
-        return (false);
-
-    return (true);
-}
-
-bool isReservedword(char *subStr)
-{
-    if (subStr[0] == 'f' && subStr[1] == 'a' && subStr[2] == 'l' && subStr[3] == 's' && subStr[4] == 'o' &&
-        subStr[5] == '\0')
-    {
-        token = "false_reserved";
-    }
-    else if (subStr[0] == 'v' && subStr[1] == 'e' && subStr[2] == 'r' && subStr[3] == 'd' && subStr[4] == 'a' &&
-             subStr[5] == 'd' && subStr[6] == '\0')
-    {
-        token = "true_reserved";
-    }
-    else
-        return (false);
-
-    return (true);
-}
-
-bool isNoiseword(char *subStr)
-{
-    if (subStr[0] == 'b' && subStr[1] == 'o' && subStr[2] == 'o' && subStr[3] == 'l' && subStr[4] == 'e' &&
-        subStr[5] == 'a' && subStr[6] == 'n' && subStr[7] == 'o' && subStr[8] == '\0')
-    {
-        token = "data_type";
-    }
-
-    else if (subStr[0] == 'c' && subStr[1] == 'u' && subStr[2] == 'e' && subStr[3] == 'r' && subStr[4] == 'd' &&
-             subStr[5] == 'a' && subStr[6] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'd' && subStr[1] == 'e' && subStr[2] == 'c' && subStr[3] == 'o' && subStr[4] == 'n' &&
-             subStr[5] == 't' && subStr[6] == 'r' && subStr[7] == 'a' && subStr[8] == '\0')
-    {
-        token = "elif_noiseword";
-    }
-    else if (subStr[0] == 'e' && subStr[1] == 'n' && subStr[2] == 't' && subStr[3] == 'e' &&
-             subStr[4] == 'r' && subStr[5] == 'o' && subStr[6] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'e' && subStr[1] == 's' && subStr[2] == 'c' && subStr[3] == 'a' &&
-             subStr[4] == 'n' && subStr[5] == 'e' && subStr[6] == 'a' && subStr[7] == 'r' && subStr[8] == '\0')
-    {
-        token = "scanf_noiseword";
-    }
-    else if (subStr[0] == 'f' && subStr[1] == 'l' && subStr[2] == 'o' && subStr[3] == 't' && subStr[4] == 'a' &&
-             subStr[5] == 'r' && subStr[6] == '\0')
-    {
-        token = "data_type";
-    }
-    else if (subStr[0] == 'i' && subStr[1] == 'm' && subStr[2] == 'p' && subStr[3] == 'r' &&
-             subStr[4] == 'i' && subStr[5] == 'm' && subStr[6] == 'i' && subStr[7] == 'r' && subStr[8] == '\0')
-    {
-        token = "printf_noiseword";
-    }
-    else if (subStr[0] == 'p' && subStr[1] == 'e' && subStr[2] == 'r' &&
-             subStr[3] == 's' && subStr[4] == 'o' && subStr[5] == 'n' && subStr[6] == 'a' &&
-             subStr[7] == 'j' && subStr[8] == 'e' && subStr[9] == '\0')
-    {
-        token = "data_type";
-    }
-    else
-        return (false);
-
-    return (true);
-}
-
-bool isIntegerLiteral(char *str)
-{
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (isdigit(str[i]) == 0)
-            return (false);
-    }
-
-    token = "int_const";
-    return (true);
-}
-
-bool isFloatLiteral(char *str)
-{
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (isdigit(str[i]) == 0 && str[i] != '.')
-            return (false);
-    }
-
-    int count = 0;
-
-    for (int i = 0; i < strlen(str); i++)
-    {
-        if (str[i] == '.')
-            count++;
-    }
-
-    if (count > 1)
-    {
-        token = "invalid";
-    }
-    else
-    {
-        token = "float_const";
-    }
-
-    return (true);
-    /*
-        if a character in the substring is neither a digit nor a '.', then return false
-        if the first loop ends w/o returning, then the str contains only numeric values and decimal
-    */
 }
