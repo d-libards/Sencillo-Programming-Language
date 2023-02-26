@@ -1,220 +1,539 @@
-Lexeme : 4.5.6.7							invalid float_literal
-Lexeme : 4							int_literal
-Lexeme : $name							invalid identifier
-Lexeme : _nume							invalid identifier
-Lexeme : 12name							invalid identifier
-Lexeme : na12me							identifier
-Lexeme : name12							identifier
-Lexeme : domskrt							identifier
-Lexeme : "no"								str_literal
-Lexeme : \backward slash\								str_literal
-Lexeme : ""								str_literal
-Lexeme : "								str_literal
-Lexeme : \								str_literal
-Lexeme : efren "bata" reyes								str_literal
-Lexeme : 								invalid char_literal
-Lexeme :  								char_literal
-Lexeme : '								char_literal
-Lexeme : \								char_literal
-Lexeme : "								char_literal
-Lexeme : hello								invalid char_literal
-Lexeme : h								char_literal
-Lexeme : 'hello'								invalid char_literal
-Lexeme : ss's'								invalid char_literal
-Lexeme : \h\								invalid char_literal
-Lexeme : holla\'								invalid char_literal
-Lexeme : Identifier					comment
-Lexeme : dom							identifier
-Lexeme : my_name							identifier
-Lexeme : name14							identifier
-Lexeme : Assignment Operators					comment
-Lexeme : =								=
-Lexeme : +=								+=
-Lexeme : -=								-=
-Lexeme : *=								*=
-Lexeme : /=								/=
-Lexeme : %=								%=
-Lexeme : //=								//=
-Lexeme : Unary Operators					comment
-Lexeme : ++								++
-Lexeme : --								--
-Lexeme : Arithmetic Operators					comment
-Lexeme : +								+
-Lexeme : -								-
-Lexeme : *								*
-Lexeme : /								/
-Lexeme : %								%
-Lexeme : **								**
-Lexeme : //								//
-Lexeme : Logical Operators					comment
-Lexeme : y							and_op
-Lexeme : ni							or_op
-Lexeme : no							not_op
-Lexeme : Boolean Relational Operators					comment
-Lexeme : ==								==
-Lexeme : !=								!=
-Lexeme : >								>
-Lexeme : <								<
-Lexeme : >=								>=
-Lexeme : <=								<=
-Lexeme : Keywords					comment
-Lexeme : bool							boolean_keyword
-Lexeme : cuer							string_keyword
-Lexeme : dec							elif_keyword
-Lexeme : descanso							break_keyword
-Lexeme : doble							double_keyword
-Lexeme : ent							integer_keyword
-Lexeme : escan							scanf_keyword
-Lexeme : flot							float_keyword
-Lexeme : hacer							do_keyword
-Lexeme : impri							printf_keyword
-Lexeme : mas							else_keyword
-Lexeme : mientras							while_keyword
-Lexeme : ni							or_op
-Lexeme : no							not_op
-Lexeme : perso							char_keyword
-Lexeme : por							for_keyword
-Lexeme : retorno							return_keyword
-Lexeme : sequir							continue_keyword
-Lexeme : si							if_keyword
-Lexeme : vacio							void_keyword
-Lexeme : vamos							goto_keyword
-Lexeme : y							and_op
-Lexeme : Reserved Word					comment
-Lexeme : falso							false_reserved
-Lexeme : verdad							true_reserved
-Lexeme : Noise Words					comment
-Lexeme : booleano							boolean_noiseword
-Lexeme : decontra							elif_noiseword
-Lexeme : personaje							char_noiseword
-Lexeme : entero							integer_noiseword
-Lexeme : escanear							scanf_noiseword
-Lexeme : flotar							float_noiseword
-Lexeme : cuerda							string_noiseword
-Lexeme : imprimir							printf_noiseword
-Lexeme : Delimeters					comment
-Lexeme : :								:
-Lexeme : (								(
-Lexeme : )								)
-Lexeme : [								[
-Lexeme : ]								]
-Lexeme : {								{
-Lexeme : }								}
-Lexeme : ,								,
-Lexeme : ;								;
-Lexeme : invalid					comment
-Unknown input : 							@
-Lexeme : _num							invalid identifier
-Lexeme : */								invalid operator
-Lexeme : invalid								invalid char_literal
-Lexeme : constant value					comment
-Lexeme : 9							int_literal
-Lexeme : 4.5							float_literal
-Lexeme : string								str_literal
-Lexeme : c								char_literal
-Lexeme : myname							identifier
-Lexeme : 14name							invalid identifier
-Lexeme : my_name							identifier
-Unknown input : 							###
-Lexeme : na$me							invalid identifier
-Lexeme : namee$							invalid identifier
-Lexeme : na14me							identifier
-Lexeme : na_me							identifier
-Lexeme : name_							identifier
-Lexeme : (								(
-Lexeme : )								)
-Lexeme : {								{
-Lexeme : }								}
-Lexeme : [								[
-Lexeme : ]								]
-Lexeme : ;								;
-Lexeme : :								:
-Lexeme : ,								,
-Unknown input : 							5$
-Unknown input : 							@
-Lexeme : name							identifier
-Lexeme : _name							invalid identifier
-Lexeme : 14name							invalid identifier
-Lexeme : name14							identifier
-Lexeme : \n							invalid identifier
-Lexeme : $name							invalid identifier
-Lexeme : name_14							identifier
-Lexeme : 					comment
-Lexeme : zz					comment
-Lexeme : 								invalid char_literal
-Lexeme : a								char_literal
-Lexeme : aaa								invalid char_literal
-Lexeme :  								char_literal
-Lexeme :  								str_literal
-Lexeme : a								str_literal
-Lexeme : 930232							int_literal
-Lexeme : 34.34							float_literal
-Lexeme : 0.3.0							invalid float_literal
-Lexeme : 2.2323.232							invalid float_literal
-Lexeme : 87634							int_literal
-Lexeme : 345.4							float_literal
-Lexeme : =								=
-Lexeme : +=								+=
-Lexeme : -=								-=
-Lexeme : *=								*=
-Lexeme : /=								/=
-Lexeme : %=								%=
-Lexeme : //=								//=
-Lexeme : ++								++
-Lexeme : --								--
-Lexeme : +								+
-Lexeme : -								-
-Lexeme : *								*
-Lexeme : /								/
-Lexeme : %								%
-Lexeme : **								**
-Lexeme : //								//
-Lexeme : ==								==
-Lexeme : !=								!=
-Lexeme : >								>
-Lexeme : y							and_op
-Lexeme : ni							or_op
-Lexeme : no							not_op
-Lexeme : <								<
-Lexeme : >=								>=
-Lexeme : <=								<=
-Lexeme : bool							boolean_keyword
-Lexeme : cuer							string_keyword
-Lexeme : dec							elif_keyword
-Lexeme : descanso							break_keyword
-Lexeme : doble							double_keyword
-Lexeme : ent							integer_keyword
-Lexeme : escan							scanf_keyword
-Lexeme : flot							float_keyword
-Lexeme : hacer							do_keyword
-Lexeme : impri							printf_keyword
-Lexeme : mas							else_keyword
-Lexeme : mientras							while_keyword
-Lexeme : ni							or_op
-Lexeme : no							not_op
-Lexeme : perso							char_keyword
-Lexeme : por							for_keyword
-Lexeme : retorno							return_keyword
-Lexeme : sequir							continue_keyword
-Lexeme : si							if_keyword
-Lexeme : vacio							void_keyword
-Lexeme : vamos							goto_keyword
-Lexeme : y							and_op
-Lexeme : falso							false_reserved
-Lexeme : verdad							true_reserved
-Lexeme : booleano							boolean_noiseword
-Lexeme : decontra							elif_noiseword
-Lexeme : personaje							char_noiseword
-Lexeme : entero							integer_noiseword
-Lexeme : escanear							scanf_noiseword
-Lexeme : flotar							float_noiseword
-Lexeme : cuerda							string_noiseword
-Lexeme : imprimir							printf_noiseword
-Lexeme : 9							int_literal
-Lexeme : 4.5							float_literal
-Lexeme : string								str_literal
-Lexeme : c								char_literal
-Lexeme : myname							identifier
-Lexeme : 14name							invalid identifier
-Lexeme : my_name							identifier
-Lexeme : 							int_literal
+ Input (1/1)								comment
+escan								scanf_keyword
+(								(
+%d								id_symbol
+,								,
+&								&
+num1								identifier
+)								)
+:								:
+escan								scanf_keyword
+(								(
+%f								id_symbol
+,								,
+&								&
+num2								identifier
+)								)
+:								:
+escan								scanf_keyword
+(								(
+%c								id_symbol
+,								,
+&								&
+ch1								identifier
+)								)
+:								:
+escan								scanf_keyword
+(								(
+%s								id_symbol
+,								,
+&								&
+str								identifier
+)								)
+:								:
+error (1/1)								comment
+escan								scanf_keyword
+(								(
+%d								id_symbol
+&								&
+txt								identifier
+)								)
+:								:
+escan								scanf_keyword
+(								(
+%d								id_symbol
+,								,
+txt								identifier
+)								)
+:								:
+escan								scanf_keyword
+(								(
+%d								id_symbol
+,								,
+&								&
+txt								identifier
+:								:
+escan								scanf_keyword
+(								(
+%d								id_symbol
+,								,
+&								&
+txt								identifier
+)								)
+ Output (3/3)								comment
+impri								printf_keyword
+(								(
+Hello Word!								str_const
+)								)
+:								:
+impri								printf_keyword
+(								(
+%d								id_symbol
+,								,
+num1								identifier
+)								)
+:								:
+impri								printf_keyword
+(								(
+Welcome! 								str_const
+,								,
+%s								id_symbol
+,								,
+name								identifier
+)								)
+:								:
+error (3/3)								comment
+impri								printf_keyword
+(								(
+idk								str_const
+)								)
+impri								printf_keyword
+(								(
+%d								id_symbol
+,								,
+sum								identifier
+:								:
+impri								printf_keyword
+(								(
+A Cup of Coffee								str_const
+,								,
+%s								id_symbol
+name								identifier
+)								)
+:								:
+ Declaration (3/3)								comment
+ent								data_type
+prod								identifier
+=								=
+7								int_const
+:								:
+perso								data_type
+ch								identifier
+=								=
+c								char_const
+:								:
+flot								data_type
+sum								identifier
+=								=
+500.34								float_const
+:								:
+cuer								data_type
+name								identifier
+=								=
+firstname								identifier
+:								:
+ent								data_type
+age								identifier
+,								,
+year								identifier
+,								,
+month								identifier
+:								:
+error (3/3)								comment
+ent								data_type
+prod								identifier
+=								=
+:								:
+perso								data_type
+ch								identifier
+c								char_const
+:								:
+flot								data_type
+=								=
+500.34								float_const
+:								:
+cuer								data_type
+name								identifier
+=								=
+firstname								identifier
+ent								data_type
+age								identifier
+;								;
+year								identifier
+,								,
+month								identifier
+:								:
+ Assignment (3/3)								comment
+val								identifier
+=								=
+7								int_const
+:								:
+b								identifier
+=								=
+a								identifier
+:								:
+total								identifier
+=								=
+como								identifier
++								+
+numero								identifier
+:								:
+d								identifier
+=								=
+(								(
+(								(
+a								identifier
+*								*
+b								identifier
+)								)
+/								/
+80								int_const
+)								)
++								+
+95								int_const
+**								**
+2								int_const
+:								:
+c								identifier
+=								=
+(								(
+a								identifier
++								+
+d								identifier
++								+
+6								int_const
+)								)
+/								/
+3								int_const
+:								:
+error (3/3)								comment
+val								identifier
+7								int_const
+:								:
+b								identifier
+=								=
+a								identifier
+total								identifier
+=								=
+como								identifier
+numero								identifier
+:								:
+d								identifier
+=								=
+(								(
+(								(
+a								identifier
+*								*
+b								identifier
+)								)
+/								/
+80								int_const
+)								)
++								+
+95								int_const
+**								**
+2								int_const
+c								identifier
+=								=
+(								(
+a								identifier
++								+
+d								identifier
++								+
+6								int_const
+/								/
+3								int_const
+:								:
+ Iterative (2/2)								comment
+por								for_keyword
+(								(
+ent								data_type
+a								identifier
+=								=
+0								int_const
+;								;
+a								identifier
+<								<
+5								int_const
+;								;
+a								identifier
+++								++
+)								)
+{								{
+impri								printf_keyword
+(								(
+This number is								str_const
+,								,
+%d								id_symbol
+,								,
+val								identifier
+)								)
+:								:
+count								identifier
+=								=
+b								identifier
++								+
+a								identifier
+:								:
+}								}
+por								for_keyword
+(								(
+ent								data_type
+i								identifier
+=								=
+0								int_const
+;								;
+i								identifier
+<								<
+10								int_const
+;								;
+i								identifier
+++								++
+)								)
+{								{
+por								for_keyword
+(								(
+ent								data_type
+j								identifier
+=								=
+0								int_const
+;								;
+j								identifier
+<								<
+10								int_const
+;								;
+j								identifier
+++								++
+)								)
+{								{
+impri								printf_keyword
+(								(
+omg 1111								str_const
+)								)
+:								:
+}								}
+}								}
+error (2/2)								comment
+por								for_keyword
+(								(
+ent								data_type
+a								identifier
+=								=
+0								int_const
+a								identifier
+<								<
+5								int_const
+;								;
+a								identifier
+++								++
+)								)
+{								{
+impri								printf_keyword
+(								(
+two numbers are equal								str_const
+)								)
+:								:
+}								}
+por								for_keyword
+(								(
+ent								data_type
+i								identifier
+=								=
+0								int_const
+;								;
+i								identifier
+<								<
+10								int_const
+;								;
+i								identifier
+)								)
+{								{
+por								for_keyword
+(								(
+ent								data_type
+j								identifier
+=								=
+0								int_const
+;								;
+j								identifier
+<								<
+10								int_const
+;								;
+j								identifier
+++								++
+)								)
+{								{
+impri								printf_keyword
+(								(
+omg 1111								str_const
+)								)
+:								:
+}								}
+}								}
+ Conditional (3/3)								comment
+ if 								comment
+si								if_keyword
+(								(
+num1								identifier
+==								==
+num2								identifier
+)								)
+{								{
+impri								printf_keyword
+(								(
+Two numbers are equal								str_const
+)								)
+:								:
+}								}
+ if else 								comment
+si								if_keyword
+(								(
+num1								identifier
+>								>
+num2								identifier
+y								and_op
+num1								identifier
+>								>
+num3								identifier
+)								)
+{								{
+impri								printf_keyword
+(								(
+Max: num1								str_const
+)								)
+:								:
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+Min: num1								str_const
+)								)
+:								:
+}								}
+nested if else								comment
+si								if_keyword
+(								(
+no								not_op
+(								(
+(								(
+num								identifier
+<=								<=
+45								int_const
+y								and_op
+num								identifier
+>								>
+0								int_const
+)								)
+ni								or_op
+num								identifier
+==								==
+1								int_const
+)								)
+)								)
+{								{
+si								if_keyword
+(								(
+num								identifier
+>								>
+5								int_const
+)								)
+{								{
+impri								printf_keyword
+(								(
+hi								str_const
+)								)
+:								:
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+hello								str_const
+)								)
+:								:
+}								}
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+hi								str_const
+)								)
+:								:
+}								}
+error (3/3)								comment
+si								if_keyword
+(								(
+num								identifier
+==								==
+num2								identifier
+)								)
+impri								printf_keyword
+(								(
+two numbers are equal								str_const
+)								)
+:								:
+}								}
+si								if_keyword
+(								(
+num1								identifier
+>								>
+num2								identifier
+y								and_op
+num1								identifier
+num3								identifier
+)								)
+{								{
+impri								printf_keyword
+(								(
+Max: num1								str_const
+)								)
+:								:
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+Min: num1								str_const
+)								)
+:								:
+}								}
+si								if_keyword
+(								(
+no								not_op
+(								(
+(								(
+num								identifier
+<=								<=
+45								int_const
+y								and_op
+num								identifier
+>								>
+0								int_const
+)								)
+ni								or_op
+num								identifier
+==								==
+)								)
+)								)
+{								{
+si								if_keyword
+(								(
+num								identifier
+>								>
+)								)
+{								{
+impri								printf_keyword
+(								(
+hi								str_const
+)								)
+:								:
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+hello								str_const
+)								)
+:								:
+}								}
+}								}
+mas								else_keyword
+{								{
+impri								printf_keyword
+(								(
+hi								str_const
+)								)
+:								:
+}								}
